@@ -1,0 +1,11 @@
+.target {
+    width:100px;
+    height: 100px;
+    border: 1px solid #000;
+}
+.drop{
+    background: red;
+}
+.listStyle{
+    max-width: 200px;
+}   

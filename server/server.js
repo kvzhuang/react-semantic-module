@@ -90,7 +90,6 @@ module.exports = function(app){
 				function getReduxPromise () {
 					let { query, params } = renderProps;
 					let comp = renderProps.components[renderProps.components.length - 1].WrappedComponent;
-					
 					let promise = comp.fetchData ?
 						comp.fetchData({ query, params, store, history }) :
 						new Promise((resolve, reject) => {

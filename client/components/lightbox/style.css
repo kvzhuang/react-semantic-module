@@ -1,0 +1,52 @@
+.overlay {
+    display: flex;
+    background: #333;
+    opacity: 0.5;
+}
+.lightbox {
+    max-width: 300px;
+    min-height: 150px;
+    background: #fff;
+    margin: auto; 
+    text-align: center;
+    z-index: 2001;
+}
+.lightbox h3 {
+    font-size: 22px;
+    color: #999;
+}
+.lightbox p {
+    font-size: 18px;
+    color: #333;
+}
+.title {
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 40px;
+    text-align: left;
+    font-size: 24px;
+    background: #eee;
+    border-bottom: 1px solid #ccc;
+    box-shadow: 0 1px 3px #ccc;
+}
+.content {
+     padding:20px 40px;        
+}
+.lightbox button {
+    border: 0;
+    padding: 0;
+    outline: 0;
+    height: 30px;
+    line-height: 30px;
+    background: #fff;
+    box-shadow: 0 0 6px #333;
+    text-align: center;
+    width: 80px;
+    margin: 10px;
+    cursor: pointer;
+}
+.lightbox button.submit {
+    background: #2881d4;
+    color: #fff;
+}
