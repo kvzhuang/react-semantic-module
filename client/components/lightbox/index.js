@@ -11,7 +11,15 @@ class Lightbox extends Component{
     }
     render(){
         let show = { 'display': 'flex' },
-            hide = { 'display': 'none'}; 
+            hide = { 'display': 'none'};
+        let boxWidth = '380px',contentPadding = '30px', contentHeight = 'auto';
+        if( this.props.option.title ) {
+            boxWidth = '800px';
+            contentPadding = '30px 50px';
+        }
+        if ( this.props.option.contentHeight ) {
+            contentHeight = this.props.option.contentHeight;
+        }
         return(
             <div style={ this.props.open? show: hide}>
                 <Overlay 
@@ -19,12 +27,12 @@ class Lightbox extends Component{
                          styleName="overlay">
                         
                 </Overlay>
-                <div styleName="lightbox">
+                <div styleName="lightbox" style={{ width: boxWidth}}>
                     { 
                         this.props.option.title && 
                         <div styleName="title">{ this.props.option.title }</div>
                     }
-                    <div styleName="content">
+                    <div styleName="content" style={{padding: contentPadding, maxHeight : contentHeight}}>
                         { this.props.children }
                         { this.props.option.submit && <button onClick={this.props.option.submit.action} styleName="submit">{this.props.option.submit.text}</button>}
                         { this.props.option.cancel && <button onClick={this.props.onClose}>{this.props.option.cancel.text}</button>}

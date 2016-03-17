@@ -22,7 +22,7 @@ class Button extends Component {
 	}
 	render() {
 		return (
-			<button 
+			<button styleName="button"
 					onClick={this.handleClick.bind(this)}
 					onBlur={this.handleBlur.bind(this)} >
 				{ this.state.newLabel || this.props.label }

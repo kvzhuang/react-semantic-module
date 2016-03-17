@@ -9,7 +9,7 @@ class Header extends Component {
 		return (
 			<header styleName="header">
 				<h1>
-					<a href="/">BIG-C</a>
+					<a href="/">BIG-C UI Pattern</a>
 				</h1>
 				<ul styleName="rightNav">
 					<li>

@@ -1,18 +1,29 @@
 .dropdownMenu{
     display: block;
 }
-.ddd{
+.list::before {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 16px;
+  height: 16px;
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, .3);
+  background: #fff;
+  top: -8px;
+  left: 50%;
+  margin-left: -8px;
+  transform: rotate(45deg);
 }
-.dropdownMenu:after {
-    content: "";
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background: #999;
-    transform: rotate(45deg); /* Prefixes... */
-    top: 75px;
-    left: 25px;
-    box-shadow: -1px -1px 10px -2px rgba(0, 0, 0, 0.5);
+.list::after {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 24px;
+  height: 16px;
+  background: #fff;
+  top: 0;
+  left: 50%;
+  margin-left: -12px;
 }
 .list {
     position: fixed;
@@ -23,6 +34,7 @@
     animation-name: rcDropdownSlideUpIn;
     animation-play-state: running;
     animation-timing-function: cubic-bezier(0.6, 0.04, 0.98, 0.34);
+    z-index: 2001;
 }
 @keyframes rcDropdownSlideUpIn {
     0% {

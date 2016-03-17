@@ -7,7 +7,9 @@ class Navigation extends Component {
 		return (
 			<nav className="navigation">
 				<Link className="navigation-link" to="/user/list">User list</Link>
-				<Link className="navigation-link" to="/user/100080">My page</Link>
+				<Link className="navigation-link" to="/dropdown">DropDown</Link>
+                <Link className="navigation-link" to="/lightbox">Lightbox</Link>
+				<Link className="navigation-link" to="/form">Form</Link>
 			</nav>
 		);
 	}

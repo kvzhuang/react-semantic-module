@@ -23,14 +23,16 @@ class List extends Component{
         let show = { 'display': 'block' },
             hide = { 'display': 'none'}; 
         return(
-            <Overlay style={ this.props.open? show: hide}
-                     onRequestClose={this.props.clickAway}>
+            <div style={ this.props.open? show: hide}>
+                <Overlay 
+                        onRequestClose={this.props.clickAway}>
+                </Overlay>
                 <div style={position}
-                     styleName="list" 
-                     className={this.props.listStyle}>
+                        styleName="list" 
+                        className={this.props.listStyle}>
                     { this.props.children }
                 </div>
-            </Overlay>
+            </div>
         );
     }
 }

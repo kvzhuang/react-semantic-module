@@ -8,7 +8,7 @@ class Footer extends Component {
 	render() {
 		return (
 			<footer styleName="footer">
-				Created by: <a href='http://github.com/rexhome7326'>rexhome7326</a>
+				Created by: <a href='http://github.com/Derek.hong'>Derek</a>
 			</footer>
 		);
 	}

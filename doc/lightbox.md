@@ -32,7 +32,8 @@
        text: 'Cancel', 
        // cancel 預設關閉lightbox
     },
-    closeIcon: true,  //有無close ICON
+    closeIcon: true,  //有無close ICON,
+    contentHeight: '300px', //決定content區塊有無最小高度，有設定的話會出現scroll bar
     title: '野豬騎士來囉'	 //標題
 }
 ```
