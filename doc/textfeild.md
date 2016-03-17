@@ -30,7 +30,7 @@
 ```
 ###Properties
 |Name|Type|default|Required|Description|
-|-------|--------|------|---|
+|-------|--------|------|------|---|
 |name|string||true|當onblur跟onchange事件發生的時候會回傳這個key值|
 |value|string||true|父層傳遞資料的接口|
 |placeHolder|string||false|輸入框placeholder|
