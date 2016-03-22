@@ -6,7 +6,8 @@ import style from './style.css';
 
 import Button from 'client/components/button';
 import DropdownMenu from 'client/components/dropdownMenu';
-import DropdwonItem from 'client/components/dropdownMenu/item';
+import Target from 'client/components/dropdownMenu/target';
+import MenuItem from 'client/components/dropdownMenu/item';
 
 class DropdownPage extends Component {
 	constructor(){
@@ -30,21 +31,21 @@ class DropdownPage extends Component {
 	action(e) {
 		console.log("this is a action!");
 	}
+	
+	onSelected(props) {
+		console.log(props);
+	}
+	
 	render() {
 		return (
 			<div>
-				<Button label="open menu"
-						focus={true}
-						hover={true}
-						ref="button"
-						onClick={this.toggleDrop.bind(this)}
-				/>
-				<DropdownMenu open={this.state.dropOpen} 
-							  toggle={this.toggleDrop.bind(this)}
-							  styleName="listStyle">
-					<DropdwonItem action={this.action.bind(this)}>關於</DropdwonItem>
-					<DropdwonItem>關於</DropdwonItem>
-					<DropdwonItem>關於</DropdwonItem>
+				<DropdownMenu
+					onSelected={this.onSelected.bind(this)}
+					styleName="listStyle">
+					<Target><button>OPEN</button></Target>
+					<MenuItem value="關於" index={1}>關於</MenuItem>
+					<MenuItem value="編輯" index={2}>編輯</MenuItem>
+					<MenuItem value="其他" index={3}>其他</MenuItem>
 				</DropdownMenu>
 			</div>
 		);
