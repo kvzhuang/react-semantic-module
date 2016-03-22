@@ -18,6 +18,7 @@
 |-------|--------|------|------|---|
 |onSelected|func|||取得所選擇的item的相關數值（等同item的props）|
 |styleName|string|||控制dropdown選單的style|
+|arrowStyle|object|||控制三角形的位置|
 
 ####MenuItem
 
