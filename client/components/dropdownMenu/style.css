@@ -35,7 +35,7 @@
 }
 
 .list {
-    position: fixed;
+    position: absolute;
     padding-top: 5px;
     background: #fff;
     box-shadow: 0 0 6px #666; 
@@ -45,6 +45,9 @@
     animation-timing-function: cubic-bezier(0.6, 0.04, 0.98, 0.34);
     z-index: 2001;
 	margin-top: 15px;
+}
+.default {
+	
 }
 .item {
 	position: relative;

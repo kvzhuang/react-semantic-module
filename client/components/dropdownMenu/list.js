@@ -8,21 +8,25 @@ import ReactDOM from 'react-dom';
 let position = {};
 
 class List extends Component{
-
+	componentDidMount() {
+		this.props.getListDom(this.refs.dropDownInnerList);
+		console.log(this.props.children); 
+	}
+	
     render(){
         let show = { 'display': 'block' },
             hide = { 'display': 'none'}; 
         return(
-            <div style={ this.props.open? show: hide}>
+            <div>
                 <Overlay 
                         onRequestClose={this.props.clickAway}>
                 </Overlay>
 				
-                <div 
-                     styleName="list" 
+                <div ref="dropDownInnerList"
+                     styleName={"list " + this.props.type} 
                      className={this.props.listStyle}>
 					<div styleName="arrow" style={this.props.arrowStyle}></div>
-                    { this.props.children }
+                    { this.props.content } 
                 </div>
             </div>
         );

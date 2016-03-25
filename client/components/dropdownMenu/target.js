@@ -6,11 +6,14 @@ import ReactDOM from 'react-dom';
 
 
 class Target extends Component{
-
+	
     render(){
+		const children = React.Children.map(this.props.children, (child) => {
+			return React.cloneElement(child); 
+		})
         return(
             <div onClick={this.context.toggleOpen}>  
-				{this.props.children}
+				{children} 
             </div>
         );
     }

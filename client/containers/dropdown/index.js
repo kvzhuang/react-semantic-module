@@ -35,10 +35,10 @@ class DropdownPage extends Component {
 	onSelected(props) {
 		console.log(props);
 	}
-	
+	 
 	render() {
 		return (
-			<div>
+			<div style={{ marginLeft: '600px'}}>
 				<DropdownMenu
 					onSelected={this.onSelected.bind(this)}
 					styleName="listStyle">
