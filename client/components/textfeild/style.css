@@ -26,9 +26,24 @@ input:focus, textarea:focus{
 	bottom: -30px;
 }
 .input {
-	display: inline-block;
+	width: 100%;
 	position: relative;
 }
 .input input, .input textarea {
 	width: 100%;
+}
+.AClist {
+	border: 1px solid #999;
+	position: relative;
+	z-index: 9;
+	background: #fff;
+}
+.AClist li{
+	padding-left: 10px;
+	list-style: none;
+	border-bottom: 1px solid #aaa;
+	cursor: pointer;
+}
+.AClist li:hover {
+	background: #eee;
 }
