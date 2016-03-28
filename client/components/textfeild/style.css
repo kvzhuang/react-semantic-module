@@ -16,14 +16,10 @@ input:focus, textarea:focus{
 .errorMessage {
 	color: #E12F1C;
 	font-size: 14px;
-	position: absolute;
-	bottom: -30px;
-	left: 0;
+	float: left;
 }
 .maxWord {
-	position: absolute;
-	right: 10px;
-	bottom: -30px;
+	float: right;
 }
 .input {
 	width: 100%;

@@ -10,7 +10,7 @@ import TextField from 'client/components/textfeild';
 
 var config = {
 			'data': {
-				'username' : [ 'notEmpty', {maxLength: 5}, 'isName'],
+				'username' : [ 'notEmpty', {maxLength: 10}, 'isName'],
 				'email':['notEmpty','isEmail'],
 				'url':['notEmpty','isURL'],
 				'editor':['notEmpty']

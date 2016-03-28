@@ -25,15 +25,13 @@ class TextFeild extends Component {
 		}
 		let MainElement = this.refs.textFeildMain.getBoundingClientRect();
 		ACStyle.width = MainElement.width;
-		//ACStyle.left = MainElement.left;
 	}
 	_onBlur(e){
-		if( this.props.val ) {
+		if( this.props.validator ) {
 			let validObject = {};
 			validObject[this.props.name] = e.target.value;
 			
 			let validResult = this.props.validator.validate(validObject);
-			
 			if(validResult.status) {
 				this.setState({
 					errorMessage: ''
