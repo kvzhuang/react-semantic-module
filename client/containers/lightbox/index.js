@@ -75,19 +75,27 @@ class LightboxPage extends Component {
         }
 		return (
 			<div>
-				<Button label="with Title"
+				<h2>LightBox</h2>
+				<div className="content">
+					<p>LightBox情境主要分成三種（無title/ 有title/ 無button）</p>
+					<p>預設close機制為按"取消"按扭、close icon、點擊lightbox以外的地方，點擊確定會有提供事件給使用者決定動作</p>
+				</div>
+				<h3>無TITLE</h3>
+				<Button label="show"
 						focus={true}
 						hover={true}
 						ref="button"
 						onClick={this.toggleLightbox.bind(this,1)}
 				/>
-                <Button label="with Title"
+				<h3>有TITLE跟button</h3>
+                <Button label="show"
 						focus={true}
 						hover={true}
 						ref="button"
 						onClick={this.toggleLightbox.bind(this,2)}
 				/>
-                 <Button label="with Title"
+				<h3>有TITLE無button</h3>
+                 <Button label="show"
 						focus={true}
 						hover={true}
 						ref="button"

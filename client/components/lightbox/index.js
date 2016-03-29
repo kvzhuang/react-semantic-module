@@ -21,7 +21,7 @@ class Lightbox extends Component{
             contentHeight = this.props.option.contentHeight;
         }
         return(
-            <div style={ this.props.open? show: hide}>
+            <div styleName="container" style={ this.props.open? show: hide}>
                 <Overlay 
                          onRequestClose={this.props.onClose}
                          styleName="overlay">

@@ -42,6 +42,6 @@ module.exports = {
 			test: /\.css$/,
 			loader: ExtracTextPlugin.extract('style',"css?modules&localIdentName=[name]__[local]___[hash:base64:5]"),
 			include: __dirname
-		}]
+		},{ test: /\.md$/, loader: "html!markdown?gfm=false" }]
 	}
 };

@@ -6,9 +6,14 @@ import style from './style.css';
 
 import Button from 'client/components/button';
 import DropdownMenu from 'client/components/dropdownMenu';
+import DropdownList from 'client/components/dropList';
 import Target from 'client/components/dropdownMenu/target';
 import MenuItem from 'client/components/dropdownMenu/item';
 
+let listContent = [
+	'asd',
+	'asdee' 
+]
 class DropdownPage extends Component {
 	constructor(){
 		super();
@@ -17,36 +22,46 @@ class DropdownPage extends Component {
 			lightbox: false
 		}
 	}
-	componentDidMount() {
-		console.log(this.refs);   
-	}
-	toggleDrop(e){
-		this.setState({
-			dropOpen: !this.state.dropOpen
-		})
-	}
-	submit(e) {
-		console.log("submit");
-	}
-	action(e) {
-		console.log("this is a action!");
-	}
-	
-	onSelected(props) {
-		console.log(props);
+
+	onSelected(value) {
+		console.log(value);
 	}
 	 
 	render() {
 		return (
 			<div>
+				<h2>DropDown</h2>
+				<div className="content">
+					<p>Dropdown系列一致在onSelect的時候讓使用者取得選擇的值，再由使用者自己決定要作什麼樣的處理</p>
+				</div>
+				<h3>DropDown Menu</h3>
+				<div className="content">
+					<p>DropdownMenu定義為點擊圖示後的下拉式選單</p>
+					<p>帶有transition特效</p>
+				</div>
 				<DropdownMenu
 					onSelected={this.onSelected.bind(this)}
 					styleName="listStyle">
-					<Target><button>OPEN</button></Target>
+					<Target>
+						<Button label="show"
+							focus={true}
+							hover={true}
+							ref="button"
+						/>
+					</Target>
 					<MenuItem value="關於" index={1}>關於</MenuItem>
 					<MenuItem value="編輯" index={2}>編輯</MenuItem>
 					<MenuItem value="其他" index={3}>其他</MenuItem>
 				</DropdownMenu>
+				<h3>Drop List</h3>
+				<div className="content">
+					<p>Drop List為基本的類目選單，列表的內容為傳入的array動態產生</p>
+				</div>
+				<DropdownList 
+					listContent={listContent}
+					onSelected={this.onSelected.bind(this)}>
+				</DropdownList>
+				
 			</div>
 		);
 	}

@@ -19,7 +19,7 @@ module.exports = function checkMode(app){
 			],
 			resolve: {
 				root: [ __dirname ],
-				extensions: ["", ".js", ".jsx"]
+				extensions: ["", ".js", ".jsx",".md"]
 			},
 			output: {
 				path: path.join(__dirname, '/public/build'),
@@ -38,7 +38,8 @@ module.exports = function checkMode(app){
 				})
 			],
 			module: {
-				loaders: [{
+				loaders: [
+				{
 					test: /\.js$/,
 					loader: 'babel-loader',
 					exclude: /node_modules/,
@@ -62,7 +63,9 @@ module.exports = function checkMode(app){
 					test: /\.css$/,
 					loader: "style-loader!css-loader?modules&localIdentName=[name]__[local]___[hash:base64:5]",
 					include: __dirname
-				}]
+				},
+				
+				]
 			}
 		};
 		var compiler = webpack(config);

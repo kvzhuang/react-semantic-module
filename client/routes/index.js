@@ -9,6 +9,7 @@ import userDetail from 'client/containers/userDetail';
 import LightboxPage from 'client/containers/lightbox';
 import DropdwonPage from 'client/containers/dropdown';
 import Form from 'client/containers/form';
+import Switches from 'client/containers/switches';
 
 export default function(history) {
 	return (
@@ -19,6 +20,7 @@ export default function(history) {
 				<Route path="/dropdown" component={DropdwonPage} />
                 <Route path="/lightbox" component={LightboxPage} />
 				<Route path="/form" component={Form} />
+				<Route path="/switches" component={Switches} />
 			</Route>
 		</Router>
 	);

@@ -6,7 +6,7 @@ import style from './style.css';
 
 import Validators from 'util/validator';
 import TextField from 'client/components/textfeild';
-
+import RadioGroup from 'client/components/radioGroup';
 
 var config = {
 			'data': {
@@ -104,9 +104,31 @@ class Form extends Component {
 			data: this.state.data
 		})
 	}
+	radioSelect(index, value) {
+		console.log(index);
+		console.log(value);
+	}
 	render() {
+		let group = [
+			'項目1',
+			'項目2',
+			'項目3',
+			'項目4',
+			'項目5'
+		];
 		return (
 			<div>
+				<h2>Form</h2>
+				<div className="content">
+					<p>Form表單的設計原則，會讓每個form元素在觸發某個行為之後提供事件給使用者取得資料，再決定是否要更新父層的state</p>
+					<p>目前的自由度依照UI盤點原則制定，開發者如果有自由度需求可以提出</p>
+				</div>
+				<h3>TextFeild</h3>
+				<div className="content">
+					<p>1. 一般的input，提供onChange事件偵測實時輸入，以及onBlur事件做驗證&自動寫入state值</p>
+					<p>2. allowMultiLine ＝ true 則改成以textarea型態顯示</p>
+					<p>3. 提供AutoComplete UI （送api拉回值必須由使用者實作，只要改變傳入的obj的值即可改變AC的內容）</p>
+				</div>
 				<TextField
 					name="username" 
 					value={this.state.data.username}

@@ -1,0 +1,29 @@
+.list {
+    position: absolute;
+    padding-top: 5px;
+    background: #fff;
+	border: 1px solid #2881d4;
+    box-shadow: 0 0 6px #666; 
+    animation-duration: 0.3s;
+    animation-name: rcDropdownSlideUpIn;
+    animation-play-state: running;
+    animation-timing-function: cubic-bezier(0.6, 0.04, 0.98, 0.34);
+    z-index: 2001;
+	width: 150px;
+}
+.listInput {
+	cursor: pointer;
+	width: 150px;
+	background: #fff;
+	text-align: left;
+}
+.list li {
+	width: 100%;
+	padding-left: 10px;
+	font-size: 16px;
+	cursor: pointer;
+	color: #333;
+}
+.list li:hover {
+	background: #d8f3fd;
+}
