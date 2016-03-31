@@ -9,7 +9,7 @@ class Switches extends Component {
 	constructor(){
 		super();
 	}
-	radioSelect(index, value) {
+	radioSelect(value, index) {
 		console.log(index);
 		console.log(value);
 	}
@@ -37,6 +37,26 @@ class Switches extends Component {
 					onSelected={this.radioSelect.bind(this)}
 					custom={true}
 					styleName="radioGroup">
+				</RadioGroup>
+				<div className="content">
+				<p>表單送出沒有選擇的時候</p>
+				</div>
+				<RadioGroup
+					group={group}
+					name="radio_none"
+					onSelected={this.radioSelect.bind(this)}
+					custom={true}
+					styleName="radioGroup"
+					errorMessage="請選擇項目">
+				</RadioGroup>
+				<RadioGroup
+					group={group}
+					name="checkbox"
+					onSelected={this.radioSelect.bind(this)}
+					custom={true}
+					styleName="radioGroup"
+					checkBox={true}
+					checkLimit={3}>
 				</RadioGroup>
 			</div>
 		);
