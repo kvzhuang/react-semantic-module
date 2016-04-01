@@ -46,8 +46,10 @@
     z-index: 2001;
 	margin-top: 15px;
 }
-.default {
-	
+.default{}
+.target {
+	cursor: pointer;
+	display: inline-block;
 }
 .item {
 	position: relative;

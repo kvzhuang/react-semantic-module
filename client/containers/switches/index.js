@@ -49,6 +49,10 @@ class Switches extends Component {
 					styleName="radioGroup"
 					errorMessage="請選擇項目">
 				</RadioGroup>
+				<h3>CheckBox</h3>
+				<div className="content">
+					<p>可多選，每次選擇之後會回傳已選擇項目的陣列給使用者得知</p>
+				</div>
 				<RadioGroup
 					group={group}
 					name="checkbox"

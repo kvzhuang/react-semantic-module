@@ -12,7 +12,7 @@ class Target extends Component{
 			return React.cloneElement(child); 
 		})
         return(
-            <div onClick={this.context.toggleOpen}>  
+            <div onClick={this.context.toggleOpen} styleName="target">  
 				{children} 
             </div>
         );

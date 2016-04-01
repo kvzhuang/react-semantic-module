@@ -19,7 +19,7 @@ module.exports = function checkMode(app){
 			],
 			resolve: {
 				root: [ __dirname ],
-				extensions: ["", ".js", ".jsx",".md"]
+				extensions: ["", ".js", ".jsx"]
 			},
 			output: {
 				path: path.join(__dirname, '/public/build'),

@@ -11,8 +11,8 @@ class Button extends Component {
 		} 
 	}
 	handleClick(){
-		this.props.onClick();
-		if ( this.props.onFocusLabel && !this.state.focus ) {
+		if( this.props.onClick ) this.props.onClick();
+		if( this.props.onFocusLabel && !this.state.focus ) {
 			this.setState({ newLabel: this.props.onFocusLabel, focus: true });
 		}else {
 			this.setState({ newLabel: null, focus: false });

@@ -30,13 +30,11 @@ class RadioGroup extends Component {
 	}
 	
 	handleChange(index,e) {
-		let returnValue;
 		if( !this.state.customDisable ) this.setState({ customDisable: true});
 		if( !this.props.checkBox ) {
 			this.props.onSelected(e.target.value, index+1);
 		}else if( this.props.checkBox){
-			returnValue = getSelectedChbox(this.refs.main);
-			this.props.onSelected(returnValue);
+			this.props.onSelected(getSelectedChbox(this.refs.main));
 		}
 		
 	}

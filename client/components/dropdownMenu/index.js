@@ -4,6 +4,7 @@ import style from './style.css';
 import Transitions from 'util/transitions';
 import List from 'client/components/dropdownMenu/list';
 import ReactDOM from 'react-dom';
+import Target from './target';
 
 let target;
 let list = [];
@@ -22,10 +23,9 @@ class DropdownMenu extends Component{
 
 	componentWillMount() {
 		let that = this;
-		
 		React.Children.map(this.props.children, function(child,index){
-			if( child.type.displayName === 'Target' ) {
-				target = React.cloneElement(child);
+			if( child.type === Target ) {
+				target = React.cloneElement(child,{});
 			}else {
 				list.push(child);
 			}
@@ -70,6 +70,7 @@ class DropdownMenu extends Component{
 	}
 	
     render(){
+		console.log(target);
         return(
             <div> 
 				{target}
