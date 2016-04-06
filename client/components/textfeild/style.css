@@ -30,7 +30,7 @@ input:focus, textarea:focus{
 }
 .AClist {
 	border: 1px solid #999;
-	position: relative;
+	position: absolute;
 	z-index: 9;
 	background: #fff;
 }

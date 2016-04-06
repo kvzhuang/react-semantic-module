@@ -25,9 +25,9 @@ class DropdownMenu extends Component{
 		let that = this;
 		React.Children.map(this.props.children, function(child,index){
 			if( child.type === Target ) {
-				target = React.cloneElement(child,{});
+				target = React.cloneElement(child);
 			}else {
-				list.push(child);
+				list.push(React.cloneElement(child));
 			}
 		});
 	}
