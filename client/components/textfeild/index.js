@@ -23,8 +23,10 @@ class TextFeild extends Component {
 			target.style.height = Math.max(target.scrollHeight,target.clientHeight) + 'px';
 			this.initHeight = Math.max(target.scrollHeight,target.clientHeight);
 		}
+		
 		let MainElement = this.refs.textFeildMain.getBoundingClientRect();
 		ACStyle.width = MainElement.width;
+		ACStyle.maxHeight = window.innerHeight - MainElement.top - MainElement.height - 10;
 	}
 	_onBlur(e){
 		if( this.props.validator ) {
@@ -42,7 +44,6 @@ class TextFeild extends Component {
 				})
 			}
 		}
-		
 		
 		this.props.onBlur(this.props.name, e);
 		

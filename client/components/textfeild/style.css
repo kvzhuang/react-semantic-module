@@ -33,6 +33,7 @@ input:focus, textarea:focus{
 	position: absolute;
 	z-index: 9;
 	background: #fff;
+	overflow: auto;
 }
 .AClist li{
 	padding-left: 10px;

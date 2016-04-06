@@ -35,7 +35,7 @@ class DropdownList extends Component{
 		this.setState({
 			open: false,
 			choosen: value
-		})
+		}) 
 		this.props.onSelected(value);
 	}
 	
