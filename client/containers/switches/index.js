@@ -9,8 +9,7 @@ class Switches extends Component {
 	constructor(){
 		super();
 	}
-	radioSelect(value, index) {
-		console.log(index);
+	radioSelect(value) {
 		console.log(value);
 	}
 	render() {
@@ -60,7 +59,7 @@ class Switches extends Component {
 					custom={true}
 					styleName="radioGroup"
 					checkBox={true}
-					checkLimit={3}>
+					maxChoose={3}>
 				</RadioGroup>
 			</div>
 		);

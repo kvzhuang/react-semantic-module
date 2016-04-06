@@ -12,17 +12,19 @@ function getSelectedChbox(frm) {
 	var nr_inpfields = inpfields.length;
 	// traverse the inpfields elements, and adds the value of selected (checked) checkbox in selchbox
 	for(var i=0; i<nr_inpfields; i++) {
-		if(inpfields[i].type == 'checkbox' && inpfields[i].checked == true) selchbox.push(inpfields[i].value);
+		if(inpfields[i].checked == true) selchbox.push(inpfields[i].value);
 	}
+	//multiChoose = selchbox;
 	return selchbox;
 } 
 
 class RadioGroup extends Component {
-	constructor(){
-		super();
+	constructor(props){
+		super(props);
 		this.state = {
 			customValue: '',
-			customDisable: true
+			customDisable: true,
+			errorMessage: props.errorMessage
 		}
 	}
 	componentDidMount() {
@@ -30,13 +32,14 @@ class RadioGroup extends Component {
 	}
 	
 	handleChange(index,e) {
-		if( !this.state.customDisable ) this.setState({ customDisable: true});
-		if( !this.props.checkBox ) {
-			this.props.onSelected(e.target.value, index+1);
-		}else if( this.props.checkBox){
-			this.props.onSelected(getSelectedChbox(this.refs.main));
-		}
-		
+		multiChoose = getSelectedChbox(this.refs.main);
+		if( multiChoose.length > this.props.maxChoose ) {
+			e.target.checked = false;
+			this.setState({ errorMessage: '最多選擇'+this.props.maxChoose+'個項目' });
+		}else {
+			this.setState({ errorMessage: ''});
+			this.props.onSelected(multiChoose);
+		}		 
 	}
 	customChange(e) {
 		this.setState({
@@ -45,23 +48,25 @@ class RadioGroup extends Component {
 	}
 	customChoose(e) {
 		let that = this;
-		if(e.target.value.length > 0) this.handleChange(this.props.group, e);
-		
+		this.handleChange(this.props.group.length, e);
 		this.setState({
-			customDisable: !e.target.checked
+			customDisable: !e.target.checked,
 		})
 		
 		setTimeout(function(){
 			that.refs.customInput.focus();
 		},100);
+		
 	}
 	handleBlur() {
-		if (this.props.checkBox) {
-			this.props.onSelected(getSelectedChbox(this.refs.main));
-		}else {
-			this.props.onSelected(this.state.customValue, this.props.group.length + 1);
+		this.props.onSelected(getSelectedChbox(this.refs.main));
+	}
+	componentWillReceiveProps(nextProps) {
+		if( this.state.errorMessage !== nextProps.errorMessage ) {
+			this.setState({ errorMessage: nextProps.errorMessage });
 		}
 	}
+	
 	render() {
 		let that = this;
 		let type = this.props.checkBox ? 'checkbox' : 'radio'; 
@@ -102,10 +107,13 @@ class RadioGroup extends Component {
 						
 					</div>
 				}
-				{this.props.errorMessage && <div styleName="error">{this.props.errorMessage}</div>}
+				{this.state.errorMessage && <div styleName="error">{this.state.errorMessage}</div>}
 			</div>
 		);
 	}
 }
-
+RadioGroup.defaultProps = {
+	errorMessage: '',
+	maxChoose: 99
+}
 export default connect()(CSSModules(RadioGroup,style,{allowMultiple:true}));
