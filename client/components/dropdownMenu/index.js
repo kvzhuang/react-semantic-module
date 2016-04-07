@@ -8,14 +8,14 @@ import Target from './target';
 
 let target;
 let list = [];
+let targetStyle;
 
 class DropdownMenu extends Component{
     constructor(props) {
         super(props);
         console.log(this.props);
 		this.state = {
-			open: false,
-			posType: 'default'
+			open: false
 		}
 		this.toggleOpen = this.toggleOpen.bind(this);
 		this.updateSelected = this.updateSelected.bind(this);
@@ -42,8 +42,13 @@ class DropdownMenu extends Component{
 	getChildContext() {
 		return { 
 			toggleOpen: this.toggleOpen,
-			getSelect: this.updateSelected
+			getSelect: this.updateSelected,
+			getThisDOM: this.getChildDOM
 		};
+	}
+	
+	getChildDOM(DOM) {
+		targetStyle = DOM.getBoundingClientRect();
 	}
 	
 	toggleOpen() {
@@ -56,35 +61,38 @@ class DropdownMenu extends Component{
 		this.props.onSelected(props);
 	}
 	
-	getListDom(Node) {
+	getListDom(Node, Arrow) {
 		let NodeProp = Node.getBoundingClientRect();
-		if( NodeProp.left + NodeProp.width > window.innerWidth ) {
-			this.setState({
-				posType: 'right'
-			})
-		}else if ( NodeProp.left < 0 ) {
-			this.setState({
-				posType: 'left'
-			})
+		let originLeft = targetStyle.left + (targetStyle.width / 2) - (NodeProp.width / 2);
+		let NodeLeft = originLeft;
+
+		if (originLeft < 0 ) {
+			NodeLeft = 10;
+		}else if (originLeft + NodeProp.width > window.innerWidth ) {
+			NodeLeft =  window.innerWidth - NodeProp.width - 10;
 		}
+		
+		Node.style.left = NodeLeft + 'px';
+		Arrow.style.marginLeft = originLeft - NodeLeft - 12 + 'px';
+		/*if( NodeProp.top + NodeProp.height > window.innerHeight ) {
+			
+			Node.style.marginTop = 0 - NodeProp.height + 'px';
+		}*/
 	}
 	
     render(){
-		console.log(target);
+		
         return(
             <div> 
 				{target}
-				{this.state.open && 
-				<List type={this.state.posType}
+				<List 
 				      open={this.state.open} 
                       clickAway={this.toggleOpen} 
                       listStyle={this.props.className}
-                      arrowStyle={this.props.arrowStyle}
 					  getListDom={this.getListDom}
-					  content={list}>
-                    
-                </List>} 
-                
+					  content={list}
+					  targetStyle={targetStyle}>       
+                </List>
             </div>
         );
     }
@@ -92,7 +100,8 @@ class DropdownMenu extends Component{
 
 DropdownMenu.childContextTypes = {
 	toggleOpen: React.PropTypes.func,
-	getSelect: React.PropTypes.func
+	getSelect: React.PropTypes.func,
+	getThisDOM: React.PropTypes.func
 }
 
 export default CSSModules(DropdownMenu,style,{allowMultiple:true});

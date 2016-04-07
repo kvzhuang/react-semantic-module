@@ -6,19 +6,25 @@ import ReactDOM from 'react-dom';
 
 
 class Target extends Component{
+	componentDidMount() {
+		//console.log(ReactDOM.findDOMNode(this).getBoundingClientRect());
+		this.context.getThisDOM(ReactDOM.findDOMNode(this));
+		console.log(this.props);
+	}
 	
     render(){
 		const children = React.Children.map(this.props.children, (child) => {
 			return React.cloneElement(child); 
 		})
         return(
-            <div onClick={this.context.toggleOpen} styleName="target">  
+            <div onClick={this.context.toggleOpen} styleName="target" className={this.props.className}>  
 				{children} 
             </div>
         );
     }
 }
 Target.contextTypes = {
-	toggleOpen: React.PropTypes.func
+	toggleOpen: React.PropTypes.func,
+	getThisDOM: React.PropTypes.func
 }
 export default CSSModules(Target,style,{allowMultiple:true});

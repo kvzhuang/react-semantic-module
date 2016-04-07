@@ -33,18 +33,21 @@
 	left: 50%;
 	margin-left: -12px;
 }
-
+.container {
+	display: inline-block;
+	position: absolute;
+	transition: all 0.2s ease;
+	transform-origin: 0% 0%;
+}
 .list {
-    position: absolute;
+    position: relative;
     padding-top: 5px;
     background: #fff;
     box-shadow: 0 0 6px #666; 
-    animation-duration: 0.3s;
-    animation-name: rcDropdownSlideUpIn;
-    animation-play-state: running;
-    animation-timing-function: cubic-bezier(0.6, 0.04, 0.98, 0.34);
+   
     z-index: 2001;
 	margin-top: 15px;
+	
 }
 .default{}
 .target {
