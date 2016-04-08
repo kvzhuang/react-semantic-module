@@ -9,42 +9,34 @@ let position = {};
 
 class List extends Component{
 	componentDidMount() {
-		this.props.getListDom(this.refs.listContainer, this.refs.listArrow);
+		this.props.getListDom(this.refs.listContainer, this.refs.listArrow, this.refs.dropDownInnerList.offsetHeight +15);
 		console.log(this.props.children); 
 		console.log(this.props.targetStyle);
 	}
 	
     render(){
 		let tt =   this.props.targetStyle;
-		/*let arrowStyle = {
-			left: tt.left + (tt.width / 2) - 12 + 'px',
-			top: tt.top + tt.height + 5 + 'px'
-		}
-		let listStyle = {
-			left: tt.left + (tt.width / 2) - (this.props.width / 2) + 'px',
-			top: tt.top + tt.height + 5 + 24 + 'px'
-		}*/
 		let arrowPosition = this.props.midPosition + 12;
 		let show = this.props.open ? 'visible' : 'hidden';
-		let listStyle = this.props.open ? 
+		let dropStyle = this.props.open ? 
 						{
 							visibility: 'visible',
-							transform: 'scaleY(1)'
+							height: this.refs.dropDownInnerList.offsetHeight +30,
 						} : 
 						{
 							visibility: 'hidden',
-							transform: 'scaleY(0)'
+							height: 0
 						}
+		let listStyle = this.props.top ? 'list top' : 'list';
         return(
-            <div style={{ visibility: show}}>
+            <div style={{ visibility: show, position: 'relative'}}>
                 <Overlay 
                         onRequestClose={this.props.clickAway}>
                 </Overlay>
-				<div styleName="container" ref="listContainer" style={listStyle}>
+				<div styleName="container" ref="listContainer" style={dropStyle}>
 					
 					<div ref="dropDownInnerList" 
-						styleName="list"
-						className={this.props.listStyle}>
+						styleName={listStyle}>
 						<div styleName="arrow" ref="listArrow"></div>
 						{ this.props.content } 
 					</div>

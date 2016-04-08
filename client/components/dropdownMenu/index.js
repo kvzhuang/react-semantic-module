@@ -10,10 +10,11 @@ let target;
 let list = [];
 let targetStyle;
 
+let ListNode, ArrowNode, TrueHeight, InitialProp;
+
 class DropdownMenu extends Component{
     constructor(props) {
         super(props);
-        console.log(this.props);
 		this.state = {
 			open: false
 		}
@@ -32,13 +33,6 @@ class DropdownMenu extends Component{
 		});
 	}
 	
-	componentDidMount() {
-		console.log(ReactDOM.findDOMNode(this).offsetLeft);
-		console.log(window.innerWidth);
-		console.log(ReactDOM.findDOMNode(this).offsetWidth);
-	}
-	
-	
 	getChildContext() {
 		return { 
 			toggleOpen: this.toggleOpen,
@@ -52,6 +46,10 @@ class DropdownMenu extends Component{
 	}
 	
 	toggleOpen() {
+		if ( !this.state.open ) {
+			this.testPostiion();
+		}
+		
 		this.setState({
 			open: !this.state.open
 		})
@@ -61,29 +59,49 @@ class DropdownMenu extends Component{
 		this.props.onSelected(props);
 	}
 	
-	getListDom(Node, Arrow) {
-		let NodeProp = Node.getBoundingClientRect();
-		let originLeft = targetStyle.left + (targetStyle.width / 2) - (NodeProp.width / 2);
-		let NodeLeft = originLeft;
+	testPostiion(){
+		let ContainerProp = ListNode.getBoundingClientRect();
+		let OrginLeft = (targetStyle.width / 2) - (ContainerProp.width / 2);
+		let ContainerLeft = OrginLeft;
+		
+		if (OrginLeft + targetStyle.left + targetStyle.width < 0 ) {
+			ContainerLeft = 0;
+		}else if (targetStyle.left + ( targetStyle.width / 2 ) + (ContainerProp.width / 2) > window.innerWidth ) {
+			ContainerLeft =  window.innerWidth - ContainerProp.width - 10 - targetStyle.left;
+		}
 
-		if (originLeft < 0 ) {
-			NodeLeft = 10;
-		}else if (originLeft + NodeProp.width > window.innerWidth ) {
-			NodeLeft =  window.innerWidth - NodeProp.width - 10;
+		ListNode.style.left = ContainerLeft + 'px';
+		ArrowNode.style.marginLeft = OrginLeft - ContainerLeft - 12 + 'px';
+		
+		if( InitialProp.top + TrueHeight <= window.innerHeight ) {
+			ListNode.style.bottom = "";
+			ArrowNode.style.bottom = "";
+			ArrowNode.style.top = 0;
+			ArrowNode.className = style.arrow;
+		}else if ( ContainerProp.top + TrueHeight > window.innerHeight ) {
+			ListNode.style.bottom =  targetStyle.height + 15 + 'px';
+			ArrowNode.style.bottom = -24 + 'px';
+			ArrowNode.style.top = 'initial';
+			ArrowNode.className += " "+style.top;
+		}
+	}
+	
+	getListDom(Node, Arrow, trueHeight) {
+		
+		if (!ListNode || !ArrowNode || !TrueHeight) {
+			ListNode = Node;
+			ArrowNode = Arrow;
+			TrueHeight = trueHeight;
+			InitialProp = ListNode.getBoundingClientRect();
 		}
 		
-		Node.style.left = NodeLeft + 'px';
-		Arrow.style.marginLeft = originLeft - NodeLeft - 12 + 'px';
-		/*if( NodeProp.top + NodeProp.height > window.innerHeight ) {
-			
-			Node.style.marginTop = 0 - NodeProp.height + 'px';
-		}*/
+		
 	}
 	
     render(){
 		
         return(
-            <div> 
+            <div className={this.props.className} styleName="root"> 
 				{target}
 				<List 
 				      open={this.state.open} 
