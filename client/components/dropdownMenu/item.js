@@ -8,9 +8,12 @@ class Item extends Component{
     }
 	
     render(){
+		const children = React.Children.map(this.props.children, (child) => {
+			return React.cloneElement(child); 
+		})
         return(
             <div onClick={this.context.getSelect.bind(null,this.props)} styleName="item" className={this.props.className}>
-                { this.props.children }
+                {children}
             </div>
         );
     }
