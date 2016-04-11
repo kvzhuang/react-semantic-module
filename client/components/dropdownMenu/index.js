@@ -87,15 +87,21 @@ class DropdownMenu extends Component{
 	}
 	
 	getListDom(Node, Arrow, trueHeight) {
-		
+
 		if (!ListNode || !ArrowNode || !TrueHeight) {
 			ListNode = Node;
 			ArrowNode = Arrow;
 			TrueHeight = trueHeight;
 			InitialProp = ListNode.getBoundingClientRect();
-		}
-		
-		
+		}	
+	}
+	
+	componentWillUnmount(){
+		ListNode = null;
+		ArrowNode = null;
+		TrueHeight = null;
+		InitialProp = null;
+		list = [];
 	}
 	
     render(){

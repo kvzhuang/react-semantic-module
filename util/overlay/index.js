@@ -5,7 +5,6 @@ import style from './style.css';
 class Overlay extends Component{
     constructor(props) {
         super(props);
-        console.log(props);
     }
     handleClick(e) {
         if(this.props.onRequestClose) {

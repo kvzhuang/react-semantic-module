@@ -3,15 +3,30 @@ import CSSModules from 'react-css-modules';
 import style from './style.css';
 
 import Overlay from 'util/overlay';
+import { enableDocScroll, disableDocScroll } from 'util/windowScroll';
+
 
 class Lightbox extends Component{
     constructor(props) {
         super(props);
-        //console.log(this.props);
+		console.log(props);
+        this.state = {
+			open: props.open
+		}
     }
+
+	
+	componentDidMount() {
+		disableDocScroll();
+	}
+	
+	componentWillUnmount() {
+		enableDocScroll();
+	}
+	
     render(){
-        let show = { 'display': 'flex' },
-            hide = { 'display': 'none'};
+		
+
         let boxWidth = '380px',contentPadding = '30px', contentHeight = 'auto';
         if( this.props.option.title ) {
             boxWidth = '800px';
@@ -21,7 +36,7 @@ class Lightbox extends Component{
             contentHeight = this.props.option.contentHeight;
         }
         return(
-            <div styleName="container" style={ this.props.open? show: hide}>
+            <div styleName="container">
                 <Overlay 
                          onRequestClose={this.props.onClose}
                          styleName="overlay">

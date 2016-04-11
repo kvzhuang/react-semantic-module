@@ -10,8 +10,6 @@ let position = {};
 class List extends Component{
 	componentDidMount() {
 		this.props.getListDom(this.refs.listContainer, this.refs.listArrow, this.refs.dropDownInnerList.offsetHeight +15);
-		console.log(this.props.children); 
-		console.log(this.props.targetStyle);
 	}
 	
     render(){

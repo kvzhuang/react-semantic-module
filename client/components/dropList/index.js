@@ -11,7 +11,6 @@ let list = [];
 class DropdownList extends Component{
     constructor(props) {
         super(props);
-        console.log(this.props);
 		this.state = {
 			open: false,
 			choosen: this.props.defaultValue || '選單項目'

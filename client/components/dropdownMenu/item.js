@@ -9,7 +9,9 @@ class Item extends Component{
 	
     render(){
 		const children = React.Children.map(this.props.children, (child) => {
-			return React.cloneElement(child); 
+			if( React.isValidElement(child) ) return React.cloneElement(child); 
+			else return (<div>{child}</div>);
+			
 		})
         return(
             <div onClick={this.context.getSelect.bind(null,this.props)} styleName="item" className={this.props.className}>

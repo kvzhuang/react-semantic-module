@@ -25,7 +25,7 @@ class TextFeild extends Component {
 		
 		let MainElement = this.refs.textFeildMain.getBoundingClientRect();
 		ACStyle.width = MainElement.width;
-		ACStyle.maxHeight = window.innerHeight - MainElement.top - MainElement.height - 10;
+		//ACStyle.maxHeight = window.innerHeight - MainElement.top - MainElement.height - 10;
 	}
 	_onBlur(e){
 		if( this.props.validator ) {

@@ -7,8 +7,6 @@ let customPattern = {};
 const usePattern = function(patternArr,value,key) {
 
 	let i = 0,res;
-	
-	console.log(customPattern);
 
 	while (i < patternArr.length) {
 		try{
@@ -38,7 +36,7 @@ const usePattern = function(patternArr,value,key) {
 
 class Validators {
 	constructor(options){
-
+		
 		this.pattern = options.data || {};
 		this.customValidator = options.customValidator || {};
 
@@ -68,3 +66,4 @@ class Validators {
 	}
 }
 export default Validators;
+

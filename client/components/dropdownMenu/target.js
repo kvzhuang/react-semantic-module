@@ -7,14 +7,13 @@ import ReactDOM from 'react-dom';
 
 class Target extends Component{
 	componentDidMount() {
-		//console.log(ReactDOM.findDOMNode(this).getBoundingClientRect());
 		this.context.getThisDOM(ReactDOM.findDOMNode(this));
-		console.log(this.props);
 	}
 	
     render(){
 		const children = React.Children.map(this.props.children, (child) => {
-			return React.cloneElement(child); 
+			if( React.isValidElement(child) ) return React.cloneElement(child); 
+			else return (<div>{child}</div>);	
 		})
         return(
             <div onClick={this.context.toggleOpen} styleName="target" className={this.props.className}>  
