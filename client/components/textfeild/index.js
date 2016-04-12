@@ -10,7 +10,7 @@ class TextFeild extends Component {
 		super(props); 
 		this.state = {
 			data: this.props.value,
-			errorMessage: '',
+			errorMessage: this.props.errorMessage,
 			ACData: this.props.ACData
 		}
 		this._onChange = this._onChange.bind(this);
@@ -39,7 +39,7 @@ class TextFeild extends Component {
 				})
 			}else {
 				this.setState({
-					errorMessage: '使用者名稱' + validResult.errorMessage[this.props.name]
+					errorMessage:validResult.errorMessage[this.props.name]
 				})
 			}
 		}
@@ -76,9 +76,15 @@ class TextFeild extends Component {
 	}
 	
 	componentWillReceiveProps(nextProps) {
-		this.setState({
-			ACData: nextProps.ACData
-		})
+		if( this.state.data !== nextProps.value) {
+			this.setState({ data: nextProps.value });
+		}
+		if( this.state.ACData !== nextProps.ACData) {
+			this.setState({ ACData: nextProps.ACData });
+		}
+		if( this.state.errorMessage !== nextProps.errorMessage) {
+			this.setState({ errorMessage: nextProps.errorMessage });
+		}
 	}
 	
 	render() {
@@ -116,6 +122,9 @@ class TextFeild extends Component {
 		);
 	}
 }
-
+TextFeild.defaultProps = {
+	errorMessage: '',
+	data: ''
+}
 
 export default CSSModules(TextFeild,style,{allowMultiple:true});

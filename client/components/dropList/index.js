@@ -50,7 +50,7 @@ class DropdownList extends Component{
 					  getListDom={this.getListDom}> 
 					  { this.props.listContent.map(function (value, index) {
 						  return (
-							  <li onClick={that.onSelect.bind(that, value)}>{value}</li>
+							  <li key={index} onClick={that.onSelect.bind(that, value)}>{value}</li>
 							);
 					  })}  
                 </List>

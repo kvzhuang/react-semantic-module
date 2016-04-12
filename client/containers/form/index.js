@@ -99,9 +99,12 @@ class Form extends Component {
 		
 	}
 	onBlur(key,e){
+		console.log(key, e.target.value);
 		this.state.data[key] = e.target.value;
+		console.log(this.state.data);
 		this.setState({
-			data: this.state.data
+			data: this.state.data,
+			ACData: []
 		})
 	}
 	radioSelect(index, value) {
