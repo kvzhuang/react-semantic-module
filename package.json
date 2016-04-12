@@ -1,17 +1,18 @@
 {
-  "name": "isomorphic-startkit",
-  "version": "0.2.0",
-  "description": "isomorphic-startkit",
+  "name": "C-WAP-Module",
+  "version": "0.1",
+  "description": "module for c platform",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rexhome7326/isomorphic-startkit"
+    "url": "https://github.com/DerekHung/react-semantic-module"
   },
   "scripts": {
     "start": "node --harmony ./bin/www",
     "dev": "node --harmony ./bin/www --env=dev",
     "build": "webpack -p -d --config ./webpack.prod.config.js --progress --colors"
   },
+  "main":"./client/components",
   "dependencies": {
     "async": "^1.5.0",
     "bluebird": "^3.1.1",
