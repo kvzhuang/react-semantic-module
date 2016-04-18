@@ -1,6 +1,6 @@
 {
-  "name": "C-WAP-Module",
-  "version": "0.1",
+  "name": "CWAPModule",
+  "version": "0.2.0",
   "description": "module for c platform",
   "license": "MIT",
   "repository": {
