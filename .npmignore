@@ -2,3 +2,5 @@ node_modules
 public
 server
 doc
+client
+util

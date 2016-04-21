@@ -10,9 +10,10 @@
   "scripts": {
     "start": "node --harmony ./bin/www",
     "dev": "node --harmony ./bin/www --env=dev",
-    "build": "webpack -p -d --config ./webpack.prod.config.js --progress --colors"
+    "build": "webpack -p -d --config ./webpack.prod.config.js --progress --colors",
+    "babel": "babel client/components util --out-dir lib"
   },
-  "main":"./client/components",
+  "main":"./lib",
   "dependencies": {
 	"validator": "^5.1.0"
   },

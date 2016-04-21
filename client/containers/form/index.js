@@ -6,7 +6,7 @@ import style from './style.css';
 
 import Validators from 'util/validator';
 
-import { TextField } from 'client/components';
+import { TextField } from 'c_wap_module';
 
 console.log(TextField);
 var config = {
