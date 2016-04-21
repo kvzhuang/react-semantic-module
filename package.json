@@ -12,7 +12,7 @@
     "dev": "node --harmony ./bin/www --env=dev",
     "build": "webpack -p -d --config ./webpack.prod.config.js --progress --colors"
   },
-  "main":"./client/components/index.js",
+  "main":"./client/components",
   "dependencies": {
 	"validator": "^5.1.0"
   },
@@ -67,7 +67,6 @@
     "style-loader": "^0.13.0",
     "superagent": "^1.6.1",
     "unirest": "^0.4.2",
-    "webpack-sources": "^0.1.0",
-    "c_wap_module": "git+ssh://git@github.com:DerekHung/react-semantic-module.git"
+    "webpack-sources": "^0.1.0"
   }
 }
