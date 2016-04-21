@@ -7,15 +7,6 @@ import { enableDocScroll, disableDocScroll } from 'util/windowScroll';
 
 
 class Lightbox extends Component{
-    constructor(props) {
-        super(props);
-		console.log(props);
-        this.state = {
-			open: props.open
-		}
-    }
-
-	
 	componentDidMount() {
 		disableDocScroll();
 	}
