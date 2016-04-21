@@ -5,9 +5,6 @@ import Transitions from 'util/transitions';
 import List from './list';
 import ReactDOM from 'react-dom';
 
-let target;
-let list = [];
-
 class DropdownList extends Component{
     constructor(props) {
         super(props);
@@ -46,8 +43,7 @@ class DropdownList extends Component{
 				{this.state.open && 
 				<List type={this.state.posType}
 				      open={this.state.open} 
-                      clickAway={this.toggleOpen} 
-					  getListDom={this.getListDom}> 
+                      clickAway={this.toggleOpen} > 
 					  { this.props.listContent.map(function (value, index) {
 						  return (
 							  <li key={index} onClick={that.onSelect.bind(that, value)}>{value}</li>
