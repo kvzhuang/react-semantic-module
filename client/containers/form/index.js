@@ -8,6 +8,8 @@ import Validators from 'util/validator';
 import TextField from 'client/components/textfeild';
 import RadioGroup from 'client/components/radioGroup';
 
+//import { LightBox } from 'c_wap_module';
+
 var config = {
 			'data': {
 				'username' : [ 'notEmpty', {maxLength: 10}, 'isName'],
@@ -39,6 +41,7 @@ class Form extends Component {
 	}
 	onChange(key,value) {
 		/* call AC api and get ACDATA*/
+		console.log(value);
 		if( key === 'job') {
 			if (value.length <= 0 ) {
 				this.setState({ ACData: [] });
@@ -113,6 +116,9 @@ class Form extends Component {
 		console.log(index);
 		console.log(value);
 	}
+	onSelected(value,index) {
+		console.log(value,index);
+	}
 	render() {
 		let group = [
 			'項目1',
@@ -161,7 +167,8 @@ class Form extends Component {
 					placeHolder="AC測試"
 					styleName="input1"
 					maxWords={10}
-					ACData={this.state.ACData}>
+					ACData={this.state.ACData}
+					onSelected={this.onSelected.bind(this)}>
 				</TextField>
 			</div>
 		);

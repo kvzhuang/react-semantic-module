@@ -56,7 +56,6 @@ class TextFeild extends Component {
 		}
 
 		if( this.props.maxWords && e.target.value.length > this.props.maxWords ) {
-			console.log("over");
 			this.setState({
 				errorMessage: '超過指定字數',
 				ACData: []
@@ -66,7 +65,7 @@ class TextFeild extends Component {
 				data:  e.target.value,
 				errorMessage: ''
 			})
-			this.props.onChange(this.props.name, this.state.data);	
+			this.props.onChange(this.props.name, e.target.value);	
 		}
 		
 		
@@ -79,6 +78,7 @@ class TextFeild extends Component {
 			errorMessage: '',
 			ACData: []
 		})
+		this.props.onSelected(value,index+1);
 	}
 	
 	componentWillReceiveProps(nextProps) {
@@ -103,7 +103,6 @@ class TextFeild extends Component {
 		let status = '';
 		let that = this;
 		if( this.state.errorMessage.length > 0 ) status = 'error ';
-		console.log(this.state.ACData); 
 		return (
 			<div className={this.props.className}>
 				<div styleName={status + 'input'}  ref="textFeildMain">
