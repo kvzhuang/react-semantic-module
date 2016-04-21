@@ -43,8 +43,11 @@ class TextFeild extends Component {
 				})
 			}
 		}
+		let that = this;
+		setTimeout(function(){
+			that.props.onBlur(that.props.name, that.state.data);
+		},200);
 		
-		this.props.onBlur(this.props.name, e);
 		
 	}
 	_onChange(e){
@@ -53,17 +56,20 @@ class TextFeild extends Component {
 		}
 
 		if( this.props.maxWords && e.target.value.length > this.props.maxWords ) {
+			console.log("over");
 			this.setState({
-				errorMessage: '超過指定字數'
+				errorMessage: '超過指定字數',
+				ACData: []
 			})
 		}else {
 			this.setState({
 				data:  e.target.value,
 				errorMessage: ''
-			})	
+			})
+			this.props.onChange(this.props.name, this.state.data);	
 		}
 		
-		this.props.onChange(this.props.name, e);
+		
 	}
 	
 	
@@ -76,13 +82,13 @@ class TextFeild extends Component {
 	}
 	
 	componentWillReceiveProps(nextProps) {
-		if( this.state.data !== nextProps.value) {
+		if( this.state.data !== nextProps.value && this.props.value !== nextProps.value) {
 			this.setState({ data: nextProps.value });
 		}
-		if( this.state.ACData !== nextProps.ACData) {
+		if( this.state.ACData !== nextProps.ACData && this.props.ACData !== nextProps.ACData) {
 			this.setState({ ACData: nextProps.ACData });
 		}
-		if( this.state.errorMessage !== nextProps.errorMessage) {
+		if( this.props.errorMessage !== nextProps.errorMessage && this.props.errorMessage !== nextProps.errorMessage) {
 			this.setState({ errorMessage: nextProps.errorMessage });
 		}
 	}
@@ -97,6 +103,7 @@ class TextFeild extends Component {
 		let status = '';
 		let that = this;
 		if( this.state.errorMessage.length > 0 ) status = 'error ';
+		console.log(this.state.ACData); 
 		return (
 			<div className={this.props.className}>
 				<div styleName={status + 'input'}  ref="textFeildMain">

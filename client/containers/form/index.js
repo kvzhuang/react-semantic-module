@@ -22,6 +22,8 @@ var config = {
 		}
 let val = new Validators(config);	
 
+val.validate
+
 class Form extends Component {
 	constructor(){
 		super();
@@ -30,14 +32,15 @@ class Form extends Component {
 				username:"",
 				job:"",
 				editor:"野豬騎士來囉野",
-				ACData: []
-			}		
+				
+			},
+			ACData: []		
 		}
 	}
-	onChange(key,e) {
+	onChange(key,value) {
 		/* call AC api and get ACDATA*/
 		if( key === 'job') {
-			if ( e.target.value.length <= 0 ) {
+			if (value.length <= 0 ) {
 				this.setState({ ACData: [] });
 			}else {
 			this.setState({
@@ -98,10 +101,9 @@ class Form extends Component {
 		}
 		
 	}
-	onBlur(key,e){
-		console.log(key, e.target.value);
-		this.state.data[key] = e.target.value;
-		console.log(this.state.data);
+	onBlur(key,value){
+		console.log(key, value); 
+		this.state.data[key] = value;
 		this.setState({
 			data: this.state.data,
 			ACData: []
