@@ -12,7 +12,7 @@
     "dev": "node --harmony ./bin/www --env=dev",
     "build": "webpack -p -d --config ./webpack.prod.config.js --progress --colors"
   },
-  "main":"./client/components",
+  "main":"./client/components/index.js",
   "dependencies": {
 	"validator": "^5.1.0"
   },
