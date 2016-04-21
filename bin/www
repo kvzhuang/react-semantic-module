@@ -1,6 +1,17 @@
 #!/usr/bin/env node
 
-"use strict";
+require('babel-core/register')({
+	cache: false,
+	ignore : function ignore(filename){
+		if(/node_modules(\\|\/)c_wap_module/.test(filename)){
+			return false;
+		}else if(/node_modules(\\|\/).+/.test(filename)){
+			return true;
+		}else {
+			return false;
+		}
+	}
+})
 
 var path = require('path');
 process.env.NODE_PATH = path.join(__dirname, '../');

@@ -5,11 +5,10 @@ import CSSModules from 'react-css-modules';
 import style from './style.css';
 
 import Validators from 'util/validator';
-import TextField from 'client/components/textfeild';
-import RadioGroup from 'client/components/radioGroup';
 
-//import { LightBox } from 'c_wap_module';
+import { TextField } from 'client/components';
 
+console.log(TextField);
 var config = {
 			'data': {
 				'username' : [ 'notEmpty', {maxLength: 10}, 'isName'],
