@@ -6,11 +6,6 @@ import List from 'client/components/dropdownMenu/list';
 import ReactDOM from 'react-dom';
 import Target from './target';
 
-let target;
-let list = [];
-let targetStyle;
-
-let ListNode, ArrowNode, TrueHeight, InitialProp;
 
 class DropdownMenu extends Component{
     constructor(props) {
@@ -20,15 +15,23 @@ class DropdownMenu extends Component{
 		}
 		this.toggleOpen = this.toggleOpen.bind(this);
 		this.updateSelected = this.updateSelected.bind(this);
+		this.getChildDOM = this.getChildDOM.bind(this);
+		this.target = null;
+		this.list = [];
+		this.targetStyle = null;
+		this.ListNode = null;
+		this.ArrowNode = null;
+		this.TrueHeight = null;
+		this.InitialProp = null;
     }
 
 	componentWillMount() {
 		let that = this;
 		React.Children.map(this.props.children, function(child,index){
 			if( child.type === Target ) {
-				target = React.cloneElement(child);
+				that.target = React.cloneElement(child);
 			}else {
-				list.push(React.cloneElement(child));
+				that.list.push(React.cloneElement(child));
 			}
 		});
 	}
@@ -42,7 +45,7 @@ class DropdownMenu extends Component{
 	}
 	
 	getChildDOM(DOM) {
-		targetStyle = DOM.getBoundingClientRect();
+		this.targetStyle = DOM.getBoundingClientRect();
 	}
 	
 	toggleOpen() {
@@ -60,62 +63,62 @@ class DropdownMenu extends Component{
 	}
 	
 	testPostiion(){
-		let ContainerProp = ListNode.getBoundingClientRect();
-		let OrginLeft = (targetStyle.width / 2) - (ContainerProp.width / 2);
+		let ContainerProp = this.ListNode.getBoundingClientRect();
+		let OrginLeft = (this.targetStyle.width / 2) - (ContainerProp.width / 2);
 		let ContainerLeft = OrginLeft;
 		
-		if (OrginLeft + targetStyle.left + targetStyle.width < 0 ) {
+		if (OrginLeft + this.targetStyle.left + this.targetStyle.width < 0 ) {
 			ContainerLeft = 0;
-		}else if (targetStyle.left + ( targetStyle.width / 2 ) + (ContainerProp.width / 2) > window.innerWidth ) {
-			ContainerLeft =  window.innerWidth - ContainerProp.width - 10 - targetStyle.left;
+		}else if (this.targetStyle.left + ( this.targetStyle.width / 2 ) + (ContainerProp.width / 2) > window.innerWidth ) {
+			ContainerLeft =  window.innerWidth - ContainerProp.width - 10 - this.targetStyle.left;
 		}
 
-		ListNode.style.left = ContainerLeft + 'px';
-		ArrowNode.style.marginLeft = OrginLeft - ContainerLeft - 12 + 'px';
+		this.ListNode.style.left = ContainerLeft + 'px';
+		this.ArrowNode.style.marginLeft = OrginLeft - ContainerLeft - 12 + 'px';
 		
-		if( InitialProp.top + TrueHeight <= window.innerHeight ) {
-			ListNode.style.bottom = "";
-			ArrowNode.style.bottom = "";
-			ArrowNode.style.top = 0;
-			ArrowNode.className = style.arrow;
-		}else if ( ContainerProp.top + TrueHeight > window.innerHeight ) {
-			ListNode.style.bottom =  targetStyle.height + 15 + 'px';
-			ArrowNode.style.bottom = -24 + 'px';
-			ArrowNode.style.top = 'initial';
-			ArrowNode.className += " "+style.top;
+		if( this.InitialProp.top + this.TrueHeight <= window.innerHeight ) {
+			this.ListNode.style.bottom = "";
+			this.ArrowNode.style.bottom = "";
+			this.ArrowNode.style.top = 0;
+			this.ArrowNode.className = style.arrow;
+		}else if ( ContainerProp.top + this.TrueHeight > window.innerHeight ) {
+			this.ListNode.style.bottom =  this.targetStyle.height + 15 + 'px';
+			this.ArrowNode.style.bottom = -24 + 'px';
+			this.ArrowNode.style.top = 'initial';
+			this.ArrowNode.className += " "+style.top;
 		}
 	}
 	
 	getListDom(Node, Arrow, trueHeight) {
 
-		if (!ListNode || !ArrowNode || !TrueHeight) {
-			ListNode = Node;
-			ArrowNode = Arrow;
-			TrueHeight = trueHeight;
-			InitialProp = ListNode.getBoundingClientRect();
+		if (!this.ListNode || !this.ArrowNode || !this.TrueHeight) {
+			this.ListNode = Node;
+			this.ArrowNode = Arrow;
+			this.TrueHeight = trueHeight;
+			this.InitialProp = this.ListNode.getBoundingClientRect();
 		}	
 	}
 	
 	componentWillUnmount(){
-		ListNode = null;
-		ArrowNode = null;
-		TrueHeight = null;
-		InitialProp = null;
-		list = [];
+		this.ListNode = null;
+		this.ArrowNode = null;
+		this.TrueHeight = null;
+		this.InitialProp = null;
+		this.list = [];
 	}
 	
     render(){
 		
         return(
             <div className={this.props.className} styleName="root"> 
-				{target}
+				{this.target}
 				<List 
 				      open={this.state.open} 
                       clickAway={this.toggleOpen} 
                       listStyle={this.props.className}
-					  getListDom={this.getListDom}
-					  content={list}
-					  targetStyle={targetStyle}>       
+					  getListDom={this.getListDom.bind(this)}
+					  content={this.list}
+					  targetStyle={this.targetStyle}>       
                 </List>
             </div>
         );
