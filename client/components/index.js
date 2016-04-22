@@ -1,10 +1,10 @@
-import LightBox from 'client/components/lightbox';
-import Button from 'client/components/button';
-import DropdownMenu from 'client/components/dropdownMenu';
-import DropList from 'client/components/dropList';
-import RadioGroup from 'client/components/radioGroup';
-import TextField from 'client/components/textfeild';
+import LightBox from './lightbox';
+import Button from './button';
+import DropdownMenu from './dropdownMenu';
+import DropList from './dropList';
+import RadioGroup from './radioGroup';
+import TextField from './textfeild';
 
-import Validator from 'util/validator';
+import Validator from '../../util/validator';
 
 export { LightBox, Button, DropdownMenu, DropList, RadioGroup, TextField, Validator };

@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import CSSModules from 'react-css-modules';
 import style from './style.css';
 
-import Overlay from 'util/overlay';
-import { enableDocScroll, disableDocScroll } from 'util/windowScroll';
+import Overlay from '../../util/overlay';
+import { enableDocScroll, disableDocScroll } from '../../util/windowScroll';
 
 
 class Lightbox extends Component{
