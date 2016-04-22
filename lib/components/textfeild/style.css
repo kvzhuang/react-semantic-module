@@ -1,0 +1,46 @@
+.error.input input, .error.input textarea{
+	border:1px solid #E12F1C;
+}
+input, textarea{
+	padding:10px;
+	border:1px solid #ccc;
+	border-radius: 2.5px;
+	font-size: 16px;
+	outline: 0;
+	resize : none;
+	overflow: hidden;
+}
+input:focus, textarea:focus{
+	border: 1px solid #2881d4;
+}
+.errorMessage {
+	color: #E12F1C;
+	font-size: 14px;
+	float: left;
+}
+.maxWord {
+	float: right;
+}
+.input {
+	width: 100%;
+	position: relative;
+}
+.input input, .input textarea {
+	width: 100%;
+}
+.AClist {
+	border: 1px solid #999;
+	position: absolute;
+	z-index: 9;
+	background: #fff;
+	overflow: auto;
+}
+.AClist li{
+	padding-left: 10px;
+	list-style: none;
+	border-bottom: 1px solid #aaa;
+	cursor: pointer;
+}
+.AClist li:hover {
+	background: #eee;
+}
