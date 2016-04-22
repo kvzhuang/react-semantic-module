@@ -5,6 +5,6 @@ import DropList from './dropList';
 import RadioGroup from './radioGroup';
 import TextField from './textfeild';
 
-import Validator from '../util/validator';
+import Validators from '../utils/validator';
 
-export { LightBox, Button, DropdownMenu, DropList, RadioGroup, TextField, Validator };
+export { LightBox, Button, DropdownMenu, DropList, RadioGroup, TextField, Validators };

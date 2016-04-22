@@ -6,7 +6,7 @@ import style from './style.css';
 
 //import Validators from '../../util/validator';
 
-import { TextField } from 'c_wap_module';
+import { TextField,Validators } from 'c_wap_module';
 //import TextField from 'client/components/textfeild';
 
 console.log(TextField);
@@ -22,8 +22,8 @@ var config = {
 				}
 			}
 		}
-//let val = new Validators(config);	
-let val;
+let val = new Validators(config);	
+
 class Form extends Component {
 	constructor(){
 		super();
