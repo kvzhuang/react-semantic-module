@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import CSSModules from 'react-css-modules';
 import style from './style.css';
 
-import Validators from '../../util/validator';
+//import Validators from '../../util/validator';
 
 import { TextField } from 'c_wap_module';
 
@@ -21,10 +21,8 @@ var config = {
 				}
 			}
 		}
-let val = new Validators(config);	
-
-val.validate
-
+//let val = new Validators(config);	
+let val;
 class Form extends Component {
 	constructor(){
 		super();
