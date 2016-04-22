@@ -1,6 +1,6 @@
 {
   "name": "c_wap_module",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "module for c platform",
   "license": "MIT",
   "repository": {
@@ -11,7 +11,7 @@
     "start": "node --harmony ./bin/www",
     "dev": "node --harmony ./bin/www --env=dev",
     "build": "webpack -p -d --config ./webpack.prod.config.js --progress --colors",
-    "babel": "babel client --out-dir lib --copy-files"
+    "babel": "babel client/components --out-dir lib/components --copy-files && babel client/util --out-dir lib/util --copy-files"
   },
   "main":"./lib/components",
   "dependencies": {
