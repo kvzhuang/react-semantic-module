@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import CSSModules from 'react-css-modules';
 import style from './style.css';
-import RadioGroup from 'client/components/radioGroup';
 
+import { RadioGroup } from 'c_wap_module';
 class Switches extends Component {
 	constructor(){
 		super();

@@ -4,11 +4,7 @@ import { Link } from 'react-router';
 import CSSModules from 'react-css-modules';
 import style from './style.css';
 
-import Button from 'client/components/button';
-import DropdownMenu from 'client/components/dropdownMenu';
-import DropdownList from 'client/components/dropList';
-import Target from 'client/components/dropdownMenu/target';
-import MenuItem from 'client/components/dropdownMenu/item';
+import { Button, DropdownMenu, DropList, DropdownTarget, DropdownItem } from 'c_wap_module';
 
 let listContent = [
 	'asd',
@@ -42,49 +38,49 @@ class DropdownPage extends Component {
 				<DropdownMenu
 					onSelected={this.onSelected.bind(this)}
 					styleName="listStyle">
-					<Target>
+					<DropdownTarget>
 						<Button label="show"
 							focus={true}
 							hover={true}
 							ref="button"
 						/>
-					</Target>
-					<MenuItem value="關於" index={1}><div>關於112645645645643445645648978974561231354564561231234684789423123456468421231456456</div></MenuItem>
-					<MenuItem value="編輯" index={2}>編輯</MenuItem>
-					<MenuItem value="其他" index={3}>其他</MenuItem>
-					<MenuItem value="其他" index={4}>其他</MenuItem>
-					<MenuItem value="其他" index={5}>其他</MenuItem>
-					<MenuItem value="其他" index={6}>其他</MenuItem>
-					<MenuItem value="其他" index={7}>其他</MenuItem>
-					<MenuItem value="其他" index={8}>其他</MenuItem>
+					</DropdownTarget>
+					<DropdownItem value="關於" index={1}><div>關於112645645645643445645648978974561231354564561231234684789423123456468421231456456</div></DropdownItem>
+					<DropdownItem value="編輯" index={2}>編輯</DropdownItem>
+					<DropdownItem value="其他" index={3}>其他</DropdownItem>
+					<DropdownItem value="其他" index={4}>其他</DropdownItem>
+					<DropdownItem value="其他" index={5}>其他</DropdownItem>
+					<DropdownItem value="其他" index={6}>其他</DropdownItem>
+					<DropdownItem value="其他" index={7}>其他</DropdownItem>
+					<DropdownItem value="其他" index={8}>其他</DropdownItem>
 				</DropdownMenu>
 				<DropdownMenu
 					onSelected={this.onSelected.bind(this)}
 					styleName="listStyle">
-					<Target>
+					<DropdownTarget>
 						<Button label="show"
 							focus={true}
 							hover={true}
 							ref="button"
 						/>
-					</Target>
-					<MenuItem value="關於" index={1}><div>關於112645645645643445645648978974561231354564561231234684789423123456468421231456456</div></MenuItem>
-					<MenuItem value="編輯" index={2}>編輯</MenuItem>
-					<MenuItem value="其他" index={3}>其他</MenuItem>
-					<MenuItem value="其他" index={4}>其他</MenuItem>
-					<MenuItem value="其他" index={5}>其他</MenuItem>
-					<MenuItem value="其他" index={6}>其他</MenuItem>
-					<MenuItem value="其他" index={7}>其他</MenuItem>
-					<MenuItem value="其他" index={8}>其他</MenuItem>
+					</DropdownTarget>
+					<DropdownItem value="關於" index={1}><div>關於112645645645643445645648978974561231354564561231234684789423123456468421231456456</div></DropdownItem>
+					<DropdownItem value="編輯" index={2}>編輯</DropdownItem>
+					<DropdownItem value="其他" index={3}>其他</DropdownItem>
+					<DropdownItem value="其他" index={4}>其他</DropdownItem>
+					<DropdownItem value="其他" index={5}>其他</DropdownItem>
+					<DropdownItem value="其他" index={6}>其他</DropdownItem>
+					<DropdownItem value="其他" index={7}>其他</DropdownItem>
+					<DropdownItem value="其他" index={8}>其他</DropdownItem>
 				</DropdownMenu>
 				<h3>Drop List</h3>
 				<div className="content">
 					<p>Drop List為基本的類目選單，列表的內容為傳入的array動態產生</p>
 				</div>
-				<DropdownList 
+				<DropList 
 					listContent={listContent}
 					onSelected={this.onSelected.bind(this)}>
-				</DropdownList>
+				</DropList>
 				
 			</div>
 		);

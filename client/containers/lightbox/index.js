@@ -4,9 +4,7 @@ import { Link } from 'react-router';
 import CSSModules from 'react-css-modules';
 import style from './style.css';
 
-import Button from 'client/components/button';
-
-import LightBox from 'client/components/lightbox';
+import { LightBox,Button } from 'c_wap_module';
 
 class LightboxPage extends Component {
 	constructor(){
@@ -102,7 +100,7 @@ class LightboxPage extends Component {
 						onClick={this.toggleLightbox.bind(this,3)}
 				/>
                 { this.state.lightbox && 
-				<LightBox open={this.state.lightbox}
+				<LightBox 
 						  option={option}
 						  onClose={this.lightboxClose.bind(this)}> 
 					<h3>刪除背景照片</h3>
