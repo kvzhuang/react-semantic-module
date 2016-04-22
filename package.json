@@ -1,6 +1,6 @@
 {
   "name": "c_wap_module",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "module for c platform",
   "license": "MIT",
   "repository": {
@@ -68,7 +68,6 @@
     "style-loader": "^0.13.0",
     "superagent": "^1.6.1",
     "unirest": "^0.4.2",
-    "webpack-sources": "^0.1.0",
-    "c_wap_module": "git+://git@github.com:DerekHung/react-semantic-module.git"
+    "webpack-sources": "^0.1.0"
   }
 }
