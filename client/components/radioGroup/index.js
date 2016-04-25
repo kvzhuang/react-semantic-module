@@ -38,7 +38,7 @@ class RadioGroup extends Component {
 			this.setState({ errorMessage: '最多選擇'+this.props.maxChoose+'個項目' });
 		}else {
 			this.setState({ errorMessage: ''});
-			this.props.onSelected(multiChoose);
+			this.props.onSelected(multiChoose,index+1);
 		}		 
 	}
 	customChange(e) {
@@ -51,7 +51,7 @@ class RadioGroup extends Component {
 		this.handleChange(this.props.group.length, e);
 		this.setState({
 			customDisable: !e.target.checked,
-		})
+		}) 
 		
 		setTimeout(function(){
 			that.refs.customInput.focus();
@@ -65,7 +65,7 @@ class RadioGroup extends Component {
 		if( this.state.errorMessage !== nextProps.errorMessage ) {
 			this.setState({ errorMessage: nextProps.errorMessage });
 		}
-	}
+	} 
 	
 	render() {
 		let that = this;
@@ -99,7 +99,6 @@ class RadioGroup extends Component {
 						<input
 							type="text" 
 							ref="customInput"
-							onFocus={console.log("focus")}
 							value={this.state.customValue} 
 							onChange={this.customChange.bind(this)} 
 							disabled={this.state.customDisable}

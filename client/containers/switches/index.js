@@ -4,13 +4,14 @@ import { Link } from 'react-router';
 import CSSModules from 'react-css-modules';
 import style from './style.css';
 
-import { RadioGroup } from 'c_wap_module';
+//import { RadioGroup } from 'c_wap_module';
+import RadioGroup from 'client/components/radioGroup';
 class Switches extends Component {
 	constructor(){
 		super();
 	}
-	radioSelect(value) {
-		console.log(value);
+	radioSelect(value,index) {
+		console.log(value, index);
 	}
 	render() {
 		let group = [
