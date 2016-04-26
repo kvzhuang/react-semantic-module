@@ -4,11 +4,12 @@ import { Link } from 'react-router';
 import CSSModules from 'react-css-modules';
 import style from './style.css';
 
-import { Button, DropdownMenu, DropList, DropdownTarget, DropdownItem } from 'c_wap_module';
+import { Button, DropdownMenu, DropdownTarget, DropdownItem } from 'c_wap_module';
+import DropList from 'client/components/droplist';
 
 let listContent = [
-	'asd',
-	'asdee' 
+	{ label: '項目1', value: '111'},
+	{ label: '項目2', value: '222'}
 ]
 class DropdownPage extends Component {
 	constructor(){

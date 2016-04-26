@@ -26,12 +26,12 @@ class DropdownList extends Component{
 		})
 	}
 	
-	onSelect(value) {
+	onSelect(data) {
 		this.setState({
 			open: false,
-			choosen: value
+			choosen: data.label
 		}) 
-		this.props.onSelected(value);
+		this.props.onSelected(data);
 	}
 	
     render(){
@@ -43,9 +43,9 @@ class DropdownList extends Component{
 				<List type={this.state.posType}
 				      open={this.state.open} 
                       clickAway={this.toggleOpen} > 
-					  { this.props.listContent.map(function (value, index) {
+					  { this.props.listContent.map(function (data, index) {
 						  return (
-							  <li key={index} onClick={that.onSelect.bind(that, value)}>{value}</li>
+							  <li key={index} onClick={that.onSelect.bind(that, data)}>{data.label}</li>
 							);
 					  })}  
                 </List>

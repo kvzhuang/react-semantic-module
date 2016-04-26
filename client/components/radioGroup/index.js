@@ -12,7 +12,12 @@ function getSelectedChbox(frm) {
 	var nr_inpfields = inpfields.length;
 	// traverse the inpfields elements, and adds the value of selected (checked) checkbox in selchbox
 	for(var i=0; i<nr_inpfields; i++) {
-		if(inpfields[i].checked == true) selchbox.push(inpfields[i].value);
+		if(inpfields[i].checked == true) {
+			selchbox.push({
+				label: inpfields[i].getAttribute("label"),
+				value: inpfields[i].value
+			});
+		} 
 	}
 	//multiChoose = selchbox;
 	return selchbox;
@@ -69,17 +74,18 @@ class RadioGroup extends Component {
 		
 		return (
 			<div className={this.props.className} ref="main">
-				{this.props.group.map(function (value, index) {
+				{this.props.group.map(function (data, index) {
 					return(
 					<div key={index} style={{display: 'inline-block'}}>
 						<input
 							type={type}
 							id={that.props.name + 'radio' + index}
 							name={that.props.name}
-							value={value} 
+							value={data.value} 
+							label={data.label}
 							onChange={that.handleChange.bind(that,index)}
-							defaultChecked={that.props.checkedIndex-1 === index || that.props.checkedValue === value ? 'checked' : null } />
-						<label htmlFor={that.props.name + 'radio' + index}>{value}</label>
+							defaultChecked={that.props.checkedIndex-1 === index || that.props.checkedValue === data.label ? 'checked' : null } />
+						<label htmlFor={that.props.name + 'radio' + index}>{data.label}</label>
 					</div>
 					);
 				})}
@@ -90,6 +96,7 @@ class RadioGroup extends Component {
 							type={type}
 							value={this.state.customValue}
 							name={that.props.name}
+							label="自訂"
 							onChange={this.customChoose.bind(this)} />
 						<label htmlFor={that.props.name + 'custom'}>自訂</label>
 						<input

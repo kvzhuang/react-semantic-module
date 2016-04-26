@@ -15,11 +15,11 @@ class Switches extends Component {
 	}
 	render() {
 		let group = [
-			'項目1',
-			'項目2',
-			'項目3',
-			'項目4',
-			'項目5'
+			{label:'項目1',value: '111'},
+			{label:'項目2',value: '222'},
+			{label:'項目3',value: '333'},
+			{label:'項目4',value: '444'},
+			{label:'項目5',value: '555'},
 		];
 		return (
 			<div>
