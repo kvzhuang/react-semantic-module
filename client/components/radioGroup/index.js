@@ -27,10 +27,6 @@ class RadioGroup extends Component {
 			errorMessage: props.errorMessage
 		}
 	}
-	componentDidMount() {
-		this.refs.customInput.focus();
-	}
-	
 	handleChange(index,e) {
 		multiChoose = getSelectedChbox(this.refs.main);
 		if( multiChoose.length > this.props.maxChoose ) {
@@ -59,7 +55,7 @@ class RadioGroup extends Component {
 		
 	}
 	handleBlur() {
-		this.props.onSelected(getSelectedChbox(this.refs.main));
+		this.props.onSelected(getSelectedChbox(this.refs.main),this.props.group.length+1);
 	}
 	componentWillReceiveProps(nextProps) {
 		if( this.state.errorMessage !== nextProps.errorMessage ) {
