@@ -4,8 +4,11 @@ import { Link } from 'react-router';
 import CSSModules from 'react-css-modules';
 import style from './style.css';
 
-import { Button, DropdownMenu, DropdownTarget, DropdownItem } from 'c_wap_module';
+import { Button } from 'c_wap_module';
 import DropList from 'client/components/droplist';
+import DropdownMenu from 'client/components/dropdownMenu';
+import DropdownTarget from 'client/components/dropdownMenu/target';
+import DropdownItem from 'client/components/dropdownMenu/item';
 
 let listContent = [
 	{ label: '項目1', value: '111'},
@@ -16,14 +19,20 @@ class DropdownPage extends Component {
 		super();
 		this.state = {
 			dropOpen: false,
-			lightbox: false
+			lightbox: false,
+			test: '123'
 		}
 	}
 
 	onSelected(value) {
 		console.log(value);
 	}
-	 
+	test (){
+		console.log("test");
+		this.setState({
+			test: '234'
+		})
+	} 
 	render() {
 		return (
 			<div>
@@ -44,9 +53,11 @@ class DropdownPage extends Component {
 							focus={true}
 							hover={true}
 							ref="button"
+							
 						/>
+						<p>{ this.state.test }</p>
 					</DropdownTarget>
-					<DropdownItem value="關於" index={1}><div>關於112645645645643445645648978974561231354564561231234684789423123456468421231456456</div></DropdownItem>
+					<DropdownItem value="關於" index={1} onClick={this.test.bind(this)}><div>關於112645645645643445645648978974561231354564561231234684789423123456468421231456456</div></DropdownItem>
 					<DropdownItem value="編輯" index={2}>編輯</DropdownItem>
 					<DropdownItem value="其他" index={3}>其他</DropdownItem>
 					<DropdownItem value="其他" index={4}>其他</DropdownItem>

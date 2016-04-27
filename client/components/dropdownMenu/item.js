@@ -6,7 +6,10 @@ class Item extends Component{
     constructor(props) {
         super(props);
     }
-	
+	handleClick(){
+        this.context.getSelect.bind(null,this.props)
+        this.props.onClick();
+    }
     render(){
 		const children = React.Children.map(this.props.children, (child) => {
 			if( React.isValidElement(child) ) return React.cloneElement(child); 
@@ -14,7 +17,7 @@ class Item extends Component{
 			
 		})
         return(
-            <div onClick={this.context.getSelect.bind(null,this.props)} styleName="item" className={this.props.className}>
+            <div onClick={this.handleClick.bind(this)} styleName="item" className={this.props.className}>
                 {children}
             </div>
         );

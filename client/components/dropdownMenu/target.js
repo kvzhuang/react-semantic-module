@@ -11,10 +11,12 @@ class Target extends Component{
 	}
 	
     render(){
+		//console.log(this.props.children);
 		const children = React.Children.map(this.props.children, (child) => {
 			if( React.isValidElement(child) ) return React.cloneElement(child); 
 			else return (<div>{child}</div>);	
 		})
+		
         return(
             <div onClick={this.context.toggleOpen} styleName="target" className={this.props.className}>  
 				{children} 

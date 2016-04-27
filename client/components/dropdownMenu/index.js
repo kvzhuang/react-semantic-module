@@ -98,6 +98,25 @@ class DropdownMenu extends Component{
 		}	
 	}
 	
+	componentWillReceiveProps(nextProps) {
+		let that = this;
+		if( this.props.children !== nextProps.children ) {
+			that.list = [];
+			React.Children.map(nextProps.children, function(child,index){
+				if( child.type === Target ) {
+					that.target = React.cloneElement(child);
+				}else {
+					that.list.push(React.cloneElement(child));
+				}
+			});
+		}
+		
+	}
+	
+	componentWillUpdate(nextProps, nextState) {
+		
+	}
+	
 	componentWillUnmount(){
 		this.ListNode = null;
 		this.ArrowNode = null;
@@ -107,7 +126,7 @@ class DropdownMenu extends Component{
 	}
 	
     render(){
-		
+		//console.log(this.target);
         return(
             <div className={this.props.className} styleName="root"> 
 				{this.target}
