@@ -27,7 +27,7 @@ class RadioGroup extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			customValue: '',
+			customValue: props.customValue,
 			customDisable: true,
 			errorMessage: props.errorMessage
 		}
@@ -63,8 +63,11 @@ class RadioGroup extends Component {
 		this.props.onSelected(getSelectedChbox(this.refs.main),this.props.group.length+1);
 	}
 	componentWillReceiveProps(nextProps) {
-		if( this.state.errorMessage !== nextProps.errorMessage ) {
+		if( this.state.errorMessage !== this.props.errorMessage || this.props.errorMessage !== nextProps.errorMessage ) {
 			this.setState({ errorMessage: nextProps.errorMessage });
+		}
+		if( this.state.customValue !== this.props.customValue || this.props.customValue !== nextProps.customValue ) {
+			this.setState({ customValue: nextProps.customValue });
 		}
 	} 
 	

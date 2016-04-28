@@ -9,9 +9,17 @@ import RadioGroup from 'client/components/radioGroup';
 class Switches extends Component {
 	constructor(){
 		super();
+		this.state = {
+			customValue: '123'
+		}
 	}
 	radioSelect(value,index) {
 		console.log(value, index);
+	}
+	test(){
+		this.setState({
+			customValue: '234'
+		})
 	}
 	render() {
 		let group = [
@@ -30,13 +38,15 @@ class Switches extends Component {
 				<div className="content">
 					<p>單選且可指定預設選項，custom = true的時候產生自訂欄位，選擇之後會自動focus在input區塊</p>
 				</div>
+				<button onClick={this.test.bind(this)}>123</button>
 				<RadioGroup
 					group={group}
 					name="radio"
 					checkedIndex={2}
 					onSelected={this.radioSelect.bind(this)}
 					custom={true}
-					styleName="radioGroup">
+					styleName="radioGroup"
+					customValue={this.state.customValue}>
 				</RadioGroup>
 				<div className="content">
 				<p>表單送出沒有選擇的時候</p>
@@ -60,7 +70,8 @@ class Switches extends Component {
 					custom={true}
 					styleName="radioGroup"
 					checkBox={true}
-					maxChoose={3}>
+					maxChoose={3}
+					customValue={this.state.customValue}>
 				</RadioGroup>
 			</div>
 		);

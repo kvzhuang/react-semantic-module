@@ -58,6 +58,7 @@ class DropdownMenu extends Component{
 	}
 	
 	updateSelected(props) {
+		this.toggleOpen();
 		this.props.onSelected(props);
 	}
 	

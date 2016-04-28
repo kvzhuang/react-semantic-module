@@ -7,8 +7,8 @@ class Item extends Component{
         super(props);
     }
 	handleClick(){
-        this.context.getSelect.bind(null,this.props)
-        this.props.onClick();
+        this.context.getSelect(this.props);
+        if( typeof(this.props.onClick) === 'function' )this.props.onClick();
     }
     render(){
 		const children = React.Children.map(this.props.children, (child) => {
@@ -25,7 +25,8 @@ class Item extends Component{
 }
 Item.propTypes = {
 	index: React.PropTypes.number,
-	value: React.PropTypes.string
+	value: React.PropTypes.string,
+    onClick: React.PropTypes.function
 }
 Item.contextTypes = {
 	getSelect: React.PropTypes.func

@@ -13,12 +13,6 @@ class DropdownList extends Component{
 		}
 		this.toggleOpen = this.toggleOpen.bind(this);
     }
-	getChildContext() {
-		return { 
-			toggleOpen: this.toggleOpen,
-			getSelect: this.updateSelected
-		};
-	}
 	
 	toggleOpen() {
 		this.setState({
@@ -53,11 +47,6 @@ class DropdownList extends Component{
             </div>
         );
     }
-}
-
-DropdownList.childContextTypes = {
-	toggleOpen: React.PropTypes.func,
-	getSelect: React.PropTypes.func
 }
 
 export default CSSModules(DropdownList,style,{allowMultiple:true});
