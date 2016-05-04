@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import CSSModules from 'react-css-modules';
 import style from './style.css';
 
-import { Button } from 'c_wap_module';
+import Button from 'client/components/button';
 import DropList from 'client/components/droplist';
 import DropdownMenu from 'client/components/dropdownMenu';
 import DropdownTarget from 'client/components/dropdownMenu/target';

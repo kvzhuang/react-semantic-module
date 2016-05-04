@@ -76,7 +76,7 @@ class RadioGroup extends Component {
 		let type = this.props.checkBox ? 'checkbox' : 'radio'; 
 		
 		return (
-			<div className={this.props.className} ref="main">
+			<div className={this.props.className} ref="main" styleName="radioGroup">
 				{this.props.group.map(function (data, index) {
 					return(
 					<div key={index} style={{display: 'inline-block'}}>

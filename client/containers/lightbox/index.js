@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import CSSModules from 'react-css-modules';
 import style from './style.css';
 
-import { Button } from 'c_wap_module';
+import Button from 'client/components/button';
 import LightBox from 'client/components/lightbox';
 
 class LightboxPage extends Component {

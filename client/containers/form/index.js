@@ -4,10 +4,8 @@ import { Link } from 'react-router';
 import CSSModules from 'react-css-modules';
 import style from './style.css';
 
-//import Validators from '../../util/validator';
-
-import { TextField,Validators } from 'c_wap_module';
-//import TextField from 'client/components/textfeild';
+import Validators from 'client/utils/validator';
+import TextField from 'client/components/textfeild';
 
 console.log(TextField);
 var config = {
