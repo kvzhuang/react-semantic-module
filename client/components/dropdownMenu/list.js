@@ -8,14 +8,18 @@ let position = {};
 
 class List extends Component{
 	componentDidMount() {
-		this.props.getListDom(this.refs.listContainer, this.refs.listArrow, this.refs.dropDownInnerList.offsetHeight +15);
+		this.context.getListDom(this.refs.listContainer, this.refs.listArrow, this.refs.dropDownInnerList.offsetHeight +15);
 	}
-	
+	clickList(){
+		let that = this;
+		setTimeout(function () {
+			that.context.toggleOpen();
+		},200);
+	}
     render(){
-		let tt =   this.props.targetStyle;
 		let arrowPosition = this.props.midPosition + 12;
-		let show = this.props.open ? 'visible' : 'hidden';
-		let dropStyle = this.props.open ? 
+		let show = this.context.open ? 'visible' : 'hidden';
+		let dropStyle = this.context.open ? 
 						{
 							visibility: 'visible',
 							height: this.refs.dropDownInnerList.offsetHeight +30,
@@ -28,14 +32,14 @@ class List extends Component{
         return(
             <div style={{ visibility: show, position: 'relative'}}>
                 <Overlay 
-                        onRequestClose={this.props.clickAway}>
+                        onRequestClose={this.context.toggleOpen}>
                 </Overlay>
-				<div styleName="container" ref="listContainer" style={dropStyle}>
+				<div styleName="container" ref="listContainer" style={dropStyle} onClick={this.clickList.bind(this)}>
 					
 					<div ref="dropDownInnerList" 
 						styleName={listStyle}>
 						<div styleName="arrow" ref="listArrow"></div>
-						{ this.props.content } 
+						{ this.props.children } 
 					</div>
 				</div> 
             </div>
@@ -44,5 +48,10 @@ class List extends Component{
 }
 List.defaultProps = {
 	width: 100
+}
+List.contextTypes = {
+	open: React.PropTypes.bool,
+	toggleOpen: React.PropTypes.func,
+	getListDom: React.PropTypes.func
 }
 export default CSSModules(List,style,{allowMultiple:true});

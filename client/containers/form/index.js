@@ -7,7 +7,6 @@ import style from './style.css';
 import Validators from 'client/utils/validator';
 import TextField from 'client/components/textfeild';
 
-console.log(TextField);
 var config = {
 			'data': {
 				'username' : [ 'notEmpty', {maxLength: 10}, 'isName'],
@@ -30,7 +29,6 @@ class Form extends Component {
 				username:"",
 				job:"",
 				editor:"野豬騎士來囉野",
-				
 			},
 			ACData: []		
 		}

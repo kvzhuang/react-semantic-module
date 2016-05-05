@@ -8,7 +8,7 @@ import Button from 'client/components/button';
 import DropList from 'client/components/droplist';
 import DropdownMenu from 'client/components/dropdownMenu';
 import DropdownTarget from 'client/components/dropdownMenu/target';
-import DropdownItem from 'client/components/dropdownMenu/item';
+import DropdownList from 'client/components/dropdownMenu/list';
 
 let listContent = [
 	{ label: '項目1', value: '111'},
@@ -20,19 +20,49 @@ class DropdownPage extends Component {
 		this.state = {
 			dropOpen: false,
 			lightbox: false,
-			test: '123'
+			test: '123',
+			ui:{
+				public:{
+					targetStyle: null,
+					targetIcon: 'fa-globe'
+				},
+				editor: {
+					targetStyle: null,
+					targetIcon: 'fa-pencil'
+				},
+				viewpoint: {
+					targetStyle: null,
+					defaultSelect: 1,
+				}
+			}
+			
 		}
 	}
 
-	onSelected(value) {
-		console.log(value);
+	onSelected(index,value,key,icon) {
+		console.log(index,value);
+		if( typeof(icon) === 'string' ){
+			this.state.ui[key].targetIcon = icon;
+			this.setState({
+				ui: this.state.ui
+			})
+		}
+		if( key === 'viewpoint') {
+			this.state.ui.viewpoint.defaultSelect = index;
+			this.setState({
+				ui: this.state.ui
+			})
+		}
+		
 	}
-	test (){
-		console.log("test");
-		this.setState({
-			test: '234'
-		})
-	} 
+	toggleOpen(key,open) {
+		if( key === 'public' || key === 'editor') {
+			this.state.ui[key].targetStyle = open? {color:'rgb(38,151,185)'} : null;
+			this.setState({
+				ui: this.state.ui
+			})
+		}
+	}
 	render() {
 		return (
 			<div>
@@ -45,46 +75,92 @@ class DropdownPage extends Component {
 					<p>DropdownMenu定義為點擊圖示後的下拉式選單</p>
 					<p>帶有transition特效</p>
 				</div>
-				<DropdownMenu
-					onSelected={this.onSelected.bind(this)}
-					styleName="listStyle">
-					<DropdownTarget>
-						<Button label="show"
-							focus={true}
-							hover={true}
-							ref="button"
-							
-						/>
-						<p>{ this.state.test }</p>
-					</DropdownTarget>
-					<DropdownItem value="關於" index={1} onClick={this.test.bind(this)}><div>關於112645645645643445645648978974561231354564561231234684789423123456468421231456456</div></DropdownItem>
-					<DropdownItem value="編輯" index={2}>編輯</DropdownItem>
-					<DropdownItem value="其他" index={3}>其他</DropdownItem>
-					<DropdownItem value="其他" index={4}>其他</DropdownItem>
-					<DropdownItem value="其他" index={5}>其他</DropdownItem>
-					<DropdownItem value="其他" index={6}>其他</DropdownItem>
-					<DropdownItem value="其他" index={7}>其他</DropdownItem>
-					<DropdownItem value="其他" index={8}>其他</DropdownItem>
-				</DropdownMenu>
-				<DropdownMenu
-					onSelected={this.onSelected.bind(this)}
-					styleName="listStyle">
-					<DropdownTarget>
-						<Button label="show"
-							focus={true}
-							hover={true}
-							ref="button"
-						/>
-					</DropdownTarget>
-					<DropdownItem value="關於" index={1}><div>關於112645645645643445645648978974561231354564561231234684789423123456468421231456456</div></DropdownItem>
-					<DropdownItem value="編輯" index={2}>編輯</DropdownItem>
-					<DropdownItem value="其他" index={3}>其他</DropdownItem>
-					<DropdownItem value="其他" index={4}>其他</DropdownItem>
-					<DropdownItem value="其他" index={5}>其他</DropdownItem>
-					<DropdownItem value="其他" index={6}>其他</DropdownItem>
-					<DropdownItem value="其他" index={7}>其他</DropdownItem>
-					<DropdownItem value="其他" index={8}>其他</DropdownItem>
-				</DropdownMenu>
+				<table>
+					<tbody>
+						<tr>
+							<td>
+								<div>公開設定 &nbsp;&nbsp;
+									<DropdownMenu
+										toggleOpen={this.toggleOpen.bind(this,'public')}>
+										<DropdownTarget>
+											<i className={"fa "+this.state.ui.public.targetIcon} aria-hidden="true" style={this.state.ui.public.targetStyle}></i>
+										</DropdownTarget>
+										<DropdownList>
+											<ul styleName="list" >
+												<li onClick={this.onSelected.bind(this,1,'公開','public','fa-globe')}>
+													<i className="fa fa-globe" aria-hidden="true" ></i>
+													公開
+												</li>
+												<li  onClick={this.onSelected.bind(this,2,'只限本人','public','fa-lock')}>
+													<i className="fa fa-lock" aria-hidden="true"></i>
+													只限本人
+												</li>
+											</ul>
+										</DropdownList>
+									</DropdownMenu>
+								</div>
+							</td>
+							<td>
+								<div>編輯&nbsp;&nbsp;
+									<DropdownMenu
+										toggleOpen={this.toggleOpen.bind(this,'editor')}>
+										<DropdownTarget>
+											<i className={"fa "+this.state.ui.editor.targetIcon} aria-hidden="true" style={this.state.ui.editor.targetStyle}></i>
+										</DropdownTarget>
+										<DropdownList>
+											<ul styleName="list editor" >
+												<li onClick={this.onSelected.bind(this,1,'編輯','editor')}>
+													編輯
+												</li>
+												<li  onClick={this.onSelected.bind(this,2,'刪除','editor')}>
+													刪除
+												</li>
+												<li  onClick={this.onSelected.bind(this,2,'刪除特定對象','editor')}>
+													刪除特定對象
+												</li>
+											</ul>
+										</DropdownList>
+									</DropdownMenu>
+								</div>
+							</td>
+							<td>
+								<DropdownMenu
+									toggleOpen={this.toggleOpen.bind(this,'viewpoint')}>
+									<DropdownTarget>
+										<button styleName="viewButton">檢視角度</button>
+									</DropdownTarget>
+									<DropdownList>
+										<ul styleName="list viewpoint" >
+											<li onClick={this.onSelected.bind(this,1,'公開','viewpoint')}>
+												{ this.state.ui.viewpoint.defaultSelect === 1 && <i className="fa fa-check" aria-hidden="true" styleName="check"/> }
+												公開
+											</li>
+											<li  onClick={this.onSelected.bind(this,2,'朋友','viewpoint')}>
+												{ this.state.ui.viewpoint.defaultSelect === 2 && <i className="fa fa-check" aria-hidden="true" styleName="check"/> }
+												朋友
+											</li>
+										</ul>
+									</DropdownList>
+								</DropdownMenu>
+							</td>
+							<td>
+								<DropdownMenu
+									toggleOpen={this.toggleOpen.bind(this,'viewpoint')}>
+									<DropdownTarget>
+										<i className="fa fa-trash" aria-hidden="true" style={this.state.ui.editor.targetStyle}></i>
+									</DropdownTarget>
+									<DropdownList>
+										<div styleName="content">
+											<p>是否要刪除此筆讚美</p>
+											<button styleName="viewButton sure">確定</button>
+											<button styleName="viewButton cancel">取消</button>
+										</div>
+									</DropdownList>
+								</DropdownMenu>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 				<h3>Drop List</h3>
 				<div className="content">
 					<p>Drop List為基本的類目選單，列表的內容為傳入的array動態產生</p>

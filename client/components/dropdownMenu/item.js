@@ -11,6 +11,7 @@ class Item extends Component{
         if( typeof(this.props.onClick) === 'function' )this.props.onClick();
     }
     render(){
+        
 		const children = React.Children.map(this.props.children, (child) => {
 			if( React.isValidElement(child) ) return React.cloneElement(child); 
 			else return (<div>{child}</div>);

@@ -1,3 +1,6 @@
 .error {
 	color: #e12f1c;
 }
+.radioGroup input[type=radio] {
+	display: none;
+}

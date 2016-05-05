@@ -4,7 +4,6 @@ import Button from './button';
 import DropdownMenu from './dropdownMenu';
 import DropdownTarget from './dropdownMenu/target.js';
 import DropdownList from './dropdownMenu/list.js';
-import DropdownItem from './dropdownMenu/item.js';
 
 import DropList from './dropList';
 
@@ -19,7 +18,6 @@ export {
 	DropdownMenu,
 	DropdownTarget,
 	DropdownList,
-	DropdownItem, 
 	DropList, 
 	RadioGroup, 
 	TextField, 

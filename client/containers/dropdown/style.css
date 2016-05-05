@@ -5,3 +5,60 @@
 .targetStyle {
 	
 }
+.list {
+    text-align: left;
+}
+.list i {
+    margin: 0 10px;
+}
+.list li {
+    cursor: pointer;
+    width: 130px;
+}
+.list li:hover {
+    background: #d8f3fd;
+    color: rgb(38,151,185);
+}
+.list.editor li {
+    padding-left: 10px;
+}
+.viewButton {
+    width: 100px;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    color: #fff;
+    background: rgb(38,151,185);
+    border: 0;
+    outline: 0;
+    padding: 0;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.viewpoint li {
+    text-align: center;
+    position: relative;
+}
+.check {
+    position: absolute;
+    left: 10px;
+    top: 5px;
+}
+.viewButton.cancel {
+    background: #fff;
+    border: 1px solid #ddd;
+    color: #333;
+    width: 50px;
+    margin: 0 10px;
+}
+.viewButton.sure {
+    width: 50px;
+    margin: 0 10px;
+}
+.content {
+    margin:0 20px 20px 20px;
+    width:150px;
+}
+.content p {
+    margin: 10px 0;
+}
