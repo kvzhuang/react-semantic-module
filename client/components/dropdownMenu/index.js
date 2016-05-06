@@ -13,7 +13,6 @@ class DropdownMenu extends Component{
 			open: false
 		}
 		this.toggleOpen = this.toggleOpen.bind(this);
-		this.updateSelected = this.updateSelected.bind(this);
 		this.getChildDOM = this.getChildDOM.bind(this);
 		this.getListDom = this.getListDom.bind(this);
 		
@@ -55,15 +54,10 @@ class DropdownMenu extends Component{
 		if ( !this.state.open ) {
 			this.testPostiion();
 		}
-		this.props.toggleOpen(!this.state.open);
+		if (this.props.toggleOpen) this.props.toggleOpen(!this.state.open);
 		this.setState({
 			open: !this.state.open
 		})
-	}
-	
-	updateSelected(props) {
-		this.toggleOpen();
-		this.props.onSelected(props);
 	}
 	
 	testPostiion(){
