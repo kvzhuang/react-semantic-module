@@ -38,9 +38,5 @@ input:focus, textarea:focus{
 .AClist li{
 	padding-left: 10px;
 	list-style: none;
-	border-bottom: 1px solid #aaa;
 	cursor: pointer;
-}
-.AClist li:hover {
-	background: #eee;
 }

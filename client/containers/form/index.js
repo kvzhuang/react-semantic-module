@@ -113,6 +113,62 @@ class Form extends Component {
 	onSelected(value,index) {
 		console.log(value,index);
 	}
+	onRequestOpenAC(){
+		this.setState({
+				ACData: [
+					{
+						id: 1,
+						value: 'aa',
+						info: ''
+					},
+					{
+						id: 2,
+						value: 'aaa',
+						info: ''
+					},
+					{
+						id: 3,
+						value: 'aaaa',
+						info: ''
+					},
+					{
+						id: 4,
+						value: 'aabbc',
+						info: ''
+					},
+					{
+						id: 5,
+						value: 'aasdas',
+						info: ''
+					},
+					{
+						id: 6,
+						value: 'aasdda',
+						info: ''
+					},
+					{
+						id: 7,
+						value: 'aaaaaaaaa',
+						info: ''
+					},
+					{
+						id: 8,
+						value: 'aaddssaasd',
+						info: ''
+					},
+					{
+						id: 9,
+						value: 'aaasdddas',
+						info: ''
+					},
+					{
+						id: 10,
+						value: 'dsaddddaa',
+						info: ''
+					},
+				]			
+			})
+	}
 	render() {
 		let group = [
 			'項目1',
@@ -162,7 +218,8 @@ class Form extends Component {
 					styleName="input1"
 					maxWords={10}
 					ACData={this.state.ACData}
-					onSelected={this.onSelected.bind(this)}>
+					onSelected={this.onSelected.bind(this)}
+					onRequestOpenAC={this.onRequestOpenAC.bind(this)}>
 				</TextField>
 			</div>
 		);

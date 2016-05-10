@@ -5,16 +5,74 @@ import ReactDOM from 'react-dom';
 
 let ACStyle = {};
 
+
+
 class TextFeild extends Component {
 	constructor(props){
 		super(props); 
 		this.state = {
 			data: this.props.value,
 			errorMessage: this.props.errorMessage,
-			ACData: this.props.ACData
+			ACData: this.props.ACData,
+			highlightedIndex: null
 		}
 		this._onChange = this._onChange.bind(this);
 		this._onBlur = this._onBlur.bind(this);
+		this.keyDownHandlers = {
+			ArrowDown(event) {
+				event.preventDefault()
+				if(this.state.ACData.length === 0) {
+					if(this.props.onRequestOpenAC) this.props.onRequestOpenAC();
+					this.setState({
+						highlightedIndex: 0
+					})
+				}else {
+					let { highlightedIndex } = this.state
+					let index = (
+						highlightedIndex === null ||
+						highlightedIndex === this.state.ACData.length - 1
+					) ? 0 : highlightedIndex + 1
+					this._performAutoCompleteOnKeyUp = true
+					this.setState({
+						highlightedIndex: index,
+					})
+				}
+				
+			},
+			ArrowUp(event) {
+				event.preventDefault()
+				let { highlightedIndex } = this.state
+				let index = (
+					highlightedIndex === 0 ||
+					highlightedIndex === null
+				) ? this.state.ACData.length - 1 : highlightedIndex - 1
+				this._performAutoCompleteOnKeyUp = true
+				this.setState({
+					highlightedIndex: index,
+				})
+			},
+			
+			Enter(event) {
+				if (this.state.ACData.length === 0) {
+					// menu is closed so there is no selection to accept -> do nothing
+					return
+				}
+				else if (this.state.highlightedIndex == null) {
+					// input has focus but no menu item is selected + enter is hit -> close the menu, highlight whatever's in input
+				}
+				else {
+					// text entered + menu item has been highlighted + enter is hit -> update value to that of selected menu item, close the menu
+					this.select(this.state.ACData[this.state.highlightedIndex].value, this.state.highlightedIndex);
+				}
+			},
+
+			Escape(event) {
+				this.setState({
+					highlightedIndex: null,
+					ACData: []
+				})
+			}
+		}
 	}
 	componentDidMount() {
 		if( this.props.allowMultiLine ){
@@ -43,6 +101,7 @@ class TextFeild extends Component {
 				})
 			}
 		}
+		if( this.state.highlightedIndex !== null ) this.setState({ highlightedIndex: null}); 
 		let that = this;
 		setTimeout(function(){
 			that.props.onBlur(that.props.name, that.state.data);
@@ -71,6 +130,17 @@ class TextFeild extends Component {
 		
 	}
 	
+	handleKeyDown (event) {
+		if (this.keyDownHandlers[event.key] && this.props.ACData){
+			this.keyDownHandlers[event.key].call(this, event)
+		}
+	}
+	
+	ACMouseOver(index) {
+		this.setState({
+			highlightedIndex:index
+		})
+	}
 	
 	select(value,index) {
 		this.setState({
@@ -110,7 +180,7 @@ class TextFeild extends Component {
 						<textarea {...option} 
 							ref="textarea"/>
 						:
-						<input {...option} />      
+						<input {...option} onKeyDown={this.handleKeyDown.bind(this)}/>      
 					}
 					{ this.props.maxWords && <span styleName="maxWord">{this.state.data.length}/{this.props.maxWords}</span>}
 					<div styleName="errorMessage">{ this.state.errorMessage }</div>
@@ -118,8 +188,9 @@ class TextFeild extends Component {
 				{ this.state.ACData && this.state.ACData.length > 0  && 
 					<div style={ACStyle} styleName="AClist">
 						{ this.state.ACData.map(function(item,index){
+							let style = index === this.state.highlightedIndex ? { background: '#def6ff' }: null; 
 							return (
-								<li key={index} onClick={this.select.bind(this, item.value, index)}>{item.value}</li>
+								<li key={index} onClick={this.select.bind(this, item.value, index)} onMouseOver={this.ACMouseOver.bind(this,index)} style={style}>{item.value}</li>
 							);
 						},this) }
 					</div>	
@@ -130,7 +201,8 @@ class TextFeild extends Component {
 }
 TextFeild.defaultProps = {
 	errorMessage: '',
-	data: ''
+	data: '',
+	onRequestOpenAC: {}
 }
 
 export default CSSModules(TextFeild,style,{allowMultiple:true});
