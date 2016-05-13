@@ -7,6 +7,9 @@ import style from './style.css';
 import Button from 'client/components/button';
 import LightBox from 'client/components/lightbox';
 
+
+import html from 'doc/lightbox.md';
+
 class LightboxPage extends Component {
 	constructor(){
 		super();
@@ -74,32 +77,46 @@ class LightboxPage extends Component {
         }
 		return (
 			<div>
-				<h2>LightBox</h2>
-				<div className="content">
-					<p>LightBox情境主要分成三種（無title/ 有title/ 無button）</p>
-					<p>預設close機制為按"取消"按扭、close icon、點擊lightbox以外的地方，點擊確定會有提供事件給使用者決定動作</p>
-				</div>
-				<h3>無TITLE</h3>
-				<Button label="show"
-						focus={true}
-						hover={true}
-						ref="button"
-						onClick={this.toggleLightbox.bind(this,1)}
-				/>
-				<h3>有TITLE跟button</h3>
-                <Button label="show"
-						focus={true}
-						hover={true}
-						ref="button"
-						onClick={this.toggleLightbox.bind(this,2)}
-				/>
-				<h3>有TITLE無button</h3>
-                 <Button label="show"
-						focus={true}
-						hover={true}
-						ref="button"
-						onClick={this.toggleLightbox.bind(this,3)}
-				/>
+				<h3>LightBox</h3>
+				<table>
+					<tbody>
+						<tr>
+							<td>無TITLE
+							</td>
+							<td>有TITLE跟button
+							</td>
+							<td>有TITLE無button
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<Button label="show"
+										focus={true}
+										hover={true}
+										ref="button"
+										onClick={this.toggleLightbox.bind(this,1)}
+								/>
+							</td>
+							<td>
+								<Button label="show"
+										focus={true}
+										hover={true}
+										ref="button"
+										onClick={this.toggleLightbox.bind(this,2)}
+								/>
+							</td>
+							<td>
+								<Button label="show"
+										focus={true}
+										hover={true}
+										ref="button"
+										onClick={this.toggleLightbox.bind(this,3)}
+								/>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+                
                 { this.state.lightbox && 
 				<LightBox 
 						  option={option}
@@ -119,8 +136,13 @@ class LightboxPage extends Component {
                     <p>移除照片後，會顯示系統預設的照片</p>
 				</LightBox>
                 }
+				<div className="content" dangerouslySetInnerHTML={{__html: html}}>
+					
+				</div>
 			</div>
+			
 		);
+		
 	}
 }
 

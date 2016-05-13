@@ -42,6 +42,6 @@ export function disableDocScroll() {
 
 export function enableDocScroll() {
 	if( document.body ) {
-		document.body.style.overflow = "scroll";
+		document.body.style.overflow = "auto";
 	}
 }

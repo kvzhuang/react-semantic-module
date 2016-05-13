@@ -8,6 +8,7 @@ import userDetail from 'client/containers/userDetail';
 
 import LightboxPage from 'client/containers/lightbox';
 import DropdwonPage from 'client/containers/dropdown';
+import DropListPage from 'client/containers/dropList';
 import Form from 'client/containers/form';
 import Switches from 'client/containers/switches';
 
@@ -18,6 +19,7 @@ export default function(history) {
 				<IndexRoute component={Demo} />
 				<Route path="/user/list" component={UserList} />
 				<Route path="/dropdown" component={DropdwonPage} />
+				<Route path="/droplist" component={DropListPage} />
                 <Route path="/lightbox" component={LightboxPage} />
 				<Route path="/form" component={Form} />
 				<Route path="/switches" component={Switches} />

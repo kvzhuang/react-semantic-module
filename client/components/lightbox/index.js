@@ -47,6 +47,5 @@ class Lightbox extends Component{
             </div>
         );
     }
-}
-
+} 
 export default CSSModules(Lightbox,style,{allowMultiple:true});

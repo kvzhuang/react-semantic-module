@@ -5,15 +5,12 @@ import CSSModules from 'react-css-modules';
 import style from './style.css';
 
 import Button from 'client/components/button';
-import DropList from 'client/components/droplist';
 import DropdownMenu from 'client/components/dropdownMenu';
 import DropdownTarget from 'client/components/dropdownMenu/target';
 import DropdownList from 'client/components/dropdownMenu/list';
 
-let listContent = [
-	{ label: '項目1', value: '111'},
-	{ label: '項目2', value: '222'}
-]
+import html from 'doc/dropdownMenu.md';
+
 class DropdownPage extends Component {
 	constructor(){
 		super();
@@ -38,7 +35,7 @@ class DropdownPage extends Component {
 			
 		}
 	}
-
+	
 	onSelected(index,value,key,icon) {
 		console.log(index,value);
 		if( typeof(icon) === 'string' ){
@@ -66,17 +63,12 @@ class DropdownPage extends Component {
 	render() {
 		return (
 			<div>
-				<h2>DropDown</h2>
-				<div className="content">
-					<p>Dropdown系列一致在onSelect的時候讓使用者取得選擇的值，再由使用者自己決定要作什麼樣的處理</p>
-				</div>
 				<h3>DropDown Menu</h3>
-				<div className="content">
-					<p>DropdownMenu定義為點擊圖示後的下拉式選單</p>
-					<p>帶有transition特效</p>
-				</div>
-				<table>
+				<table style={{'tableLayout':'fixed'}}>
 					<tbody>
+						<tr className="tbheader">
+							<td>選擇可更換ICON</td><td>一般選單</td><td>選擇後觸發勾選</td><td>diolag型態</td>
+						</tr>
 						<tr>
 							<td>
 								<div>公開設定 &nbsp;&nbsp;
@@ -161,15 +153,9 @@ class DropdownPage extends Component {
 						</tr>
 					</tbody>
 				</table>
-				<h3>Drop List</h3>
-				<div className="content">
-					<p>Drop List為基本的類目選單，列表的內容為傳入的array動態產生</p>
+				<div className="content" dangerouslySetInnerHTML={{__html: html}}>
+					
 				</div>
-				<DropList 
-					listContent={listContent}
-					onSelected={this.onSelected.bind(this)}>
-				</DropList>
-				
 			</div>
 		);
 	}

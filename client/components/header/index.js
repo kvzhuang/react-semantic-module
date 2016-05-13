@@ -8,19 +8,11 @@ class Header extends Component {
 	render() {
 		return (
 			<header styleName="header">
+				<img src="https://tleunen.github.io/react-mdl/react.svg" styleName="react"/>
 				<h1>
-					<a href="/">BIG-C UI Pattern</a>
+					<a href="/">BIG-C UI Module</a>
 				</h1>
-				<ul styleName="rightNav">
-					<li>
-						<a href="/">首頁</a>
-					</li>
-					<li styleName="head">
-						<Link to="/user/100080">
-							<img src="//static.e104.com.tw/aidma/material/104/432/11_58.gif" />
-						</Link>
-					</li>
-				</ul>
+				
 			</header>
 		);
 	}

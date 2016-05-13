@@ -7,6 +7,7 @@ class Navigation extends Component {
 		return (
 			<nav className="navigation">
 				<Link className="navigation-link" to="/dropdown">DropDown</Link>
+				<Link className="navigation-link" to="/droplist">DropList</Link>
                 <Link className="navigation-link" to="/lightbox">Lightbox</Link>
 				<Link className="navigation-link" to="/form">Form</Link>
 				<Link className="navigation-link" to="/switches">Switches</Link>

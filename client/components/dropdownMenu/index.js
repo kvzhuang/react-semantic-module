@@ -93,6 +93,7 @@ class DropdownMenu extends Component{
 			this.ArrowNode = Arrow;
 			this.TrueHeight = trueHeight;
 			this.InitialProp = this.ListNode.getBoundingClientRect();
+			this.testPostiion();
 		}	
 	}
 	

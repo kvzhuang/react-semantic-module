@@ -9,37 +9,61 @@ class DropdownList extends Component{
         super(props);
 		this.state = {
 			open: false,
-			choosen: this.props.defaultValue || '選單項目'
+			selected: this.props.defaultIndex || null
 		}
 		this.toggleOpen = this.toggleOpen.bind(this);
     }
 	
 	toggleOpen() {
-		this.setState({
-			open: !this.state.open
-		})
+		if( !this.props.disabled ) {
+			this.setState({
+				open: !this.state.open
+			})
+		}
+		
 	}
 	
-	onSelect(data) {
+	onSelect(data, index) {
 		this.setState({
 			open: false,
-			choosen: data.label
-		}) 
+			selected: index+1
+		})
+		data.index = index+1; 
 		this.props.onSelected(data);
 	}
 	
     render(){
 		let that = this;
+		let status = '';
+		if( this.props.disabled ) status = 'disabled';
+		else if ( this.state.selected || this.state.open ) status='active';
+		
         return(
-            <div> 
-				<input type="button" styleName="listInput" value={this.state.choosen} onClick={this.toggleOpen.bind(this)} />
+            <div styleName="droplist"> 
+				<div styleName={'listInput '+status} onClick={this.toggleOpen.bind(this)} className={this.props.className}>
+					{
+						(() => {
+							if( this.state.selected ) {
+								let defaultSelect = this.props.listContent[this.state.selected-1];
+								if(defaultSelect.iconFont) return <div><i className={"fa " + defaultSelect.iconFont } aria-hidden="true"/>{defaultSelect.label}</div>
+								else return defaultSelect.label;	 
+							}else {
+								return '請選擇' ; 
+							} 
+						})()
+					}
+					<i className="fa fa-caret-down" aria-hidden="true" styleName="caret-down"/> 
+				</div>
 				{this.state.open && 
 				<List type={this.state.posType}
 				      open={this.state.open} 
                       clickAway={this.toggleOpen} > 
 					  { this.props.listContent.map(function (data, index) {
 						  return (
-							  <li key={index} onClick={that.onSelect.bind(that, data)}>{data.label}</li>
+							  <li key={index} onClick={that.onSelect.bind(that, data, index)}>
+								  { typeof(data.iconFont) !== 'undefined' && <i className={"fa " + data.iconFont } aria-hidden="true"  /> }								  	
+								  {data.label}
+							  </li>
 							);
 					  })}  
                 </List>

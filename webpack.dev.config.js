@@ -1,10 +1,15 @@
 var hook = require('css-modules-require-hook');
+var hljs = require('highlight.js'); 
 
 module.exports = function checkMode(app){
 	
 	hook({
 		generateScopedName: '[name]__[local]___[hash:base64:5]',
 	});
+	
+	require('asset-require-hook')({
+		extensions: ['md']
+		})
 	
 	if(app){
 		var path = require('path');
@@ -64,8 +69,22 @@ module.exports = function checkMode(app){
 					loader: "style-loader!css-loader?modules&localIdentName=[name]__[local]___[hash:base64:5]",
 					include: __dirname
 				},
-				
+				{ test: /\.md$/, loader: "html!markdownattrs?config=markdownattrsLoaderCustomConfig" },
 				]
+			},
+			markdownattrsLoaderCustomConfig: {
+				html: true,
+				highlight: function (str, lang) {
+					if (lang && hljs.getLanguage(lang)) {
+					try {
+						return '<pre class="hljs"><code>' +
+							hljs.highlight(lang, str, true).value +
+							'</code></pre>';
+					} catch (__) {}
+					}
+
+					return '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>';
+				}
 			}
 		};
 		var compiler = webpack(config);

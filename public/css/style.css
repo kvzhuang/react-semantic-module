@@ -69,15 +69,18 @@
  * navigation
  */
 .navigation {
-	border-top: 1px solid #FFF;
-	border-bottom: 1px solid #FFF;
-	background: #666; 
+	width: 960px;
+	margin: 0 auto;
+	border: 1px solid #ccc;
+	background: #FFF; 
+	border-radius: 5px;
+	margin-top: 10px;
 }
 .navigation .navigation-link {
 	display: inline-block;
 	padding: 5px 10px;
-	border-right: 1px solid #FFF;
-	color: #FFF;
+	border-right: 1px solid #ccc;
+	color: #666;
 }
 .navigation .navigation-link:hover {
 	background: #CCC; 
@@ -105,8 +108,11 @@
 }
 
 .content {
-	background: #eee;
-	color: #333;
-	padding: 10px;
+	padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+	border-left-color: #1b809e;
 }
 

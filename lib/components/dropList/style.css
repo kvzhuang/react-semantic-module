@@ -2,8 +2,7 @@
     position: absolute;
     padding-top: 5px;
     background: #fff;
-	border: 1px solid #2881d4;
-    box-shadow: 0 0 6px #666; 
+	border: 1px solid #999;
     animation-duration: 0.3s;
     animation-name: rcDropdownSlideUpIn;
     animation-play-state: running;
@@ -12,18 +11,40 @@
 	width: 150px;
 }
 .listInput {
+	position: relative;
 	cursor: pointer;
 	width: 150px;
+	border: 1px solid #d0d0d0;
+	color: #d0d0d0;
+	border-radius: 3px;
 	background: #fff;
 	text-align: left;
+	padding-left: 15px;
 }
 .list li {
 	width: 100%;
-	padding-left: 10px;
+	padding-left: 15px;
 	font-size: 16px;
 	cursor: pointer;
 	color: #333;
 }
 .list li:hover {
-	background: #d8f3fd;
+	background: #def6ff;
+}
+.droplist i {
+	margin-right: 10px;
+}
+.caret-down {
+	position: absolute;
+	right: 0px;
+    top: 5px;
+}
+.listInput.active {
+	border: 1px solid #999;
+	color: #333;
+}
+.listInput.disabled {
+	border: 1px solid #e5e5e5;
+	background: #f4f4f4;
+	color: #8a8a8a;
 }

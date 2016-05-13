@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import Header from 'client/components/header';
 import Navigation from 'client/components/navigation';
 import Footer from 'client/components/footer';
+import CSSModules from 'react-css-modules';
+
+import style from './style.css';
 
 class App extends Component {
 	render() {
@@ -10,11 +13,10 @@ class App extends Component {
 			<div className="wrap">
 				<Header />
 				<Navigation />
-				<div className="container">{this.props.children}</div>
-				<Footer />
+				<div styleName="container">{this.props.children}</div>
 			</div>
 		);
 	}
 }
 
-export default connect()(App);
+export default connect()(CSSModules(App,style,{allowMultiple:true}));

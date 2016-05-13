@@ -31,9 +31,6 @@ class Switches extends Component {
 		];
 		return (
 			<div>
-				<h2>Switches</h2>
-				<div className="content">
-				</div>
 				<h3>RadioGroup</h3>
 				<div className="content">
 					<p>單選且可指定預設選項，custom = true的時候產生自訂欄位，選擇之後會自動focus在input區塊</p>

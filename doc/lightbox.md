@@ -1,10 +1,9 @@
-#LightBox
-###Dependency
+### Dependency
 
  - util/overlay
 
-###Example
-```jsx
+### Example
+``` jsx
 <LightBox open={this.state.lightbox}
 		  option={lightboxObtion}
 		  onClose={this.lightboxClose.bind(this)}> 
@@ -13,16 +12,16 @@
 			  //自定義的內容
 </LightBox>
 ```
-###Properties
+### Properties
 |Name|Type|Required|Description|
 |-------|--------|------|---|
 |open|bool|true|由父層state控制開關|
 |option|object|true|lightbox細節設定|
 |onClose|func|true|父層接收要求關閉lightbox的callback|
 
-###Options
+### Options
 
-```javascript
+``` javascript
 {
     submit: {
        text: '確定', //button text

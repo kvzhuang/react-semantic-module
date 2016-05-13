@@ -26,7 +26,7 @@ class List extends Component{
 						} : 
 						{
 							visibility: 'hidden',
-							height: 0
+							height: 0,
 						}
 		let listStyle = this.props.top ? 'list top' : 'list';
         return(
