@@ -6,6 +6,9 @@ import style from './style.css';
 
 import DropList from 'client/components/dropList';
 
+import html from 'doc/droplist.md';
+
+
 let listContent = [
 	{ label: '公開', value: '111', iconFont: 'fa-globe'},
 	{ label: '朋友', value: '222', iconFont: 'fa-user'},
@@ -31,9 +34,6 @@ class DropListPage extends Component {
 		return (
 			<div>
 				<h3>Drop List</h3>
-				<div className="content">
-					<p>Drop List為基本的類目選單，列表的內容為傳入的array動態產生</p>
-				</div>
 				<table>
 					<tbody>
 						<tr>
@@ -60,6 +60,9 @@ class DropListPage extends Component {
 						</tr>
 					</tbody>
 				</table>
+				<div className="content" dangerouslySetInnerHTML={{__html: html}}>
+					
+				</div>
 			</div>
 		);
 	}
