@@ -16,11 +16,6 @@ class Switches extends Component {
 	radioSelect(value,index) {
 		console.log(value, index);
 	}
-	test(){
-		this.setState({
-			customValue: '234'
-		})
-	}
 	render() {
 		let group = [
 			{label:'項目1',value: '111'},
@@ -35,7 +30,6 @@ class Switches extends Component {
 				<div className="content">
 					<p>單選且可指定預設選項，custom = true的時候產生自訂欄位，選擇之後會自動focus在input區塊</p>
 				</div>
-				<button onClick={this.test.bind(this)}>123</button>
 				<RadioGroup
 					group={group}
 					name="radio"

@@ -17,11 +17,10 @@ class Lightbox extends Component{
 	
     render(){
 		
-
-        let boxWidth = '380px',contentPadding = '30px', contentHeight = 'auto';
+        console.log(this.props.option.closeIcon);
+        let boxWidth = '380px',contentPadding = '0 10px', contentHeight = 'auto';
         if( this.props.option.title ) {
             boxWidth = '800px';
-            contentPadding = '30px 50px';
         }
         if ( this.props.option.contentHeight ) {
             contentHeight = this.props.option.contentHeight;
@@ -33,7 +32,7 @@ class Lightbox extends Component{
                          styleName="overlay">
                         
                 </Overlay>
-                <div styleName="lightbox" style={{ width: boxWidth}}>
+                <div styleName="lightbox" style={{ width: boxWidth}} className={this.props.className}>
                     { 
                         this.props.option.title && 
                         <div styleName="title">{ this.props.option.title }</div>
@@ -43,6 +42,7 @@ class Lightbox extends Component{
                         { this.props.option.submit && <button onClick={this.props.option.submit.action} styleName="submit">{this.props.option.submit.text}</button>}
                         { this.props.option.cancel && <button onClick={this.props.onClose}>{this.props.option.cancel.text}</button>}
                     </div>
+                    { this.props.option.closeIcon && <div styleName="close" onClick={this.props.onClose}></div>}
                 </div>
             </div>
         );

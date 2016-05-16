@@ -3,7 +3,7 @@
  - util/overlay
 
 ### Example
-``` jsx
+``` xml
 <LightBox open={this.state.lightbox}
 		  option={lightboxObtion}
 		  onClose={this.lightboxClose.bind(this)}> 
@@ -11,6 +11,7 @@
 			  <p>移除照片後，會顯示系統預設的照片</p>
 			  //自定義的內容
 </LightBox>
+
 ```
 ### Properties
 |Name|Type|Required|Description|

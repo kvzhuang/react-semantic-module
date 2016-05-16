@@ -54,7 +54,7 @@ class LightboxPage extends Component {
                 action: this.submit
             },
             cancel: {
-                text: 'Cancel',
+                text: '取消',
             },
             closeIcon: true,
             title: '野豬騎士來囉'
@@ -81,11 +81,11 @@ class LightboxPage extends Component {
 				<table>
 					<tbody>
 						<tr>
-							<td>無TITLE
+							<td>Alert型態
 							</td>
-							<td>有TITLE跟button
+							<td>有標題跟按鈕
 							</td>
-							<td>有TITLE無button
+							<td>有標題無按鈕
 							</td>
 						</tr>
 						<tr>
@@ -120,8 +120,9 @@ class LightboxPage extends Component {
                 { this.state.lightbox && 
 				<LightBox 
 						  option={option}
-						  onClose={this.lightboxClose.bind(this)}> 
-					<h3>刪除背景照片</h3>
+						  onClose={this.lightboxClose.bind(this)}
+						  styleName="lightbox"> 
+					<h4>刪除背景照片</h4>
 					<p>移除照片後，會顯示系統預設的照片</p>
                     <p>移除照片後，會顯示系統預設的照片</p>
                     <p>移除照片後，會顯示系統預設的照片</p>

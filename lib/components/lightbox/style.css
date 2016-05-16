@@ -8,46 +8,40 @@
     margin: auto; 
     text-align: center;
     z-index: 2001;
-}
-.lightbox h3 {
-    font-size: 22px;
-    color: #999;
-}
-.lightbox p {
-    font-size: 18px;
-    color: #333;
+   padding: 40px 48px;
+   position: relative;
 }
 .title {
     width: 100%;
-    height: 50px;
-    line-height: 50px;
-    padding:0 50px;
     text-align: left;
-    font-size: 20px;
-    color: #333;
-    background: #f4f4f4;
+    font-size: 16px;
+    color: #000;
+    padding-bottom: 16px;
     border-bottom: 1px solid #d5d5d5;
-    box-shadow: 0 1px 4px #ddd;
+    font-weight: bold;
+    padding-left: 16px;
 }
 .lightbox button {
     border: 0;
     padding: 0;
     outline: 0;
-    height: 30px;
-    line-height: 30px;
     background: #fff;
-    box-shadow: 0 0 6px #333;
     text-align: center;
-    width: 80px;
-    margin: 20px 10px 0 10px;
+    padding: 8px 20px;
+    margin: 40px 10px 0 10px;
+    border-radius: 3px;
     cursor: pointer;
+    border: 1px solid #e6e6e6;
+    font-weight: bold;
 }
 .lightbox button.submit {
-    background: #2881d4;
+    background: #34a8c4;
     color: #fff;
+    border: 0;
 }
 .content {
     overflow: auto;
+    margin-top: 28px;
 }
 .container {
 	display: flex;
@@ -59,4 +53,28 @@
     top: 0;
     left: 0;
     z-index:2000;
+}
+.overlay {
+    background: #000;
+    opacity: 0.5;
+}
+.close {
+    height: 338px;
+    width: 58px;
+    position: absolute;
+    right: -58px;
+    top: 0;
+    cursor: pointer;
+}
+
+.close:after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    content: '\d7'; /* use the hex value here... */
+    font-size: 30px; 
+    color: #FFF;
+    text-align: center;
 }
