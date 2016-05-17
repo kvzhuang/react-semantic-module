@@ -4,6 +4,8 @@ import { Link } from 'react-router';
 import CSSModules from 'react-css-modules';
 import style from './style.css';
 
+import html from 'doc/switches.md';
+
 //import { RadioGroup } from 'c_wap_module';
 import RadioGroup from 'client/components/radioGroup';
 class Switches extends Component {
@@ -64,6 +66,9 @@ class Switches extends Component {
 					maxChoose={3}
 					customValue={this.state.customValue}>
 				</RadioGroup>
+				<div className="content" dangerouslySetInnerHTML={{__html: html}}>
+					
+				</div>
 			</div>
 		);
 	}
