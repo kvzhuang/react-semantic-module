@@ -76,10 +76,11 @@ class RadioGroup extends Component {
 		let type = this.props.checkBox ? 'checkbox' : 'radio'; 
 		
 		return (
-			<div className={this.props.className} ref="main" >
+			<div className={this.props.className} ref="main" styleName="radioGroup">
 				{this.props.group.map(function (data, index) {
 					return(
-					<div key={index} style={{display: 'inline-block'}}>
+					<div key={index} styleName="radioItem">
+						
 						<input
 							type={type}
 							id={that.props.name + 'radio' + index}
@@ -88,12 +89,14 @@ class RadioGroup extends Component {
 							label={data.label}
 							onChange={that.handleChange.bind(that,index)}
 							defaultChecked={that.props.checkedIndex-1 === index || that.props.checkedValue === data.label ? 'checked' : null } />
-						<label htmlFor={that.props.name + 'radio' + index}>{data.label}</label>
+						
+						<label htmlFor={that.props.name + 'radio' + index}><div styleName="check"></div>{data.label}</label>
+						
 					</div>
 					);
 				})}
 				{this.props.custom && 
-					<div style={{display: 'inline-block'}}>
+					<div styleName="radioItem">
 						<input 
 							id={that.props.name + 'custom'}
 							type={type}
@@ -101,7 +104,7 @@ class RadioGroup extends Component {
 							name={that.props.name}
 							label="自訂"
 							onChange={this.customChoose.bind(this)} />
-						<label htmlFor={that.props.name + 'custom'}>自訂</label>
+						<label htmlFor={that.props.name + 'custom'}><div styleName="check"></div>自訂</label>
 						<input
 							type="text" 
 							ref="customInput"

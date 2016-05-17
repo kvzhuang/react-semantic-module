@@ -1,8 +1,14 @@
 var path = require('path');
 var webpack = require('webpack');
 var ExtracTextPlugin = require('extract-text-webpack-plugin');
+var hljs = require('highlight.js'); 
+
+require('asset-require-hook')({
+		extensions: ['md']
+		})
 
 module.exports = {
+	
 	entry: [
 		'./client/client'
 	],
@@ -42,6 +48,22 @@ module.exports = {
 			test: /\.css$/,
 			loader: ExtracTextPlugin.extract('style',"css?modules&localIdentName=[name]__[local]___[hash:base64:5]"),
 			include: __dirname
-		},{ test: /\.md$/, loader: "html!markdown?gfm=false" }]
+		},
+		{ test: /\.md$/, loader: "html!markdownattrs?config=markdownattrsLoaderCustomConfig" },
+		]
+	},
+	markdownattrsLoaderCustomConfig: {
+		html: true,
+		highlight: function (str, lang) {
+			if (lang && hljs.getLanguage(lang)) {
+			try {
+				return '<pre class="hljs"><code>' +
+					hljs.highlight(lang, str, true).value +
+					'</code></pre>';
+			} catch (__) {}
+			}
+
+			return '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>';
+		}
 	}
 };
