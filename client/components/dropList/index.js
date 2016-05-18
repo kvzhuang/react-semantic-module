@@ -40,7 +40,7 @@ class DropdownList extends Component{
 		
         return(
             <div styleName="droplist"> 
-				<div styleName={'listInput '+status} onClick={this.toggleOpen.bind(this)} className={this.props.className}>
+				<div onClick={this.toggleOpen.bind(this)} className={this.props.className} styleName={'listInput '+status} style={{ width: this.props.width }}>
 					{
 						(() => {
 							if( this.state.selected ) {
@@ -57,7 +57,8 @@ class DropdownList extends Component{
 				{this.state.open && 
 				<List type={this.state.posType}
 				      open={this.state.open} 
-                      clickAway={this.toggleOpen} > 
+                      clickAway={this.toggleOpen}
+					  width={this.props.width} > 
 					  { this.props.listContent.map(function (data, index) {
 						  return (
 							  <li key={index} onClick={that.onSelect.bind(that, data, index)}>

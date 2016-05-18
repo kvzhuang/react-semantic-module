@@ -44,7 +44,8 @@ class DropListPage extends Component {
 								<DropList 
 									listContent={listContent}
 									onSelected={this.onSelected.bind(this)}
-									defaultIndex={1}/>
+									defaultIndex={1}
+									width={130}/>
 							</td>
 							<td>
 								<DropList 

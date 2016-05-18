@@ -29,6 +29,7 @@ let listContent2 = [
 |listContent|json||true|list內的值|
 |defaultIndex|index|||預設選擇項目|
 |disabled|bool|false||無法被點選|
+|width|number|150px|false|客製寬度|
 
 #### MenuItem
 

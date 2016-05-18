@@ -8,6 +8,9 @@
 	bottom: -12px;
 	top: initial;
 }
+.arrow.top::before {
+	top: -6px;
+}
 .arrow.top::after {
 	top: -8px;
 }

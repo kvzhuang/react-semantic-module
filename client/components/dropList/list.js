@@ -17,7 +17,7 @@ class List extends Component{
                         onRequestClose={this.props.clickAway}>
                 </Overlay>
 				  
-                <ul styleName="list">
+                <ul styleName="list" style={{ width: this.props.width }}>
                     { this.props.children } 
                 </ul>
             </div>

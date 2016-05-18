@@ -74,13 +74,13 @@ class DropdownMenu extends Component{
 		this.ListNode.style.left = ContainerLeft + 'px';
 		this.ArrowNode.style.marginLeft = OrginLeft - ContainerLeft - 6 + 'px';
 		
-		if( this.InitialProp.top + this.TrueHeight <= window.innerHeight ) {
+		if( ContainerProp.top + this.TrueHeight <= window.innerHeight ) {
 			this.ListNode.style.bottom = "";
 			this.ArrowNode.style.bottom = "";
 			this.ArrowNode.style.top = 0;
 			this.ArrowNode.className = style.arrow;
 		}else if ( ContainerProp.top + this.TrueHeight > window.innerHeight ) {
-			this.ListNode.style.bottom =  this.targetStyle.height + 15 + 'px';
+			this.ListNode.style.bottom =  this.targetStyle.height - 15 + 'px';
 			this.ArrowNode.style.bottom = -12 + 'px';
 			this.ArrowNode.style.top = 'initial';
 			this.ArrowNode.className += " "+style.top;
