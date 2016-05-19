@@ -50,6 +50,10 @@ module.exports = {
 			include: __dirname
 		},
 		{ test: /\.md$/, loader: "html!markdownattrs?config=markdownattrsLoaderCustomConfig" },
+		{
+			test: /\.png$/,
+			loader: 'file'
+		}
 		]
 	},
 	markdownattrsLoaderCustomConfig: {
