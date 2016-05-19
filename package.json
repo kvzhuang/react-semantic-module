@@ -1,6 +1,6 @@
 {
   "name": "c_wap_module",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "description": "module for c platform",
   "license": "MIT",
   "repository": {
@@ -38,6 +38,7 @@
     "express": "^4.13.3",
     "extract-text-webpack-plugin": "^1.0.1",
     "fbjs": "^0.8.1",
+    "file-loader": "^0.8.5",
     "highlight.js": "^9.3.0",
     "history": "^1.17.0",
     "html-loader": "^0.4.3",

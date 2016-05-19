@@ -3,7 +3,7 @@ import CSSModules from 'react-css-modules';
 import style from './style.css';
 import ReactDOM from 'react-dom';
 
-let ACStyle = {};
+
 
 
 
@@ -18,6 +18,7 @@ class TextFeild extends Component {
 		}
 		this._onChange = this._onChange.bind(this);
 		this._onBlur = this._onBlur.bind(this);
+		this.ACStyle = {};
 		this.keyDownHandlers = {
 			ArrowDown(event) {
 				event.preventDefault()
@@ -82,7 +83,7 @@ class TextFeild extends Component {
 		}
 		
 		let MainElement = this.refs.textFeildMain.getBoundingClientRect();
-		ACStyle.width = MainElement.width;
+		this.ACStyle.width = MainElement.width;
 		//ACStyle.maxHeight = window.innerHeight - MainElement.top - MainElement.height - 10;
 	}
 	_onBlur(e){
@@ -186,7 +187,7 @@ class TextFeild extends Component {
 					<div styleName="errorMessage">{ this.state.errorMessage }</div>
 				</div>
 				{ this.state.ACData && this.state.ACData.length > 0  && 
-					<div style={ACStyle} styleName="AClist">
+					<div style={this.ACStyle} styleName="AClist">
 						{ this.state.ACData.map(function(item,index){
 							let style = index === this.state.highlightedIndex ? { background: '#def6ff' }: null; 
 							return (

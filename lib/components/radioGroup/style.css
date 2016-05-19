@@ -1,3 +1,4 @@
+
 .error {
 	color: #e12f1c;
 }
@@ -53,4 +54,16 @@
 }
 .radioGroup input[type=text] {
 	width: 150px;
+}
+.radioGroup input[type=checkbox] {
+  cursor: pointer;
+}
+.radioGroup input[type=checkbox]:checked:after {
+    content: " ";
+    background: url('./icon_checkbox.png');
+    display: inline-block;
+    visibility: visible;
+    height: 100%;
+    width: 100%;
+    background-position-y: -2px;
 }

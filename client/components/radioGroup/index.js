@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import CSSModules from 'react-css-modules';
 import style from './style.css';
+
 let multiChoose = [];
+
 
 function getSelectedChbox(frm) {
 	var selchbox = [];// array that will store the value of selected checkboxes
