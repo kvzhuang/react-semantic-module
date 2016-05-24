@@ -1,5 +1,5 @@
 .error.input input, .error.input textarea{
-	border:1px solid #E12F1C;
+	border:1px solid #ff530d;
 }
 input, textarea{
 	padding:10px;
@@ -14,7 +14,7 @@ input:focus, textarea:focus{
 	border: 1px solid #42ADC8;
 }
 .errorMessage {
-	color: #E12F1C;
+	color: #ff530d;
 	font-size: 14px;
 	float: left;
 }
