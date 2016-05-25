@@ -56,11 +56,11 @@
 .list {
     position: relative;
     padding-top: 7px;
+    padding-bottom: 7px;
     background: #fff;
     border:1px solid #ddd;
-   
     z-index: 2001;
-	margin-top: 5px;
+    margin-top: 5px;
 	
 }
 .default{}
