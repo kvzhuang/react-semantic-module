@@ -11,6 +11,7 @@ import DropdwonPage from 'client/containers/dropdown';
 import DropListPage from 'client/containers/dropList';
 import Form from 'client/containers/form';
 import Switches from 'client/containers/switches';
+import EditorPage from 'client/containers/editor';
 
 export default function(history) {
 	return (
@@ -23,6 +24,7 @@ export default function(history) {
                 <Route path="/lightbox" component={LightboxPage} />
 				<Route path="/form" component={Form} />
 				<Route path="/switches" component={Switches} />
+				<Route path="/editor" component={EditorPage} />
 			</Route>
 		</Router>
 	);

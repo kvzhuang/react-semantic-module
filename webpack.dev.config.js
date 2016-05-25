@@ -71,7 +71,7 @@ module.exports = function checkMode(app){
 				},
 				{ test: /\.md$/, loader: "html!markdownattrs?config=markdownattrsLoaderCustomConfig" },
 				{
-					test: /\.png$/,
+					test: /\.(png|svg|ttf|woff)$/,
 					loader: 'file'
 				}
 				]

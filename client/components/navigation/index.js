@@ -11,6 +11,7 @@ class Navigation extends Component {
                 <Link className="navigation-link" to="/lightbox">Lightbox</Link>
 				<Link className="navigation-link" to="/form">Form</Link>
 				<Link className="navigation-link" to="/switches">Switches</Link>
+				<Link className="navigation-link" to="/editor">Editor</Link>
 			</nav>
 		);
 	}

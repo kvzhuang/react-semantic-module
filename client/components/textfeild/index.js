@@ -135,6 +135,7 @@ class TextFeild extends Component {
 		if (this.keyDownHandlers[event.key] && this.props.ACData){
 			this.keyDownHandlers[event.key].call(this, event)
 		}
+		if( this.props.onKeyDown ) this.props.onKeyDown(event);
 	}
 	
 	ACMouseOver(index) {
@@ -200,10 +201,14 @@ class TextFeild extends Component {
 		);
 	}
 }
+TextFeild.propTypes = {
+	onBlur: PropTypes.func
+}
 TextFeild.defaultProps = {
 	errorMessage: '',
 	data: '',
-	onRequestOpenAC: {}
+	onRequestOpenAC: {},
+	onBlur: _.noop
 }
 
 export default CSSModules(TextFeild,style,{allowMultiple:true});
