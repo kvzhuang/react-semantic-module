@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom';
 
 class Target extends Component{
 	componentDidMount() {
-		this.context.getThisDOM(ReactDOM.findDOMNode(this));
+		this.context.getThisDOM(this.refs.target);
 	}
 	
     render(){
@@ -18,7 +18,7 @@ class Target extends Component{
 		})
 		
         return(
-            <div onClick={this.context.toggleOpen} styleName="target" className={this.props.className}>  
+            <div onClick={this.context.toggleOpen} styleName="target" className={this.props.className} ref="target">  
 				{children} 
             </div>
         );
