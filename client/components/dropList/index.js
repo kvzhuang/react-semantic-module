@@ -24,12 +24,15 @@ class DropdownList extends Component{
 	}
 	
 	onSelect(data, index) {
+		
 		this.setState({
 			open: false,
 			selected: index+1
 		})
 		data.index = index+1; 
-		this.props.onSelected(data);
+		
+		const { onSelected = _.noop } = this.props;
+		onSelected(data);
 	}
 	
     render(){
@@ -48,7 +51,7 @@ class DropdownList extends Component{
 								if(defaultSelect.iconFont) return <div><i className={"fa " + defaultSelect.iconFont } aria-hidden="true"/>{defaultSelect.label}</div>
 								else return defaultSelect.label;	 
 							}else {
-								return '請選擇' ; 
+								return this.props.placeHolder; 
 							} 
 						})()
 					}
@@ -73,5 +76,9 @@ class DropdownList extends Component{
         );
     }
 }
-
+DropdownList.defaultProps = {
+	placeHolder: '請選擇',
+	listContent: [],
+	disabled: false,
+}
 export default CSSModules(DropdownList,style,{allowMultiple:true});

@@ -15,6 +15,7 @@
   },
   "main": "./lib/components",
   "dependencies": {
+    "underscore": "^1.8.3",
     "url-loader": "^0.5.7",
     "validator": "^5.1.0"
   },

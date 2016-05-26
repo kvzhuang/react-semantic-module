@@ -142,5 +142,4 @@ DropdownMenu.childContextTypes = {
 	getListDom: React.PropTypes.func,
 	open: React.PropTypes.bool
 }
-
 export default CSSModules(DropdownMenu,style,{allowMultiple:true});
