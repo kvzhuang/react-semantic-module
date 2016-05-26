@@ -1,6 +1,6 @@
 {
   "name": "c_wap_module",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "description": "module for c platform",
   "license": "MIT",
   "repository": {
@@ -15,6 +15,7 @@
   },
   "main": "./lib/components",
   "dependencies": {
+    "url-loader": "^0.5.7",
     "validator": "^5.1.0"
   },
   "devDependencies": {

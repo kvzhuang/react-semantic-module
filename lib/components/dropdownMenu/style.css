@@ -56,9 +56,9 @@
 .list {
     position: relative;
     padding-top: 7px;
+	padding-bottom: 2px;
     background: #fff;
     border:1px solid #ddd;
-   
     z-index: 2001;
 	margin-top: 5px;
 	

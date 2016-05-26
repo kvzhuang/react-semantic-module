@@ -12,7 +12,7 @@ class TextFeild extends Component {
 		super(props); 
 		this.state = {
 			data: this.props.value,
-			errorMessage: this.props.errorMessage,
+			errorMessage: this.props.errorMessage || '',
 			ACData: this.props.ACData,
 			highlightedIndex: null
 		}
@@ -74,6 +74,7 @@ class TextFeild extends Component {
 				})
 			}
 		}
+		console.log(this.state);
 	}
 	componentDidMount() {
 		if( this.props.allowMultiLine ){
@@ -84,19 +85,22 @@ class TextFeild extends Component {
 		
 		let MainElement = this.refs.textFeildMain.getBoundingClientRect();
 		this.ACStyle.width = MainElement.width;
+		console.log(this.state);
 		//ACStyle.maxHeight = window.innerHeight - MainElement.top - MainElement.height - 10;
 	}
 	_onBlur(e){
 		if( this.props.validator ) {
 			let validObject = {};
 			validObject[this.props.name] = e.target.value;
-			
+			console.log(validObject);
 			let validResult = this.props.validator.validate(validObject);
+			console.log(validResult);
 			if(validResult.status) {
 				this.setState({
 					errorMessage: ''
 				})
 			}else {
+				if( !validResult.errorMessage[this.props.name] ) validResult.errorMessage[this.props.name] = '';
 				this.setState({
 					errorMessage:validResult.errorMessage[this.props.name]
 				})
@@ -173,6 +177,7 @@ class TextFeild extends Component {
 		}
 		let status = '';
 		let that = this;
+		console.log(this.state);
 		if( this.state.errorMessage.length > 0 ) status = 'error ';
 		return (
 			<div className={this.props.className}>

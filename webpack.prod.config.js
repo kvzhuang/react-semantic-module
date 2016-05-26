@@ -20,7 +20,7 @@ module.exports = {
 	},
 	output: {
 		path: path.join(__dirname, '/public/build'),
-		publicPath: '/build',
+		publicPath: '/build/',
 		filename: 'bundle.js'
 	},
 	plugins: [
@@ -50,10 +50,7 @@ module.exports = {
 			include: __dirname
 		},
 		{ test: /\.md$/, loader: "html!markdownattrs?config=markdownattrsLoaderCustomConfig" },
-		{
-			test: /\.png$/,
-			loader: 'file'
-		}
+		{ test: /\.jpe?g$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/, loader: "file-loader?name=[path][name].[ext]" }
 		]
 	},
 	markdownattrsLoaderCustomConfig: {
