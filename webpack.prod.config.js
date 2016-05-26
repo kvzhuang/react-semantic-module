@@ -13,7 +13,7 @@ module.exports = {
 		'./client/client'
 	],
 	debug: true,
-	devtool: 'source-map',
+	devtool: 'eval',
 	resolve: {
 		root: [ __dirname ],
 		extensions: ["", ".js", ".jsx"]
@@ -25,11 +25,6 @@ module.exports = {
 	},
 	plugins: [
 		new webpack.IgnorePlugin(new RegExp("asyncBeApi")),
-		new webpack.optimize.UglifyJsPlugin({
-			compress: {
-				warnings: false
-			}
-		}),
 		new ExtracTextPlugin('bundle.css', {
 			allChunks: true
 		})

@@ -36,11 +36,6 @@ module.exports = function checkMode(app){
 				new webpack.HotModuleReplacementPlugin(),
 				new webpack.NoErrorsPlugin(),
 				new webpack.IgnorePlugin(new RegExp("asyncBeApi")),
-				new webpack.optimize.UglifyJsPlugin({
-					compress: {
-						warnings: false
-					}
-				})
 			],
 			module: {
 				loaders: [

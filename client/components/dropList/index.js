@@ -55,7 +55,7 @@ class DropdownList extends Component{
 							} 
 						})()
 					}
-					<i className="fa fa-caret-down" aria-hidden="true" styleName="caret-down"/> 
+					<span aria-hidden="true" styleName="caret-down"></span> 
 				</div>
 				{this.state.open && 
 				<List type={this.state.posType}

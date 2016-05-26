@@ -175,7 +175,7 @@ class TextFeild extends Component {
 		let that = this;
 		if( this.state.errorMessage.length > 0 ) status = 'error ';
 		return (
-			<div className={this.props.className}>
+			<div className={this.props.className} styleName="inputRoot">
 				<div styleName={status + 'input'}  ref="textFeildMain">
 					{ this.props.allowMultiLine ? 
 						<textarea {...option} 
