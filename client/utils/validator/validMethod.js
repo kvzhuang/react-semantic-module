@@ -26,35 +26,34 @@ const result = function(name, expression){
 }
 
 const Method = {
-	notEmpty: function(value){
-
-		return result(this.notEmpty.name, value.length > 0);
+	notEmpty: function (value){
+		return result('notEmpty', value.length > 0);
 	},
 
 	isURL: function(value){
 
-		return result(this.isURL.name, validator.isURL(value));
+		return result('isURL', validator.isURL(value));
 	},
 	
 	isName: function(value){
 
-		return result(this.isName.name, value.match(/^[a-z0-9_-]{3,16}$/));
+		return result('isName', value.match(/^[a-z0-9_-]{3,16}$/));
 	},
 
 	isEmail: function(value){
 
 		let regex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-		return result(this.isEmail.name, value.match(regex));
+		return result('isEmail', value.match(regex));
 	},
 
 	maxLength: function(value, length) {
 
-		return result(this.maxLength.name, value.length <= length);	
+		return result('maxLength', value.length <= length);	
 	},
 
 	minLength: function(value, length) {
 
-		return result(this.minLength.name, value.length > length);	
+		return result('minLength', value.length > length);	
 	},
 
 	illegalText: function(value, text) {
@@ -72,7 +71,7 @@ const Method = {
 			console.log("not avalible type");
 		}
 
-		return result(this.illegalText.name, !result);	
+		return result('illegalText', !result);	
 	},
 
 

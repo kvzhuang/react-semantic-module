@@ -124,6 +124,7 @@ class RadioGroup extends Component {
 }
 RadioGroup.defaultProps = {
 	errorMessage: '',
-	maxChoose: 99
+	maxChoose: 99,
+	custom: false
 }
 export default connect()(CSSModules(RadioGroup,style,{allowMultiple:true}));

@@ -34,6 +34,12 @@ class Switches extends Component {
 				</div>
 				<RadioGroup
 					group={group}
+					name="radio_normal"
+					onSelected={this.radioSelect.bind(this)}
+					styleName="radioGroup">
+				</RadioGroup>
+				<RadioGroup
+					group={group}
 					name="radio"
 					checkedIndex={2}
 					onSelected={this.radioSelect.bind(this)}

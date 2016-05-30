@@ -24,19 +24,22 @@ class DropdownList extends Component{
 	}
 	
 	onSelect(data, index) {
+		
 		this.setState({
 			open: false,
 			selected: index+1
 		})
 		data.index = index+1; 
-		this.props.onSelected(data);
+		
+		const { onSelected = _.noop } = this.props;
+		onSelected(data);
 	}
 	
     render(){
 		let that = this;
 		let status = '';
 		if( this.props.disabled ) status = 'disabled';
-		else if ( this.state.selected || this.state.open ) status='active';
+		else if ( this.state.open ) status='active'; 
 		
         return(
             <div styleName="droplist"> 
@@ -45,14 +48,14 @@ class DropdownList extends Component{
 						(() => {
 							if( this.state.selected ) {
 								let defaultSelect = this.props.listContent[this.state.selected-1];
-								if(defaultSelect.iconFont) return <div><i className={"fa " + defaultSelect.iconFont } aria-hidden="true"/>{defaultSelect.label}</div>
-								else return defaultSelect.label;	 
+								if(defaultSelect.iconFont) return <div style={{ color: "#333" }}><i className={"fa " + defaultSelect.iconFont } aria-hidden="true"/>{defaultSelect.label}</div>
+								else return <span style={{ color: "#333" }}>{ defaultSelect.label } </span>;	 
 							}else {
-								return '請選擇' ; 
+								return this.props.placeHolder; 
 							} 
 						})()
 					}
-					<i className="fa fa-caret-down" aria-hidden="true" styleName="caret-down"/> 
+					<span aria-hidden="true" styleName="caret-down"></span> 
 				</div>
 				{this.state.open && 
 				<List type={this.state.posType}
@@ -73,5 +76,9 @@ class DropdownList extends Component{
         );
     }
 }
-
+DropdownList.defaultProps = {
+	placeHolder: '請選擇',
+	listContent: [],
+	disabled: false,
+}
 export default CSSModules(DropdownList,style,{allowMultiple:true});

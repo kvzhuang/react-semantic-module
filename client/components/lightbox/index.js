@@ -16,8 +16,6 @@ class Lightbox extends Component{
 	}
 	
     render(){
-		
-        console.log(this.props.option.closeIcon);
         let boxWidth = '380px',contentPadding = '0 10px', contentHeight = 'auto';
         if( this.props.option.title ) {
             boxWidth = '800px';
@@ -48,4 +46,7 @@ class Lightbox extends Component{
         );
     }
 } 
+Lightbox.defaultProps = {
+    onClose: function(){ console.log( "you should have onClose props declartion on your component ! ")},
+}
 export default CSSModules(Lightbox,style,{allowMultiple:true});

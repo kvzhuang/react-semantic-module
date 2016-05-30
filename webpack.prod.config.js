@@ -13,23 +13,18 @@ module.exports = {
 		'./client/client'
 	],
 	debug: true,
-	devtool: 'source-map',
+	devtool: 'eval',
 	resolve: {
 		root: [ __dirname ],
 		extensions: ["", ".js", ".jsx"]
 	},
 	output: {
 		path: path.join(__dirname, '/public/build'),
-		publicPath: '/build',
+		publicPath: '/build/',
 		filename: 'bundle.js'
 	},
 	plugins: [
 		new webpack.IgnorePlugin(new RegExp("asyncBeApi")),
-		new webpack.optimize.UglifyJsPlugin({
-			compress: {
-				warnings: false
-			}
-		}),
 		new ExtracTextPlugin('bundle.css', {
 			allChunks: true
 		})
@@ -50,10 +45,7 @@ module.exports = {
 			include: __dirname
 		},
 		{ test: /\.md$/, loader: "html!markdownattrs?config=markdownattrsLoaderCustomConfig" },
-		{
-			test: /\.png$/,
-			loader: 'file'
-		}
+		{ test: /\.jpe?g$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/, loader: "file-loader?name=[path][name].[ext]" }
 		]
 	},
 	markdownattrsLoaderCustomConfig: {

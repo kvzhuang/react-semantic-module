@@ -12,7 +12,7 @@ class TextFeild extends Component {
 		super(props); 
 		this.state = {
 			data: this.props.value,
-			errorMessage: this.props.errorMessage,
+			errorMessage: this.props.errorMessage || '',
 			ACData: this.props.ACData,
 			highlightedIndex: null
 		}
@@ -90,13 +90,13 @@ class TextFeild extends Component {
 		if( this.props.validator ) {
 			let validObject = {};
 			validObject[this.props.name] = e.target.value;
-			
 			let validResult = this.props.validator.validate(validObject);
 			if(validResult.status) {
 				this.setState({
 					errorMessage: ''
 				})
 			}else {
+				if( !validResult.errorMessage[this.props.name] ) validResult.errorMessage[this.props.name] = '';
 				this.setState({
 					errorMessage:validResult.errorMessage[this.props.name]
 				})
@@ -176,7 +176,7 @@ class TextFeild extends Component {
 		let that = this;
 		if( this.state.errorMessage.length > 0 ) status = 'error ';
 		return (
-			<div className={this.props.className}>
+			<div className={this.props.className} styleName="inputRoot">
 				<div styleName={status + 'input'}  ref="textFeildMain">
 					{ this.props.allowMultiLine ? 
 						<textarea {...option} 
