@@ -71,6 +71,7 @@
 .radioGroup input[type=checkbox] {
 	cursor: pointer;
 	visibility: hidden;
+	margin-right: 8px;
 }
 .radioGroup input[type=checkbox]:after{
 	content: " ";
