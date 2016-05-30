@@ -39,7 +39,7 @@ class DropdownList extends Component{
 		let that = this;
 		let status = '';
 		if( this.props.disabled ) status = 'disabled';
-		else if ( this.state.selected || this.state.open ) status='active';
+		else if ( this.state.open ) status='active'; 
 		
         return(
             <div styleName="droplist"> 
@@ -48,8 +48,8 @@ class DropdownList extends Component{
 						(() => {
 							if( this.state.selected ) {
 								let defaultSelect = this.props.listContent[this.state.selected-1];
-								if(defaultSelect.iconFont) return <div><i className={"fa " + defaultSelect.iconFont } aria-hidden="true"/>{defaultSelect.label}</div>
-								else return defaultSelect.label;	 
+								if(defaultSelect.iconFont) return <div style={{ color: "#333" }}><i className={"fa " + defaultSelect.iconFont } aria-hidden="true"/>{defaultSelect.label}</div>
+								else return <span style={{ color: "#333" }}>{ defaultSelect.label } </span>;	 
 							}else {
 								return this.props.placeHolder; 
 							} 
