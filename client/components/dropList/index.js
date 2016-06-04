@@ -42,8 +42,8 @@ class DropdownList extends Component{
 		else if ( this.state.open ) status='active'; 
 		
         return(
-            <div styleName="droplist"> 
-				<div onClick={this.toggleOpen.bind(this)} className={this.props.className} styleName={'listInput '+status} style={{ width: this.props.width }}>
+            <div styleName="droplist" className={this.props.className}> 
+				<div onClick={this.toggleOpen.bind(this)} className="Droplist_listInput" styleName={'listInput '+status} style={{ width: this.props.width }}>
 					{
 						(() => {
 							if( this.state.selected ) {

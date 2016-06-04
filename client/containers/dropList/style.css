@@ -1,3 +1,9 @@
 .list {
 	width: 250px;
 }
+.errorStyle [class*=Droplist_listInput] {
+	border: 1px solid red;
+}
+.errorStyle {
+	outline: 0;
+}
