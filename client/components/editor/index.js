@@ -1,15 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import CSSModules from 'react-css-modules';
 import style from './style.css';
-
-
 import {
 	Editor,
 	EditorState,
 	Entity,
 	RichUtils,
 	ContentState,
-	CompositeDecorator
+	CompositeDecorator,
+	convertToRaw,
+	convertFromHTML,
+	AtomicBlockUtils
 } from 'draft-js';
 import {
 	getSelectionRange,
@@ -17,38 +18,72 @@ import {
 	getSelectionCoords
 } from '../../utils/selection.js';
 
-import { insertImage } from './insertImage';
+import insertMediaBlock from './modifiers/insertMediaBlock'
 import SideToolbar from './SideToolbar';
 import InlineToolbar from './InlineToolbar';
-import ImageComponent from './ImageComponent';
-import LinkInput from './urlInput';
+import ImageComponent from './ImageComponent.js';
+import MediaWrapper from './mediaWrapper.js'
+
+
+function findLinkEntities(contentBlock, callback) {
+	contentBlock.findEntityRanges(
+		(character) => {
+			const entityKey = character.getEntity();
+			return (
+				entityKey !== null &&
+				Entity.get(entityKey).getType() === 'LINK'
+			);
+		},
+		callback
+	);
+}
+
+const Link = (props) => {
+	const {url} = Entity.get(props.entityKey).getData();
+	const styleLink = {
+		color: '#3b5998',
+		textDecoration: 'underline',
+	}
+	return (
+		<a href={url} style={styleLink}>
+			{props.children}
+		</a>
+	);
+};
 
 class RichEditor extends Component {
 	constructor(props) { 
 		super(props);
-
+		
+		const decorator = new CompositeDecorator([
+			{
+				strategy: findLinkEntities,
+				component: Link,
+			},
+		]);
+		
 		this.state = {
-			editorState: EditorState.createEmpty(),
+			editorState: EditorState.createEmpty(decorator),
 			inlineToolbar: { show: false },
-			linkInput : { show: false }
 		};
 
 		this.onChange = (editorState) => {
+			console.log("onChange");
 			if (!editorState.getSelection().isCollapsed()) {
 				const selectionRange = getSelectionRange();
-				const selectionCoords = getSelectionCoords(selectionRange);
-				this.setState({
-					inlineToolbar: {
-						show: true,
-						position: {
-							top: selectionCoords.offsetTop,
-							left: selectionCoords.offsetLeft
-						}
-					},
-					linkInput: {
-						show: false
-					}
-				});
+				if( selectionRange ) {
+					const selectionCoords = getSelectionCoords(selectionRange);
+					this.setState({
+						inlineToolbar: {
+							show: true,
+							position: {
+								top: selectionCoords.offsetTop,
+								left: selectionCoords.offsetLeft
+							}
+						},
+					});
+				}
+				
 			} else {
 				this.setState({ inlineToolbar: { show: false } });
 			}
@@ -65,15 +100,9 @@ class RichEditor extends Component {
 		this.toggleInlineStyle = (style) => this._toggleInlineStyle(style);
 		this.toggleLink = () => this._toggleLink();
 		this.onLinkKeyDown = (e) => this._onLinkKeyDown(e);
+		this.insertBlockComponent = (type, data) => this._insertBlockComponent(type,data);
 		this.insertImage = (file) => this._insertImage(file);
-		this.blockRenderer = (block) => {
-			if (block.getType() === 'media') {
-				return {
-					component: ImageComponent
-				};
-			}
-			return null;
-		}
+		this.blockRenderer = (block) => this._blockRenderer(block);
 		this.blockStyler = (block) => {
 			if (block.getType() === 'unstyled') {
 				return 'paragraph';
@@ -81,7 +110,29 @@ class RichEditor extends Component {
 			return null;
 		}
 	}
-
+	
+	/*
+	componentDidMount() {
+		const test = "<p>1231231231</p><p><img src='http://img.ltn.com.tw/Upload/ent/page/800/2015/12/12/php10lj6O.jpg'/></p><p><br></p>"
+		const contentState = stateFromHTML(test);
+		console.log(convertToRaw(contentState));
+		const state = EditorState.createWithContent(contentState);
+		console.log(state);
+		this.onChange(state);
+	}*/
+	
+	
+	_blockRenderer(block) {
+		let type = block.getType();
+		console.log(type);
+		if(type === 'atomic') {
+			return {
+				component: ImageComponent,
+				editable: false
+			}
+		}
+	}
+	
 	_updateSelection() {
 		const selectionRange = getSelectionRange();
 		let selectedBlock;
@@ -122,7 +173,8 @@ class RichEditor extends Component {
 		);
 	}
 	
-	_toggleLink() {
+	/*_toggleLink() {
+		const { editorState } = this.state;
 		this.setState({
 			linkInput: {
 				show: true
@@ -131,36 +183,42 @@ class RichEditor extends Component {
 				show: false
 			}
 		})
-		/*this.onChange(
-			RichUtils.toggleLink(
-				editorState,
-				editorState.getSelection(),
-				entityKey
-			)
-		);*/
-	}
-	_onLinkKeyDown(e) {
-		console.log(this.state.editorState.getSelection().getStartOffset());
-		const entityKey = Entity.create('LINK', 'MUTABLE', {url: e.target.value});
+	}*/
+	_onLinkKeyDown(value) {
+		
+		const entityKey = Entity.create('LINK', 'MUTABLE', {url: value});
+		
 		this.setState({
-            editorState: RichUtils.toggleLink(
+			editorState: RichUtils.toggleLink(
               this.state.editorState,
               this.state.editorState.getSelection(),
               entityKey
             ),
-			linkInput: { show: false}
-		})
-	}
-	_insertImage(file) {
-		this.setState({
-			editorState: insertImage(this.state.editorState, file)
+			inlineToolbar: { show: false }
 		});
 	}
+	
+	_insertBlockComponent(type, data) {
+    
+		//let { editorState, entityKey } = insertMediaBlock(this.state.editorState, type, data)
+		
+		const entityKey = Entity.create(type, 'IMMUTABLE', {src: data.src});
+		this.onChange(AtomicBlockUtils.insertAtomicBlock(
+            this.state.editorState,
+            entityKey,
+			' '
+          ));
+		/*this.setState({
+			editorState,
+		})*/
+
+		return entityKey
+	};
 
 	_handleFileInput(e) {
-		const fileList = e.target.files;
-		const file = fileList[0];
-		this.insertImage(file);
+		let files = Array.prototype.slice.call(e.target.files, 0)
+		files.forEach(f => 
+			this.insertBlockComponent("IMAGE", {src: URL.createObjectURL(f)}))
 	}
 
 	_handleUploadImage() {
@@ -179,7 +237,12 @@ class RichEditor extends Component {
 			sideToolbarOffsetTop = (blockBounds.bottom - editorBounds.top)
 				- 31; // height of side toolbar
 		}
-
+		
+		let contentState = editorState.getCurrentContent();
+		/*let html = stateToHTML(contentState);
+		
+		console.log(html);*/
+		
 		return (
 			<div styleName="editor" id="richEditor" >
 				{selectedBlock
@@ -195,13 +258,10 @@ class RichEditor extends Component {
 					? <InlineToolbar
 						editorState={editorState}
 						onToggle={this.toggleInlineStyle}
-						onLink={this.toggleLink}
+						onLink={this.onLinkKeyDown}
 						position={this.state.inlineToolbar.position}
 						/>
 					: null
-				}
-				{ this.state.linkInput.show && 
-						<LinkInput onKeyDown={this.onLinkKeyDown}/>
 				}
 					<Editor
 						blockRendererFn={this.blockRenderer}
@@ -211,7 +271,7 @@ class RichEditor extends Component {
 						onChange={this.onChange}
 						placeholder="Write something..."
 						spellCheck={true}
-						readOnly={this.state.editingImage}
+						readOnly={this.props.readOnly}
 						ref="editor"
 						onClick={this.focus}
 						/>
@@ -221,5 +281,4 @@ class RichEditor extends Component {
 		);
 	}
 }
-
 export default CSSModules(RichEditor, style, { allowMultiple: true });

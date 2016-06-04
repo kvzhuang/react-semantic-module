@@ -208,7 +208,7 @@ TextFeild.defaultProps = {
 	errorMessage: '',
 	data: '',
 	onRequestOpenAC: {},
-	onBlur: _.noop
+	onBlur: function(){}
 }
 
 export default CSSModules(TextFeild,style,{allowMultiple:true});

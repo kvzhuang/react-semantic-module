@@ -16,6 +16,8 @@
   "main": "./lib/components",
   "dependencies": {
     "draft-js": "^0.7.0",
+    "draft-js-export-html": "^0.2.2",
+    "draft-js-import-html": "^0.1.10",
     "underscore": "^1.8.3",
     "url-loader": "^0.5.7",
     "validator": "^5.1.0"

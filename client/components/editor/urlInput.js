@@ -11,18 +11,23 @@ class urlInput extends Component {
 		this.state = {
 			data: null
 		}
-		this.onChange = (e) => this.setState({ data: e.target.value });
+	}
+	onChange(e) {
+		console.log(e.target.value);
+		this.setState({ data: e.target.value });
 	}
 	_onKeyDown (e){
+		
 		if (e.which === 13) {
-			this.props.onKeyDown(e);
+			e.preventDefault();
+			this.props.onKeyDown(this.state.data);
 		}
 	} 
 	render (){
 		return(
 			<input 
 				onKeyDown={this._onKeyDown.bind(this)} 
-				onChange={this.onChange} 
+				onChange={this.onChange.bind(this)} 
 				styleName="linkInput" 
 				type="text"/>
 		);

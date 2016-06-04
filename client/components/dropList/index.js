@@ -9,7 +9,7 @@ class DropdownList extends Component{
         super(props);
 		this.state = {
 			open: false,
-			selected: this.props.defaultIndex || null
+			selected: props.defaultIndex || null
 		}
 		this.toggleOpen = this.toggleOpen.bind(this);
     }

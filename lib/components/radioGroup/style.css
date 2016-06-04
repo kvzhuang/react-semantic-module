@@ -84,7 +84,7 @@
 }
 .radioGroup input[type=checkbox]:checked:after {
     content: " ";
-    background: url('../radioGroup/icon_checkbox.png');
+    background: url('./icon_checkbox.png');
     display: inline-block;
     visibility: visible;
     height: 100%;
