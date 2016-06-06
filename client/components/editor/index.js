@@ -18,11 +18,9 @@ import {
 	getSelectionCoords
 } from '../../utils/selection.js';
 
-import insertMediaBlock from './modifiers/insertMediaBlock'
 import SideToolbar from './SideToolbar';
 import InlineToolbar from './InlineToolbar';
 import ImageComponent from './ImageComponent.js';
-import MediaWrapper from './mediaWrapper.js'
 
 
 function findLinkEntities(contentBlock, callback) {
@@ -71,20 +69,28 @@ class RichEditor extends Component {
 			console.log("onChange");
 			if (!editorState.getSelection().isCollapsed()) {
 				const selectionRange = getSelectionRange();
+				//console.log(selectionRange);
 				if( selectionRange ) {
 					const selectionCoords = getSelectionCoords(selectionRange);
-					this.setState({
-						inlineToolbar: {
-							show: true,
-							position: {
-								top: selectionCoords.offsetTop,
-								left: selectionCoords.offsetLeft
-							}
-						},
-					});
+					console.log(selectionCoords);
+					if( !selectionCoords.collapsed) {
+						this.setState({
+							inlineToolbar: {
+								show: true,
+								position: {
+									top: selectionCoords.offsetTop,
+									left: selectionCoords.offsetLeft
+								}
+							},
+						});
+					}else {
+						this.setState({ inlineToolbar: { show: false } });
+					}
+					
 				}
 				
 			} else {
+				console.log('hide');
 				this.setState({ inlineToolbar: { show: false } });
 			}
 
@@ -230,6 +236,7 @@ class RichEditor extends Component {
 		let sideToolbarOffsetTop = 0;
 
 		if (selectedBlock) {
+			console.log(selectedBlock);
 			const editor = document.getElementById('richEditor');
 			const editorBounds = editor.getBoundingClientRect();
 			const blockBounds = selectedBlock.getBoundingClientRect();
