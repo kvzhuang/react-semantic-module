@@ -37,7 +37,7 @@ class DropListPage extends Component {
 				<table>
 					<tbody>
 						<tr>
-							<td>有iconfont＆預設值</td><td>無預設值的狀態</td><td>Disabled狀態</td>
+							<td>有iconfont＆預設值</td><td>無預設值的狀態</td><td>css設定error框</td><td>Disabled狀態</td>
 						</tr>
 						<tr>
 							<td>
@@ -51,6 +51,12 @@ class DropListPage extends Component {
 								<DropList 
 									listContent={listContent2}
 									onSelected={this.onSelected.bind(this)}/>
+							</td>
+							<td>
+								<DropList 
+									listContent={listContent2}
+									onSelected={this.onSelected.bind(this)}
+									styleName="errorStyle"/>
 							</td>
 							<td>
 								<DropList 

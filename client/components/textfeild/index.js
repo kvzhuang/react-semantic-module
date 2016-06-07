@@ -117,7 +117,7 @@ class TextFeild extends Component {
 
 		if( this.props.maxWords && e.target.value.length > this.props.maxWords ) {
 			this.setState({
-				errorMessage: '超過指定字數',
+				errorMessage: '輸入的字數已達上限',
 				ACData: []
 			})
 		}else {

@@ -1,11 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import CSSModules from 'react-css-modules';
 import style from './style.css';
-
-let multiChoose = [];
-
 
 function getSelectedChbox(frm) {
 	var selchbox = [];// array that will store the value of selected checkboxes
@@ -30,19 +26,35 @@ class RadioGroup extends Component {
 		super(props);
 		this.state = {
 			customValue: props.customValue,
-			customDisable: true,
+			customDisable: props.customValue? false: true,
 			errorMessage: props.errorMessage
 		}
+		this.multiChoose = [];
+		if( props.customValue ){
+			this.multiChoose.push({
+				label: '自訂',
+				value: props.checkedValue 
+			})
+		} 
 	}
 	handleChange(index,e) {
-		multiChoose = getSelectedChbox(this.refs.main);
-		if( multiChoose.length > this.props.maxChoose ) {
+		this.multiChoose = getSelectedChbox(this.refs.main);
+		if( this.multiChoose.length > this.props.maxChoose ) {
 			e.target.checked = false;
 			this.setState({ errorMessage: '最多選擇'+this.props.maxChoose+'個項目' });
 		}else {
 			this.setState({ errorMessage: ''});
-			this.props.onSelected(multiChoose,index+1);
-		}		 
+			this.props.onSelected(this.multiChoose,index+1);
+		}
+		let check=true;
+		for ( let i=0; i< this.multiChoose.length ; i++) {
+			if(this.multiChoose[i].label === '自訂'){
+				check = false;
+			}
+		}
+		this.setState({
+			customDisable: check,
+		})
 	}
 	customChange(e) {
 		this.setState({
@@ -74,39 +86,51 @@ class RadioGroup extends Component {
 	} 
 	
 	render() {
+		
+		const {
+			checkBox,
+			name,
+			group,
+			checkedIndex,
+			checkedValue,
+			custom,
+			customChoose,
+			customValue
+		} = this.props;
 		let that = this;
-		let type = this.props.checkBox ? 'checkbox' : 'radio'; 
+		let type = checkBox ? 'checkbox' : 'radio'; 
 		
 		return (
 			<div className={this.props.className} ref="main" styleName="radioGroup">
-				{this.props.group.map(function (data, index) {
+				{group.map(function (data, index) {
 					return(
 					<div key={index} styleName="radioItem">
 						
 						<input
 							type={type}
-							id={that.props.name + 'radio' + index}
-							name={that.props.name}
+							id={name + 'radio' + index}
+							name={name}
 							value={data.value} 
 							label={data.label}
 							onChange={that.handleChange.bind(that,index)}
-							defaultChecked={that.props.checkedIndex-1 === index || that.props.checkedValue === data.label ? 'checked' : null } />
+							defaultChecked={checkedIndex-1 === index || checkedValue === data.label ? 'checked' : null } />
 						
-						<label htmlFor={that.props.name + 'radio' + index}><div styleName="check"></div>{data.label}</label>
+						<label htmlFor={name + 'radio' + index}><div styleName="check"></div>{data.label}</label>
 						
 					</div>
 					);
 				})}
-				{this.props.custom && 
+				{custom && 
 					<div styleName="radioItem">
 						<input 
-							id={that.props.name + 'custom'}
+							id={name + 'custom'}
 							type={type}
 							value={this.state.customValue}
-							name={that.props.name}
+							name={name}
 							label="自訂"
-							onChange={this.customChoose.bind(this)} />
-						<label htmlFor={that.props.name + 'custom'}><div styleName="check"></div>自訂</label>
+							onChange={this.customChoose.bind(this)}
+							defaultChecked={ customValue? group.length + 1 : null} />
+						<label htmlFor={name + 'custom'}><div styleName="check"></div>自訂</label>
 						<input
 							type="text" 
 							ref="customInput"
@@ -127,4 +151,4 @@ RadioGroup.defaultProps = {
 	maxChoose: 99,
 	custom: false
 }
-export default connect()(CSSModules(RadioGroup,style,{allowMultiple:true}));
+export default CSSModules(RadioGroup,style,{allowMultiple:true});

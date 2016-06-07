@@ -23,6 +23,21 @@ let listContent2 = [
 ```
 ### Properties
 
+修改內部樣式的方法
+``` css
+
+/*修改Input target*/
+.[props代入的styleName] [class*=Droplist_listInput] {
+	//css code
+}
+/*修改drop list*/
+.[props代入的styleName] [class*=Droplist_list] {
+	//css code
+}
+```
+
+### Properties
+
 #### DropdownMenu
 |Name|Type|default|Required|Description|
 |-------|--------|------|------|---|
