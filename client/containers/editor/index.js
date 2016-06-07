@@ -18,8 +18,11 @@ class EditorPage extends Component {
 		return (
 			<div>
 				<h3>Rich Editor</h3>
-				<Editor />
+				<div styleName="editorBlock">
+					<Editor />
+				</div>
 			</div>
+			
 		);
 	}
 }

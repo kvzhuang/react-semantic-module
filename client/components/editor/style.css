@@ -5,22 +5,12 @@
 	right: 0;
 	bottom: 0;
 	left: 0;
-	width: 960px;
-	margin: 50px auto;
+	width: 100%;
+	height: 100%;
 	padding: 25px;
 	font-size: 18px;
 }
-.editor .paragraph {
-	margin-bottom: 2.5rem;
-}
-.editor blockquote {
-	margin-left: 0px;
-	padding-left: 21px;
-	border-left: 3px solid #444;
-}
-.editor img {
-	max-width: 100%;
-}
+
 .toolbar {
 	position: absolute;
 	z-index: 9999;
@@ -144,4 +134,34 @@
 	height: 31px;
 	top: 1px;
 	z-index: 9;
+}
+
+/* content style */
+.editor h1 {
+	font-size: 24px;
+	line-height: 28px;
+}
+.editor h2 {
+	font-size: 20px;
+	line-height: 28px;
+}
+.editor {
+	font-size: 16px;
+	line-height: 28px;
+}
+.editor blockquote {
+	font-size: 24px;
+	line-height: 28px;
+	font-style: italic;
+	color: #8a8a8a;
+	width: 626px;
+	padding: 40px 60px 40px 60px;
+	margin: 0 auto;
+	border: 0;
+}
+.editor img {
+	max-width: 100%;
+}
+.editor .paragraph {
+	margin-bottom: 28px;
 }

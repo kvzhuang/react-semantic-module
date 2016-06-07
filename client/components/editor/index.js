@@ -52,7 +52,7 @@ const Link = (props) => {
 class RichEditor extends Component {
 	constructor(props) { 
 		super(props);
-		
+		/* LINK declartion*/ 
 		const decorator = new CompositeDecorator([
 			{
 				strategy: findLinkEntities,
@@ -60,40 +60,38 @@ class RichEditor extends Component {
 			},
 		]);
 		
+		let editorState = null;
+		if (this.props.editorState) {
+			editorState = this.props.editorState
+		} else if (this.props.content) {
+			const blocks = convertFromRaw(this.props.content);
+			editorState = EditorState.createWithContent(
+				ContentState.createFromBlockArray(blocks),
+				decorator
+			)
+		} else {
+			editorState = EditorState.createEmpty(decorator)
+		}
+		
 		this.state = {
-			editorState: EditorState.createEmpty(decorator),
+			editorState,
 			inlineToolbar: { show: false },
 		};
 
 		this.onChange = (editorState) => {
-			console.log("onChange");
+			/*const selectionRange = getSelectionRange();
 			if (!editorState.getSelection().isCollapsed()) {
-				const selectionRange = getSelectionRange();
-				//console.log(selectionRange);
-				if( selectionRange ) {
-					const selectionCoords = getSelectionCoords(selectionRange);
-					console.log(selectionCoords);
-					if( !selectionCoords.collapsed) {
-						this.setState({
-							inlineToolbar: {
-								show: true,
-								position: {
-									top: selectionCoords.offsetTop,
-									left: selectionCoords.offsetLeft
-								}
-							},
-						});
-					}else {
-						this.setState({ inlineToolbar: { show: false } });
-					}
-					
-				}
-				
-			} else {
-				console.log('hide');
-				this.setState({ inlineToolbar: { show: false } });
-			}
-
+				const selectionCoords = getSelectionCoords(selectionRange);
+					this.setState({
+						inlineToolbar: {
+							show: true,
+							position: {
+								top: selectionCoords.offsetTop,
+								left: selectionCoords.offsetLeft
+							}
+						}
+					});
+			}*/
 			this.setState({ editorState });
 			setTimeout(this.updateSelection, 0);
 		}
@@ -130,7 +128,6 @@ class RichEditor extends Component {
 	
 	_blockRenderer(block) {
 		let type = block.getType();
-		console.log(type);
 		if(type === 'atomic') {
 			return {
 				component: ImageComponent,
@@ -141,14 +138,40 @@ class RichEditor extends Component {
 	
 	_updateSelection() {
 		const selectionRange = getSelectionRange();
-		let selectedBlock;
+		let popoverControlVisible = false,
+			popoverControlTop = null,
+			popoverControlLeft = null,
+			selectedBlock;
+		
 		if (selectionRange) {
+			console.log(selectionRange.startContainer.id);
+			let rangeBounds = selectionRange.getBoundingClientRect()
 			selectedBlock = getSelectedBlockElement(selectionRange);
+			console.log(selectedBlock);
+			console.log(!selectionRange.collapsed);
+			if (selectedBlock && !selectionRange.collapsed) {
+				popoverControlVisible = true;
+				popoverControlTop = getSelectionCoords(selectionRange).offsetTop;
+				popoverControlLeft = getSelectionCoords(selectionRange).offsetLeft;
+				this.tempTop = popoverControlTop;
+				this.tempLeft = popoverControlLeft;
+			}else if( selectionRange.startContainer.id === 'toolbar-icon') {
+				popoverControlVisible = true;
+				popoverControlTop = this.tempTop;
+				popoverControlLeft = this.tempLeft;
+			}
 		}
+		
 		this.setState({
 			selectedBlock,
-			selectionRange
-		});
+			inlineToolbar: {
+				show: popoverControlVisible,
+				position: {
+					top: popoverControlTop,
+					left: popoverControlLeft
+				}
+			}
+		})
 	}
 
 	_handleKeyCommand(command) {
@@ -236,7 +259,7 @@ class RichEditor extends Component {
 		let sideToolbarOffsetTop = 0;
 
 		if (selectedBlock) {
-			console.log(selectedBlock);
+			//console.log(selectedBlock);
 			const editor = document.getElementById('richEditor');
 			const editorBounds = editor.getBoundingClientRect();
 			const blockBounds = selectedBlock.getBoundingClientRect();
@@ -250,6 +273,7 @@ class RichEditor extends Component {
 		
 		console.log(html);*/
 		
+		console.log(this.state.inlineToolbar.position);
 		return (
 			<div styleName="editor" id="richEditor" >
 				{selectedBlock

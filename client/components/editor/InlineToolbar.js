@@ -39,7 +39,7 @@ class InlineToolBar extends Component {
 				id="inlineToolbar"
 				style={position}
 				>
-				<ul styleName="toolbar-icons">
+				<ul styleName="toolbar-icons" id="toolbar-icon">
 					{INLINE_STYLES.map(type =>
 						<ToolbarIcon
 							key={type.label || type.icon}
