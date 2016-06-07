@@ -93,6 +93,7 @@ class RichEditor extends Component {
 					});
 			}*/
 			this.setState({ editorState });
+			if( props.onChange ) props.onChange(convertToRaw(editorState.getCurrentContent()));
 			setTimeout(this.updateSelection, 0);
 		}
 		this.focus = () => this.refs.editor.focus();
@@ -144,11 +145,8 @@ class RichEditor extends Component {
 			selectedBlock;
 		
 		if (selectionRange) {
-			console.log(selectionRange.startContainer.id);
-			let rangeBounds = selectionRange.getBoundingClientRect()
+			let rangeBounds = selectionRange.getBoundingClientRect();
 			selectedBlock = getSelectedBlockElement(selectionRange);
-			console.log(selectedBlock);
-			console.log(!selectionRange.collapsed);
 			if (selectedBlock && !selectionRange.collapsed) {
 				popoverControlVisible = true;
 				popoverControlTop = getSelectionCoords(selectionRange).offsetTop;
@@ -272,8 +270,6 @@ class RichEditor extends Component {
 		/*let html = stateToHTML(contentState);
 		
 		console.log(html);*/
-		
-		console.log(this.state.inlineToolbar.position);
 		return (
 			<div styleName="editor" id="richEditor" >
 				{selectedBlock

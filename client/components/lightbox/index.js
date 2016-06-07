@@ -16,10 +16,7 @@ class Lightbox extends Component{
 	}
 	
     render(){
-        let boxWidth = '380px',contentPadding = '0 10px', contentHeight = 'auto';
-        if( this.props.option.title ) {
-            boxWidth = '800px';
-        }
+        let contentPadding = '0 10px', contentHeight = 'auto';
         if ( this.props.option.contentHeight ) {
             contentHeight = this.props.option.contentHeight;
         }
@@ -30,7 +27,7 @@ class Lightbox extends Component{
                          styleName="overlay">
                         
                 </Overlay>
-                <div styleName="lightbox" style={{ width: boxWidth}} className={this.props.className}>
+                <div styleName="lightbox" className={this.props.className}>
                     { 
                         this.props.option.title && 
                         <div styleName="title">{ this.props.option.title }</div>
