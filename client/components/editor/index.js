@@ -61,10 +61,10 @@ class RichEditor extends Component {
 		]);
 		
 		let editorState = null;
-		if (this.props.editorState) {
-			editorState = this.props.editorState
-		} else if (this.props.content) {
-			const blocks = convertFromRaw(this.props.content);
+		if (props.editorState) {
+			editorState = props.editorState
+		} else if (props.content) {
+			const blocks = convertFromRaw(props.content);
 			editorState = EditorState.createWithContent(
 				ContentState.createFromBlockArray(blocks),
 				decorator

@@ -11,9 +11,9 @@ class TextFeild extends Component {
 	constructor(props){
 		super(props); 
 		this.state = {
-			data: this.props.value,
-			errorMessage: this.props.errorMessage || '',
-			ACData: this.props.ACData,
+			data: props.value,
+			errorMessage: props.errorMessage || '',
+			ACData: props.ACData,
 			highlightedIndex: null
 		}
 		this._onChange = this._onChange.bind(this);
@@ -23,7 +23,7 @@ class TextFeild extends Component {
 			ArrowDown(event) {
 				event.preventDefault()
 				if(this.state.ACData.length === 0) {
-					if(this.props.onRequestOpenAC) this.props.onRequestOpenAC();
+					if(props.onRequestOpenAC) props.onRequestOpenAC();
 					this.setState({
 						highlightedIndex: 0
 					})
