@@ -44,9 +44,7 @@ class EditorPage extends Component {
 			<div>
 				<h3>Rich Editor</h3>
 				<button styleName="viewButton" onClick={this.toggle}>發表文章</button>
-				<div className="content" dangerouslySetInnerHTML={{__html: html}}>
-					
-				</div>
+				
 				{ this.state.open && 
 					<LightBox option={option}
 						  onClose={this.toggle.bind(this)}>
@@ -67,6 +65,9 @@ class EditorPage extends Component {
 						</div>
 					</div>
 				}
+				<div className="content" dangerouslySetInnerHTML={{__html: html}}>
+					
+				</div>
 			</div>
 			
 		);
