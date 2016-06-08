@@ -8,7 +8,6 @@ import DropList from 'client/components/dropList';
 
 import html from 'doc/droplist.md';
 
-
 let listContent = [
 	{ label: '公開', value: '111', iconFont: 'fa-globe'},
 	{ label: '朋友', value: '222', iconFont: 'fa-user'},

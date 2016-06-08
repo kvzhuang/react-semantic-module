@@ -35,7 +35,7 @@ let group = [
 
 |Name|Type|default|Required|Description|
 |-------|--------|------|------|---|
-|checkbox|bool|||若為true則顯示成checkbox|
+|checkBox|bool|||若為true則顯示成checkbox|
 |maxChoose|number|||最大選擇數目|
 ### Events
 

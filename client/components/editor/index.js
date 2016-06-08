@@ -9,6 +9,7 @@ import {
 	ContentState,
 	CompositeDecorator,
 	convertToRaw,
+	convertFromRaw,
 	convertFromHTML,
 	AtomicBlockUtils
 } from 'draft-js';
@@ -49,24 +50,27 @@ const Link = (props) => {
 	);
 };
 
-class RichEditor extends Component {
-	constructor(props) { 
-		super(props);
-		/* LINK declartion*/ 
-		const decorator = new CompositeDecorator([
+const decorator = new CompositeDecorator([
 			{
 				strategy: findLinkEntities,
 				component: Link,
 			},
 		]);
+
+class RichEditor extends Component {
+	constructor(props) { 
+		super(props);
+		/* LINK declartion*/ 
+		
 		
 		let editorState = null;
 		if (props.editorState) {
 			editorState = props.editorState
 		} else if (props.content) {
 			const blocks = convertFromRaw(props.content);
+			this.propsContent = props.content;
 			editorState = EditorState.createWithContent(
-				ContentState.createFromBlockArray(blocks),
+				blocks,
 				decorator
 			)
 		} else {
@@ -252,6 +256,18 @@ class RichEditor extends Component {
 		this.refs.fileInput.click();
 	}
 
+	componentWillReceiveProps(nextProps) {
+		if( nextProps.content !== this.propsContent ) {
+			const blocks = convertFromRaw(nextProps.content);
+			const editorState = EditorState.createWithContent(
+				blocks,
+				decorator
+			)
+			this.setState({ editorState });
+			this.propsContent = nextProps.content;
+		}
+	}
+	
 	render() {
 		const { editorState, selectedBlock, selectionRange } = this.state;
 		let sideToolbarOffsetTop = 0;

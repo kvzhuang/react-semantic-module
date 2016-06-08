@@ -21,7 +21,7 @@ let listContent2 = [
 	{ label: '博士', value: '333'},
 ]
 ```
-### Properties
+### Styling
 
 修改內部樣式的方法
 ``` css

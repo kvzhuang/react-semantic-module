@@ -8,7 +8,7 @@ import LightBox from 'client/components/lightbox';
 
 //import { RadioGroup } from 'c_wap_module';
 import Editor from 'client/components/editor';
-
+import html from 'doc/editor.md';
 console.log(Editor);
 
 class EditorPage extends Component {
@@ -16,19 +16,20 @@ class EditorPage extends Component {
 		super();
 		this.state = {
 			open: false,
-			rawStateString: null
+			rawStateString: null,
+			rawState: null
 		}
 		this.onChange = (rawState) => this._onChange(rawState);
 		this.toggle = () => this._toggle();
 	}
 	_onChange (rawState) {
-		console.log(rawState);
-		this.rawStateString = JSON.stringify(rawState);
+		this.rawState= rawState;
 	}
 	_toggle(){
 		this.setState({ 
 			open: !this.state.open,
-			rawStateString: this.rawStateString
+			rawStateString: JSON.stringify(this.rawState),
+			rawState: this.rawState
 		 });
 	}
 	render() {
@@ -43,6 +44,9 @@ class EditorPage extends Component {
 			<div>
 				<h3>Rich Editor</h3>
 				<button styleName="viewButton" onClick={this.toggle}>發表文章</button>
+				<div className="content" dangerouslySetInnerHTML={{__html: html}}>
+					
+				</div>
 				{ this.state.open && 
 					<LightBox option={option}
 						  onClose={this.toggle.bind(this)}>
@@ -56,6 +60,10 @@ class EditorPage extends Component {
 						<h3> SHOW JSON RESULT </h3>
 						<div className="content">
 							<p>{ this.state.rawStateString }</p>
+						</div>
+						<h3> Convert from JSON </h3>
+						<div className="content">
+							<Editor content={this.state.rawState}/>
 						</div>
 					</div>
 				}
