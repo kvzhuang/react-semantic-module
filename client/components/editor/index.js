@@ -97,7 +97,7 @@ class RichEditor extends Component {
 					});
 			}*/
 			this.setState({ editorState });
-			if( props.onChange ) props.onChange(convertToRaw(editorState.getCurrentContent()));
+			if( props.onChange ) props.onChange(editorState.getCurrentContent());
 			setTimeout(this.updateSelection, 0);
 		}
 		this.focus = () => this.refs.editor.focus();

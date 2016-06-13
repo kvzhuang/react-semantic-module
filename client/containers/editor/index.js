@@ -5,10 +5,14 @@ import CSSModules from 'react-css-modules';
 import style from './style.css';
 import LightBox from 'client/components/lightbox';
 //import html from 'doc/switches.md';
-
+import {stateToHTML} from 'draft-js-export-html';
+import {stateFromHTML} from 'draft-js-import-html';
 //import { RadioGroup } from 'c_wap_module';
 import Editor from 'client/components/editor';
 import html from 'doc/editor.md';
+import {
+	convertToRaw,
+} from 'draft-js';
 console.log(Editor);
 
 class EditorPage extends Component {
@@ -17,19 +21,27 @@ class EditorPage extends Component {
 		this.state = {
 			open: false,
 			rawStateString: null,
+			HTMLString: null,
 			rawState: null
 		}
 		this.onChange = (rawState) => this._onChange(rawState);
 		this.toggle = () => this._toggle();
 	}
-	_onChange (rawState) {
-		this.rawState= rawState;
+	_onChange (contentState) {
+		this.contentState = contentState;
+		this.rawState= convertToRaw(contentState);
 	}
 	_toggle(){
+		let html;
+		if( this.contentState ) {
+			html = stateToHTML(this.contentState);
+		}
 		this.setState({ 
 			open: !this.state.open,
 			rawStateString: JSON.stringify(this.rawState),
-			rawState: this.rawState
+			rawState: this.rawState,
+			HTMLString: html,
+			HTMLtoState: convertToRaw(stateFromHTML(html))
 		 });
 	}
 	render() {
@@ -62,6 +74,14 @@ class EditorPage extends Component {
 						<h3> Convert from JSON </h3>
 						<div className="content">
 							<Editor content={this.state.rawState}/>
+						</div>
+						<h3> SHOW HTML RESULT </h3>
+						<div className="content">
+							<p>{ this.state.HTMLString }</p>
+						</div>
+						<h3> Convert from HTML </h3>
+						<div className="content">
+							<Editor content={this.state.HTMLtoState}/>
 						</div>
 					</div>
 				}
