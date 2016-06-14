@@ -29,12 +29,11 @@
     outline: 0;
     background: #fff;
     text-align: center;
-    padding: 8px 20px;
-    margin: 40px 10px 0 10px;
+    padding: 8px 16px;
+    margin: 40px 8px 0 10px;
     border-radius: 3px;
     cursor: pointer;
     border: 1px solid #e6e6e6;
-    font-weight: bold;
 }
 .lightbox button.submit {
     background: #34a8c4;
