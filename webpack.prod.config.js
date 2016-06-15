@@ -10,7 +10,8 @@ require('asset-require-hook')({
 module.exports = {
 	
 	entry: [
-		'./client/client'
+		'babel-polyfill',
+		'./client/client',
 	],
 	debug: true,
 	devtool: 'eval',

@@ -118,6 +118,7 @@ class RichEditor extends Component {
 			}
 			return null;
 		}
+		this.cleanInput = () => { this.refs.fileInput.value = null; }
 	}
 	
 	/*
@@ -232,7 +233,8 @@ class RichEditor extends Component {
 	_insertBlockComponent(type, data) {
     
 		//let { editorState, entityKey } = insertMediaBlock(this.state.editorState, type, data)
-		
+		console.log(type);
+		console.log(data);
 		const entityKey = Entity.create(type, 'IMMUTABLE', {src: data.src});
 		this.onChange(AtomicBlockUtils.insertAtomicBlock(
             this.state.editorState,
@@ -242,17 +244,20 @@ class RichEditor extends Component {
 		/*this.setState({
 			editorState,
 		})*/
-
+		this.cleanInput();
 		return entityKey
 	};
 
 	_handleFileInput(e) {
-		let files = Array.prototype.slice.call(e.target.files, 0)
+		console.log(e);
+		let files = Array.prototype.slice.call(e.target.files, 0);
+		console.log(files);
 		files.forEach(f => 
-			this.insertBlockComponent("IMAGE", {src: URL.createObjectURL(f)}))
+			this.insertBlockComponent("IMAGE", {src: URL.createObjectURL(f)}));
 	}
 
 	_handleUploadImage() {
+		console.log(this.refs);
 		this.refs.fileInput.click();
 	}
 
@@ -319,7 +324,7 @@ class RichEditor extends Component {
 						onClick={this.focus}
 						/>
 					<input type="file" ref="fileInput" style={{ display: 'none' }}
-						onChange={this.handleFileInput} />
+						 onChange={this.handleFileInput}/>
 			</div>
 		);
 	}

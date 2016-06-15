@@ -33,6 +33,11 @@ class EditorPage extends Component {
 	}
 	_toggle(){
 		let html;
+		const option = {
+			parser:{
+				'img': 'IMAGE'
+			}
+		}
 		if( this.contentState ) {
 			html = stateToHTML(this.contentState);
 		}
