@@ -4,7 +4,12 @@ import style from './style.css';
 import ReactDOM from 'react-dom';
 
 
+function highlightString( keyword, targetString ){
+	let pattern = new RegExp(keyword,'gi'),
+		replace = '<span>' + keyword + '</span>';
 
+		return targetString.replace(pattern,replace);
+}
 
 
 class TextFeild extends Component {
@@ -105,7 +110,7 @@ class TextFeild extends Component {
 		if( this.state.highlightedIndex !== null ) this.setState({ highlightedIndex: null}); 
 		let that = this;
 		setTimeout(function(){
-			that.props.onBlur(that.props.name, that.state.data);
+			//that.props.onBlur(that.props.name, that.state.data);
 		},200);
 		
 		
@@ -191,8 +196,14 @@ class TextFeild extends Component {
 					<div style={this.ACStyle} styleName="AClist">
 						{ this.state.ACData.map(function(item,index){
 							let style = index === this.state.highlightedIndex ? { background: '#def6ff' }: null; 
+							let transformString = highlightString(this.state.data ,item.value);
+							console.log(transformString);
 							return (
-								<li key={index} onClick={this.select.bind(this, item.value, index)} onMouseOver={this.ACMouseOver.bind(this,index)} style={style}>{item.value}</li>
+								<li key={index} 
+									onClick={this.select.bind(this, item.value, index)} 
+									onMouseOver={this.ACMouseOver.bind(this,index)} 
+									style={style}
+									dangerouslySetInnerHTML={{ __html: transformString }} ></li>
 							);
 						},this) }
 					</div>	

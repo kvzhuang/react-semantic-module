@@ -19,6 +19,7 @@ module.exports = function checkMode(app){
 			context: __dirname,
 			devtool: 'eval',
 			entry: [
+				'babel-polyfill',
 				'webpack-hot-middleware/client',
 				'./client/client'
 			],

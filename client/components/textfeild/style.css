@@ -41,3 +41,6 @@
 	list-style: none;
 	cursor: pointer;
 }
+.AClist li span {
+	color: #ff530d;
+}
