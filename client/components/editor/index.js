@@ -252,8 +252,13 @@ class RichEditor extends Component {
 		console.log(e);
 		let files = Array.prototype.slice.call(e.target.files, 0);
 		console.log(files);
-		files.forEach(f => 
-			this.insertBlockComponent("IMAGE", {src: URL.createObjectURL(f)}));
+		files.forEach(f => {
+			console.log(f);
+			if( f.type.indexOf('image') > -1 )
+				this.insertBlockComponent("IMAGE", {src: URL.createObjectURL(f)});
+			else if ( f.type.indexOf('video') > -1 )
+				this.insertBlockComponent("VIDEO", {src: URL.createObjectURL(f)});
+		});
 	}
 
 	_handleUploadImage() {

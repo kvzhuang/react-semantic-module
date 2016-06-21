@@ -197,7 +197,6 @@ class TextFeild extends Component {
 						{ this.state.ACData.map(function(item,index){
 							let style = index === this.state.highlightedIndex ? { background: '#def6ff' }: null; 
 							let transformString = highlightString(this.state.data ,item.value);
-							console.log(transformString);
 							return (
 								<li key={index} 
 									onClick={this.select.bind(this, item.value, index)} 
