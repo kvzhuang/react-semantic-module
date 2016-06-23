@@ -49,6 +49,7 @@
 |allowMultiLine|bool|false|false|若為true則超過寬度會自動換行|
 |maxWords|bool||false|設定最大字數，若有設定則會出現目前字數顯示|
 |ACData|array||false|auto complete|
+|disabled|bool||false|true則disabled|
 
 ###Styling
 

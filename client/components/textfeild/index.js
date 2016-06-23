@@ -123,12 +123,14 @@ class TextFeild extends Component {
 		if( this.props.maxWords && e.target.value.length > this.props.maxWords ) {
 			this.setState({
 				errorMessage: '輸入的字數已達上限',
-				ACData: []
+				ACData: [],
+				highlightedIndex: null
 			})
 		}else {
 			this.setState({
 				data:  e.target.value,
-				errorMessage: ''
+				errorMessage: '',
+				highlightedIndex: null,
 			})
 			this.props.onChange(this.props.name, e.target.value);	
 		}
@@ -176,6 +178,7 @@ class TextFeild extends Component {
 			onChange: this._onChange,
 			value: this.state.data,
 			placeholder: this.props.placeHolder,
+			disabled: this.props.disabled
 		}
 		let status = '';
 		let that = this;

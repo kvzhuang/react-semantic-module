@@ -40,7 +40,8 @@
 	padding-left: 10px;
 	list-style: none;
 	cursor: pointer;
+	color: #8d8d8d;
 }
 .AClist li span {
-	color: #ff530d;
+	color: #000;
 }
