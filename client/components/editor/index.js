@@ -11,7 +11,9 @@ import {
 	convertToRaw,
 	convertFromRaw,
 	convertFromHTML,
-	AtomicBlockUtils
+	AtomicBlockUtils,
+	getDefaultKeyBinding,
+	KeyBindingUtil
 } from 'draft-js';
 import {
 	getSelectionRange,
@@ -23,6 +25,15 @@ import SideToolbar from './SideToolbar';
 import InlineToolbar from './InlineToolbar';
 import ImageComponent from './ImageComponent.js';
 
+const {hasCommandModifier} = KeyBindingUtil;
+
+function myKeyBindingFn(e: SyntheticKeyboardEvent): string {
+	console.log(e);
+	if (e.keyCode === 86 /* `S` key */ && hasCommandModifier(e)) {
+		return 'editor-paste';
+	}
+	return getDefaultKeyBinding(e);
+}
 
 function findLinkEntities(contentBlock, callback) {
 	contentBlock.findEntityRanges(
@@ -178,6 +189,7 @@ class RichEditor extends Component {
 	}
 
 	_handleKeyCommand(command) {
+		console.log(command);
 		const { editorState } = this.state;
 		const newState = RichUtils.handleKeyCommand(editorState, command);
 		if (newState) {
@@ -327,6 +339,7 @@ class RichEditor extends Component {
 						readOnly={this.props.readOnly}
 						ref="editor"
 						onClick={this.focus}
+						keyBindingFn={myKeyBindingFn}
 						/>
 					<input type="file" ref="fileInput" style={{ display: 'none' }}
 						 onChange={this.handleFileInput}/>
