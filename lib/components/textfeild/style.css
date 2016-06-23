@@ -45,3 +45,6 @@
 .AClist li span {
 	color: #000;
 }
+.error .front {
+	color: #ff530d;
+}

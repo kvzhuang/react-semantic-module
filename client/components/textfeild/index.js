@@ -122,6 +122,7 @@ class TextFeild extends Component {
 
 		if( this.props.maxWords && e.target.value.length > this.props.maxWords ) {
 			this.setState({
+				data:  e.target.value,
 				errorMessage: '輸入的字數已達上限',
 				ACData: [],
 				highlightedIndex: null
@@ -192,7 +193,7 @@ class TextFeild extends Component {
 						:
 						<input {...option} onKeyDown={this.handleKeyDown.bind(this)}/>      
 					}
-					{ this.props.maxWords && <span styleName="maxWord">{this.state.data.length}/{this.props.maxWords}</span>}
+					{ this.props.maxWords && <span styleName="maxWord"><span styleName="front">{this.state.data.length}</span>/{this.props.maxWords}</span>}
 					<div styleName="errorMessage">{ this.state.errorMessage }</div>
 				</div>
 				{ this.state.ACData && this.state.ACData.length > 0  && 
