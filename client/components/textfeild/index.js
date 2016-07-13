@@ -110,7 +110,7 @@ class TextFeild extends Component {
 		if( this.state.highlightedIndex !== null ) this.setState({ highlightedIndex: null}); 
 		let that = this;
 		setTimeout(function(){
-			//that.props.onBlur(that.props.name, that.state.data);
+			that.props.onBlur(that.props.name, that.state.data);
 		},200);
 		
 		
@@ -183,6 +183,7 @@ class TextFeild extends Component {
 		}
 		let status = '';
 		let that = this;
+
 		if( this.state.errorMessage.length > 0 ) status = 'error ';
 		return (
 			<div className={this.props.className} styleName="inputRoot">
