@@ -134,8 +134,8 @@
 	outline: 0;
 	border: 0;
 	border-bottom: 3px solid #444;
-	height: 31px;
-	top: 1px;
+	height: 34px;
+	top: 0px;
 	z-index: 9;
 }
 
@@ -157,7 +157,7 @@
 	line-height: 28px;
 	font-style: italic;
 	color: #8a8a8a;
-	width: 626px;
+	width: 100%;
 	padding: 40px 60px 40px 60px;
 	margin: 0 auto;
 	border: 0;

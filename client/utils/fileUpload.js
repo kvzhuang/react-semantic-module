@@ -4,7 +4,7 @@ export function getSignature (file){
 	let jsonDataForSig = {
 		apnum: "10400",
 		pid: "10400",
-		contenttype: "image/jpeg",
+		contentType: "image/jpeg",
 		contentDisposition: file.name,
 		isP: 1,
 		extra: {
@@ -92,7 +92,6 @@ export function getFileUrl(jsonDataForUpload) {
 export function getURLData(url){
 	let jsonData = {
 		pid: "10400",
-		contentType:"info.json",
 		apnum: "10400",
 		isP: 1,
 		urlList:[{

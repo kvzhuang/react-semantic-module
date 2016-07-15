@@ -221,6 +221,7 @@ class Form extends Component {
 					onSelected={this.onSelected.bind(this)}
 					onRequestOpenAC={this.onRequestOpenAC.bind(this)}>
 				</TextField>
+				<i className="icon privacy"></i>
 			</div>
 		);
 	}

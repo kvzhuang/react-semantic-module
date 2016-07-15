@@ -141,7 +141,6 @@ class RichEditor extends Component {
 	_blockRenderer(block) {
 		let type = block.getType();
 		let that = this;
-		console.log(type);
 		if(type === 'atomic') {
 			return {
 				component: CustomComponent,
@@ -196,7 +195,6 @@ class RichEditor extends Component {
 	}
 
 	_handleKeyCommand(command) {
-		console.log(command);
 		const { editorState } = this.state;
 		const newState = RichUtils.handleKeyCommand(editorState, command);
 		if (newState) {
@@ -259,8 +257,8 @@ class RichEditor extends Component {
 
 	_insertAsyncBlockComponent(type, file, props){
 		
+		if( this.props.onUploadStatusChange ) this.props.onUploadStatusChange({ uploading: true });
 		const currentSelection = this.state.editorState.getSelection();
-		console.log(currentSelection);
 		const entityKey = Entity.create(
 			type,
 			'IMMUTABLE',
@@ -273,11 +271,6 @@ class RichEditor extends Component {
 		));
 		let that = this;
 		getSignature(file).done(function(jsonDataForUpload){
-			console.log(jsonDataForUpload);
-			/*let fileURL = 'http://'+ jsonDataForUpload.bucketName + '.s3.amazonsaws.com/' + jsonDataForUpload.objectKey
-							 + '?AWSAccessKeyId=' + jsonDataForUpload.AWSAccessKeyId
-							 + '&Expires=' + '1669527003'
-							 + '&Signature=' + jsonDataForUpload.signature;*/
 			uploadToS3(jsonDataForUpload, file).done(function(){
 				getFileUrl(jsonDataForUpload).done(function(res){
 
@@ -288,6 +281,7 @@ class RichEditor extends Component {
 					console.log(selection);
 					Entity.replaceData(entityKey, props);
 					that.onChange(EditorState.forceSelection(that.state.editorState,selection));
+					if( this.props.onUploadStatusChange ) this.props.onUploadStatusChange({ uploading: false });
 				})
 			})
 		})
@@ -299,8 +293,6 @@ class RichEditor extends Component {
 
 		let block = content.getBlockForKey(blockKey);
 		let blockAfter = content.getKeyAfter(blockKey);
-
-		console.log(blockAfter);
 
 		let targetRange = new SelectionState({
 			anchorKey: blockKey,
@@ -321,7 +313,6 @@ class RichEditor extends Component {
 		this.onChange(newState);
 	}
 	_handleFileInput(e) {
-		console.log(e);
 		let files = Array.prototype.slice.call(e.target.files, 0);
 		
 		files.forEach(f => {
@@ -329,25 +320,27 @@ class RichEditor extends Component {
 				loading: true,
 				fakeSrc: URL.createObjectURL(f)
 			}
-			console.log(f);
-			if( f.type.indexOf('image') > -1 )
+			if( f.type.indexOf('image') > -1 ){
 				this._insertAsyncBlockComponent("IMAGE", f, props);
-			else if ( f.type.indexOf('video') > -1 )	
+			}
+			else if ( f.type.indexOf('video') > -1 ){
 				this._insertAsyncBlockComponent("VIDEO", f, props);
-			else if ( f.type.indexOf('document') > -1 )
+			}
+			else if ( f.type.indexOf('document') > -1 ){
 				this._insertAsyncBlockComponent("DOCUMENT", f, props);
-			else if ( f.type.indexOf('audio') > -1 )
+			}
+			else if ( f.type.indexOf('audio') > -1 ){
+				props.name = f.name;
 				this._insertAsyncBlockComponent("AUDIO", f, props);	
+			}
 		});
 	}
 
 	_handleUploadImage() {
-		console.log(this.refs);
 		this.refs.fileInput.click();
 	}
 
 	_handlePaste(text){
-		console.log(text);
 		const youtubeReg = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
 		const URLReg = /^(http|https):\/\//i;
 
@@ -363,11 +356,13 @@ class RichEditor extends Component {
 			return true;
 		}
 		else if( URLTest ) {
+			
 			getURLData(text).done(function(res){
-				console.log(res);
+				getFileUrl(res[0]).done(function(res){
+					console.log(res);
+				})
 			})
 			//that._insertAsyncBlockComponent("HYPERLINK", {src: text})
-			return true;
 		}
 	}
 
@@ -449,8 +444,9 @@ class RichEditor extends Component {
 						/>
 					<input type="file" ref="fileInput" style={{ display: 'none' }}
 						 onChange={this.handleFileInput}/>
+						 
 			</div>
 		);
 	}
 }
-export default CSSModules(RichEditor, style, { allowMultiple: true });
+export default CSSModules(RichEditor, style, { allowMultiple: true }); 

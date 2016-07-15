@@ -13,7 +13,6 @@ class urlInput extends Component {
 		}
 	}
 	onChange(e) {
-		console.log(e.target.value);
 		this.setState({ data: e.target.value });
 	}
 	_onKeyDown (e){

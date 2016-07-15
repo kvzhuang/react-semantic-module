@@ -7,7 +7,6 @@ let customPattern = {};
 const usePattern = function(patternArr,value,key) {
 
 	let i = 0,res;
-	console.log(Method);
 	while (i < patternArr.length) {
 		try{
 
@@ -18,7 +17,6 @@ const usePattern = function(patternArr,value,key) {
 			}else {
 				res = Method[patternArr[i]](value);
 			}
-			console.log(res);
 			if(!res.status){
 				validStatus = false;
 				error[key] = res.errorMessage;
