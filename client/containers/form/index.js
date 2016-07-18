@@ -113,6 +113,10 @@ class Form extends Component {
 	onSelected(value,index) {
 		console.log(value,index);
 	}
+	onError(name, errorMessage){
+		console.log(name);
+		console.log(errorMessage);
+	}
 	onRequestOpenAC(){
 		this.setState({
 				ACData: [
@@ -198,7 +202,8 @@ class Form extends Component {
 					placeHolder="請輸入"
 					styleName="input1"
 					validator={val}
-					maxWords={10}/>
+					maxWords={10}
+					onError={this.onError.bind(this)}/>
 				<TextField
 					name="editor" 
 					value={this.state.data.editor}

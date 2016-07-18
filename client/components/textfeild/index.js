@@ -104,6 +104,8 @@ class TextFeild extends Component {
 				if( !validResult.errorMessage[this.props.name] ) validResult.errorMessage[this.props.name] = '';
 				this.setState({
 					errorMessage:validResult.errorMessage[this.props.name]
+				},function(){
+					this.handleError();
 				})
 			}
 		}
@@ -116,6 +118,7 @@ class TextFeild extends Component {
 		
 	}
 	_onChange(e){
+		let event = e;
 		if( this.props.allowMultiLine ) {
 			e.target.style.height = Math.max(e.target.scrollHeight,e.target.clientHeight,this.initHeight) + 'px';
 		}
@@ -126,14 +129,18 @@ class TextFeild extends Component {
 				errorMessage: '輸入的字數已達上限',
 				ACData: [],
 				highlightedIndex: null
+			},function(){
+				this.handleError();
 			})
 		}else {
 			this.setState({
 				data:  e.target.value,
 				errorMessage: '',
 				highlightedIndex: null,
+			},function(){
+				this.props.onChange(this.props.name, this.state.data);	
 			})
-			this.props.onChange(this.props.name, e.target.value);	
+			
 		}
 		
 		
@@ -173,6 +180,12 @@ class TextFeild extends Component {
 		}
 	}
 	
+	handleError(){
+		if(this.state.errorMessage.length > 0 && this.props.onError) {
+			this.props.onError(this.props.name, this.state.errorMessage);
+		}	
+	}
+
 	render() {
 		const option = {
 			onBlur: this._onBlur,

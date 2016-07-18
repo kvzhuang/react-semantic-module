@@ -1,6 +1,6 @@
 {
   "name": "c_wap_module",
-  "version": "0.9.3",
+  "version": "0.9.4",
   "description": "module for c platform",
   "license": "MIT",
   "repository": {
@@ -25,7 +25,8 @@
     "json-loader": "^0.5.4",
     "underscore": "^1.8.3",
     "url-loader": "^0.5.7",
-    "validator": "^5.1.0"
+    "validator": "^5.1.0",
+    "classnames": "^2.2.5"
   },
   "devDependencies": {
     "asset-require-hook": "^1.0.2",
@@ -40,7 +41,6 @@
     "babel-runtime": "^6.3.19",
     "bluebird": "^3.1.1",
     "body-parser": "^1.14.2",
-    "classnames": "^2.2.5",
     "compression": "^1.6.0",
     "cookie-parser": "^1.4.0",
     "css-loader": "^0.23.1",
