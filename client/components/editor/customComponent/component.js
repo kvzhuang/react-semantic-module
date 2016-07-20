@@ -3,20 +3,46 @@ import { Entity } from 'draft-js';
 import CSSModules from 'react-css-modules';
 import style from './style.css';
 
+import { getFileUrl } from '../../../utils/fileUpload.js';
 
 class CustomComponent extends Component  {
 	
+	constructor(props){
+		super(props);
+
+		const entity = Entity.get(props.block.getEntityAt(0));
+		const entityProps =  entity.getData();
+		const type = entity.getType();
+
+		this.state = {
+			props: entityProps,
+			type: type
+		}
+	}
+
 	handleClick(e){
 		this.props.blockProps.onRequestRemove(this.props.block.getKey());
 	}
-	
-	
 
+	componentWillMount() {
+		
+		let that = this;
+		if( !this.state.props.src && this.state.props.fileId ) {
+			getFileUrl(this.state.props.fileId).done(function(res){
+				that.state.props.src = res[0].url[0];
+				that.setState({
+					props: that.state.props
+				});
+			})
+		}
+	}
+	
 	render(){
-
-		const entity = Entity.get(this.props.block.getEntityAt(0));
-		const props =  entity.getData();
-		const type = entity.getType();
+		const props = this.state.props;
+		const type = this.state.type;
+		
+		if( !props.fakeSrc ) props.fakeSrc = props.src;
+		
 		switch(type) {
 			case 'IMAGE': 
 				return <div styleName="block">

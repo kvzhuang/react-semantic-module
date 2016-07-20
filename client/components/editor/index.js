@@ -272,16 +272,17 @@ class RichEditor extends Component {
 		let that = this;
 		getSignature(file).done(function(jsonDataForUpload){
 			uploadToS3(jsonDataForUpload, file).done(function(){
-				getFileUrl(jsonDataForUpload).done(function(res){
+				getFileUrl(jsonDataForUpload.fileId).done(function(res){
 
 					props.loading = false;
 					props.src = res[0].url[0];
+					props.fileId = jsonDataForUpload.fileId;
 					
 					let selection = currentSelection.set('hasFocus', false);
 					console.log(selection);
 					Entity.replaceData(entityKey, props);
 					that.onChange(EditorState.forceSelection(that.state.editorState,selection));
-					if( this.props.onUploadStatusChange ) this.props.onUploadStatusChange({ uploading: false });
+					if( that.props.onUploadStatusChange ) that.props.onUploadStatusChange({ uploading: false });
 				})
 			})
 		})
@@ -362,7 +363,10 @@ class RichEditor extends Component {
 					console.log(res);
 				})
 			})
-			//that._insertAsyncBlockComponent("HYPERLINK", {src: text})
+			setTimeout(function(){
+				that._insertBlockComponent("HYPERLINK", {src: text});
+			}, 500);
+			return true;
 		}
 	}
 

@@ -62,7 +62,7 @@ export function uploadToS3(jsonDataForUpload, file){
 		data: formData
 	});
 }
-export function getFileUrl(jsonDataForUpload) {
+export function getFileUrl(fileId) {
 	var config = [
 		{name: "原圖", tag: ""}
 	],params = {};
@@ -70,7 +70,7 @@ export function getFileUrl(jsonDataForUpload) {
 	params.getFileArr = [];
 	config.map(function(obj, index){
 		var ioi = {};
-		ioi.fileId = jsonDataForUpload.fileId;
+		ioi.fileId = fileId;
 		ioi.protocol = "http";
 		ioi.fileTag = obj.tag;
 		params.getFileArr.push(ioi);

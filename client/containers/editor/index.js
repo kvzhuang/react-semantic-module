@@ -42,6 +42,7 @@ class EditorPage extends Component {
 			rawStateString: null,
 			HTMLString: null,
 			rawState: null,
+			uploading: false
 		}
 		this.onChange = (rawState) => this._onChange(rawState);
 		this.toggle = () => this._toggle();
@@ -53,21 +54,28 @@ class EditorPage extends Component {
 	}
 	_toggle(){
 		let html;
-		if( this.contentState ) {
-			html = stateToHTML(this.contentState);
+		if( !this.state.uploading ){
+			if( this.contentState ) {
+				html = stateToHTML(this.contentState);
+			}
+			this.setState({ 
+				open: !this.state.open,
+				rawStateString: JSON.stringify(this.rawState),
+				rawState: this.rawState,
+				HTMLString: html,
+				HTMLtoState: convertToRaw(stateFromHTML(html))
+			});
 		}
-		this.setState({ 
-			open: !this.state.open,
-			rawStateString: JSON.stringify(this.rawState),
-			rawState: this.rawState,
-			HTMLString: html,
-			HTMLtoState: convertToRaw(stateFromHTML(html))
-		 });
+		
 	}
 	componentDidMount() {
 		
 	}
-	
+	onUploadStatusChange(status){
+		this.setState({
+			uploading: status.uploading
+		})
+	}
 	/*_onRequestSearch(value) {
 
 	}*/
@@ -89,7 +97,8 @@ class EditorPage extends Component {
 						  onClose={this.toggle.bind(this)}>
 						<div styleName="editorBlock">
 							<Editor onChange={this.onChange} 
-									mentions={mentions}/>
+									mentions={mentions}
+									onUploadStatusChange={this.onUploadStatusChange.bind(this)}/>
 						</div>
 					</LightBox>	
 				}
@@ -110,7 +119,11 @@ class EditorPage extends Component {
 							<p>{ this.state.HTMLString }</p>
 						</div>
 						<h3> Convert from HTML </h3>
-						
+						<div className="content">
+							<Editor content={this.state.HTMLtoState}
+									mentions={mentions}
+									readOnly={true}/>
+						</div>
 					</div>
 				}
 				<div className="content" dangerouslySetInnerHTML={{__html: html}}>

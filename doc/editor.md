@@ -4,16 +4,47 @@
 
 ``` xml
 
-onChange( rawState ){
-	// rawState 為 EitorState的 contentState 經過轉譯的 json raw data
+/* event */
+onChange( constentState ){
+	// EitorState的 contentState 
 }
 
+onUploadStatusChange(status) {
+	// status 是一個物件，目前裡面只有loading  未來可視需求增加
+	this.setState({
+		uploading: status.uploading
+	})
+}
+
+/* jsx component */
 <Editor onChange={this.onChange}
 		content={rawState}
+		mentions={mentions}
+		readOnly={false}
+		onUploadStatusChange={this.onUploadStatusChange}
 		/>
 
 ```
 
+### tag mention
+
+mention 功能使用了 draft-js-mention-pludgin  詳細使用可以參考github
+
+我們在這邊只需要把預存好的friend list轉換成他可以吃的結構
+
+最後再轉換成immutable object 丟進去editor即可
+
+``` javascript
+let metion = [];
+
+$.each(testData.response, function(index,value){
+	let item = {link: value.pid, name: value.userName, avatar: 'https://pbs.twimg.com/profile_images/517863945/mattsailing_400x400.jpg'};
+	metion.push(item);
+})
+
+import { fromJS } from 'immutable';
+let mentions = fromJS(mention);
+```
 ### Styling
 
 Editor Element 會延展寬高到100％，因此要控制寬高請在外面多包一層div
@@ -31,3 +62,21 @@ Editor Element 會延展寬高到100％，因此要控制寬高請在外面多�
 |Name|Description|
 |----|--------------|
 |content|傳入與rawstate相同結構的json object 即可產生有預設內容的Editor|
+|readOnly|true則不能編輯（純顯示）|
+
+### data conversion
+
+這邊用了兩個套件
+draft-js-export-html : 輸出html string
+draft-js-import-html : 讀入html string 轉換成 draft data model
+
+``` javascript
+import {stateToHTML} from 'draft-js-export-html';
+import {stateFromHTML} from 'draft-js-import-html';
+
+
+htmlString = stateToHTML(this.contentState);
+//送給api 的html字串
+HTMLtoState: convertToRaw(stateFromHTML(htmlString));
+<Editor content={HTMLtoState} />
+```
