@@ -31,6 +31,8 @@ import SideToolbar from './SideToolbar';
 import InlineToolbar from './InlineToolbar';
 import CustomComponent from './customComponent/component.js';
 import { getSignature,uploadToS3,getFileUrl,getURLData } from '../../utils/fileUpload.js';
+
+import $ from 'jquery';
 /*
 const {hasCommandModifier} = KeyBindingUtil;
 
@@ -358,14 +360,32 @@ class RichEditor extends Component {
 		}
 		else if( URLTest ) {
 			
-			getURLData(text).done(function(res){
-				getFileUrl(res[0]).done(function(res){
+			function timeoutTest(id){
+				let time = 0;
+				getFileUrl(id).done(function(res){
 					console.log(res);
+					if(res[0].convert === 'pending') {
+						setTimeout(function(){
+							time = time + 500;
+							timeoutTest(id);
+						},500);
+					}else {
+						console.log(time);
+					}
+				})
+			}
+
+			getURLData(text).done(function(res){
+				//console.log(res);
+				getFileUrl(res[0].fileId).done(function(res){
+					//console.log(res);
+					$.getJSON(res[0].url[0],function(result){
+						console.log(result);
+						//timeoutTest(result.imgUrls[0].fileId);
+						that._insertBlockComponent("HYPERLINK", {title: result.title, description: result.description, img: result.imgUrls, text: text});
+					})
 				})
 			})
-			setTimeout(function(){
-				that._insertBlockComponent("HYPERLINK", {src: text});
-			}, 500);
 			return true;
 		}
 	}

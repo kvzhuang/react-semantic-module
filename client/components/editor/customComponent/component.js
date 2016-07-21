@@ -74,7 +74,19 @@ class CustomComponent extends Component  {
 				}
 				</div>;
 			case 'HYPERLINK':
-				return <div> {props.src} </div>;
+
+				return <a href={props.text } target="_blank">
+				<div styleName="block">
+					<div styleName="close" onClick={this.handleClick.bind(this)}></div>
+					{props.text}
+					<div styleName="linkBlock">
+						<img src={props.img[0].url} />
+						<h3>{props.title}</h3>
+						<p>{props.description}</p>
+						<span styleName="tag104">plus.104.com.tw</span>
+					</div>
+				</div>
+				</a>;
 			case 'YOUTUBE':
 				return <div styleName="block">
 					<div styleName="close" onClick={this.handleClick.bind(this)}></div>

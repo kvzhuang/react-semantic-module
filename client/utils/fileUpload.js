@@ -93,7 +93,7 @@ export function getURLData(url){
 	let jsonData = {
 		pid: "10400",
 		apnum: "10400",
-		isP: 1,
+		isP: 0,
 		urlList:[{
 			url: url,
 			tag: "fb"

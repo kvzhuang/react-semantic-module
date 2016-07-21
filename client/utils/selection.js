@@ -1,3 +1,6 @@
+
+const window = window || null;
+
 export const getSelectionRange = () => {
 	const selection = window.getSelection();
 	if (selection.rangeCount === 0) return null;
