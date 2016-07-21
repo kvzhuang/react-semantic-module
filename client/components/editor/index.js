@@ -162,39 +162,42 @@ class RichEditor extends Component {
 	}
 	
 	_updateSelection() {
-		const selectionRange = getSelectionRange();
-		let popoverControlVisible = false,
-			popoverControlTop = null,
-			popoverControlLeft = null,
-			selectedBlock;
-		
-		if (selectionRange) {
-			let rangeBounds = selectionRange.getBoundingClientRect();
-			selectedBlock = getSelectedBlockElement(selectionRange);
-			if (selectedBlock && !selectionRange.collapsed) {
-				popoverControlVisible = true;
-				popoverControlTop = getSelectionCoords(selectionRange).offsetTop;
-				popoverControlLeft = getSelectionCoords(selectionRange).offsetLeft;
-				this.tempTop = popoverControlTop;
-				this.tempLeft = popoverControlLeft;
-			}else if( selectionRange.startContainer.id === 'toolbar-icon') {
-				popoverControlVisible = true;
-				popoverControlTop = this.tempTop;
-				popoverControlLeft = this.tempLeft;
-			}
-		}
-		
-		this.setState({
-			selectedBlock,
-			inlineToolbar: {
-				show: popoverControlVisible,
-				position: {
-					top: popoverControlTop,
-					left: popoverControlLeft
+		if( typeof(window) !== 'undefined') {
+			const selectionRange = getSelectionRange(window);
+			let popoverControlVisible = false,
+				popoverControlTop = null,
+				popoverControlLeft = null,
+				selectedBlock;
+			
+			if (selectionRange) {
+				let rangeBounds = selectionRange.getBoundingClientRect();
+				selectedBlock = getSelectedBlockElement(selectionRange);
+				if (selectedBlock && !selectionRange.collapsed) {
+					popoverControlVisible = true;
+					popoverControlTop = getSelectionCoords(selectionRange).offsetTop;
+					popoverControlLeft = getSelectionCoords(selectionRange).offsetLeft;
+					this.tempTop = popoverControlTop;
+					this.tempLeft = popoverControlLeft;
+				}else if( selectionRange.startContainer.id === 'toolbar-icon') {
+					popoverControlVisible = true;
+					popoverControlTop = this.tempTop;
+					popoverControlLeft = this.tempLeft;
 				}
 			}
-		})
-	}
+			
+			this.setState({
+				selectedBlock,
+				inlineToolbar: {
+					show: popoverControlVisible,
+					position: {
+						top: popoverControlTop,
+						left: popoverControlLeft
+					}
+				}
+			})
+		}
+		}
+		
 
 	_handleKeyCommand(command) {
 		const { editorState } = this.state;
