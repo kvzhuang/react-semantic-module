@@ -465,10 +465,12 @@ class RichEditor extends Component {
 						handlePastedText={this.handlePaste}
 						plugins={plugins}
 						/>
+				{ this.props.mentions && 
 					<MentionSuggestions
 						onSearchChange={ this.onSearchChange }
 						suggestions={ this.state.suggestions }
 						/>
+				}
 					<input type="file" ref="fileInput" style={{ display: 'none' }}
 						 onChange={this.handleFileInput}/>
 						 

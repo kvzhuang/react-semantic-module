@@ -97,7 +97,6 @@ class EditorPage extends Component {
 						  onClose={this.toggle.bind(this)}>
 						<div styleName="editorBlock">
 							<Editor onChange={this.onChange} 
-									mentions={mentions}
 									onUploadStatusChange={this.onUploadStatusChange.bind(this)}/>
 						</div>
 					</LightBox>	

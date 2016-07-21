@@ -79,8 +79,50 @@
     background: url('./icon_trumpet.png');
 }
 .linkBlock{
-    
+    background: rgb(249,249,249);
+    border: 1px solid #e8e8e8;
+    height: 160px;
+    overflow: hidden;
+}
+.linkBlock img {
+    width: 160px;
+    height: 160px;
+    float: left;
+    margin-right: 16px;
+}
+.linkBlock h3{
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: bold;
+    max-height: 48px;
+    overflow: hidden;
+    border: 0 ;
+}
+.linkBlock p {
+    font-size: 13px;
+    line-height: 20px;
+    max-height: 40px;
+    overflow: hidden;
+    color: #8a8a8a;
+}
+.linkBlock .info {
+    padding: 10px 16px;
 }
 .tag104{
-
+    font-size: 13px;
+    position: absolute;
+    right: 16px;
+    bottom: 0px;
+    color: #8a8a8a;
+}
+.link {
+    width: 100%;
+    display: inline-block;
+    overflow : hidden;
+    text-overflow : ellipsis;
+    white-space : nowrap;
+    -moz-user-select: none; 
+    -webkit-user-select: none; 
+    -ms-user-select:none; 
+    user-select:none;-o-user-select:none;
 }

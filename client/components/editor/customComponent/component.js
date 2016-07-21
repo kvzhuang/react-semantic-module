@@ -78,12 +78,14 @@ class CustomComponent extends Component  {
 				return <a href={props.text } target="_blank">
 				<div styleName="block">
 					<div styleName="close" onClick={this.handleClick.bind(this)}></div>
-					{props.text}
+					<span styleName="link">{props.text}</span>
 					<div styleName="linkBlock">
 						<img src={props.img[0].url} />
-						<h3>{props.title}</h3>
-						<p>{props.description}</p>
-						<span styleName="tag104">plus.104.com.tw</span>
+						<div styleName="info">
+							<h3>{props.title}</h3>
+							<p>{props.description}</p>
+							<span styleName="tag104">plus.104.com.tw</span>
+						</div>
 					</div>
 				</div>
 				</a>;

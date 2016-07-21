@@ -5,9 +5,9 @@ import style from './style.css';
 import LinkInput from './urlInput';
 
 const INLINE_STYLES = [
-	{ icon: 'fa fa-bold', style: 'BOLD' },
-	{ icon: 'fa fa-italic', style: 'ITALIC' },
-	{ icon: 'fa fa-link', style: 'LINK' }
+	{ icon: 'icon bold', style: 'BOLD' },
+	{ icon: 'icon italics', style: 'ITALIC' },
+	{ icon: 'icon link', style: 'LINK' }
 ];
 
 
