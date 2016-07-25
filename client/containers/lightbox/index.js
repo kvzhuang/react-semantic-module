@@ -95,6 +95,7 @@ class LightboxPage extends Component {
 										hover={true}
 										ref="button"
 										onClick={this.toggleLightbox.bind(this,1)}
+										
 								/>
 							</td>
 							<td>
@@ -121,7 +122,8 @@ class LightboxPage extends Component {
 				<LightBox 
 						  option={option}
 						  onClose={this.lightboxClose.bind(this)}
-						  styleName="lightbox"> 
+						  styleName="lightbox"
+						  clickOverlayToClose={false}> 
 					<div style={{ textAlign: 'left'}}>
 						<h4>刪除背景照片</h4>
 						<p>移除照片後，會顯示系統預設的照片移除照片後，會顯示系統預設的照片移除照片後，會顯示系統預設的照片移除照片後，會顯示系統預設的照片</p>

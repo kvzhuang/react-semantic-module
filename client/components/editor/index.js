@@ -196,7 +196,7 @@ class RichEditor extends Component {
 				}
 			})
 		}
-		}
+	}
 		
 
 	_handleKeyCommand(command) {
@@ -275,22 +275,56 @@ class RichEditor extends Component {
 			' '
 		));
 		let that = this;
-		getSignature(file).done(function(jsonDataForUpload){
-			uploadToS3(jsonDataForUpload, file).done(function(){
-				getFileUrl(jsonDataForUpload.fileId).done(function(res){
 
-					props.loading = false;
-					props.src = res[0].url[0];
-					props.fileId = jsonDataForUpload.fileId;
-					
-					let selection = currentSelection.set('hasFocus', false);
-					console.log(selection);
-					Entity.replaceData(entityKey, props);
-					that.onChange(EditorState.forceSelection(that.state.editorState,selection));
-					if( that.props.onUploadStatusChange ) that.props.onUploadStatusChange({ uploading: false });
+		function timeoutTest(id){
+				let time = 0;
+				getFileUrl(id).done(function(res){
+					console.log(res);
+					if(res[0].convertStatus === 'pending') {
+						setTimeout(function(){
+							time = time + 500;
+							timeoutTest(id);
+						},500);
+					}else {
+						$.getJSON(res[0].url[0],function(result){
+							console.log(result);
+							props.loading = false;
+							props.title = result.title; 
+							props.description = result.description;
+							props.img = result.imgUrls[0]; 
+							//timeoutTest(result.imgUrls[0].fileId);
+							let selection = currentSelection.set('hasFocus', false);
+							Entity.replaceData(entityKey, props);
+							that.onChange(EditorState.forceSelection(that.state.editorState,selection));
+							if( that.props.onUploadStatusChange ) that.props.onUploadStatusChange({ uploading: false });
+						})
+					}
+				})
+			}
+
+		if( type === 'HYPERLINK') {
+			getURLData(props.text).done(function(res){
+				//console.log(res);
+				timeoutTest(res[0].fileId)
+			})
+		}else {
+			getSignature(file).done(function(jsonDataForUpload){
+				uploadToS3(jsonDataForUpload, file).done(function(){
+					getFileUrl(jsonDataForUpload.fileId).done(function(res){
+
+						props.loading = false;
+						props.src = res[0].url[0];
+						props.fileId = jsonDataForUpload.fileId;
+						
+						let selection = currentSelection.set('hasFocus', false);
+						Entity.replaceData(entityKey, props);
+						that.onChange(EditorState.forceSelection(that.state.editorState,selection));
+						if( that.props.onUploadStatusChange ) that.props.onUploadStatusChange({ uploading: false });
+					})
 				})
 			})
-		})
+		}
+		
 	}
 
 	_removeBlock(blockKey) {
@@ -322,6 +356,7 @@ class RichEditor extends Component {
 		let files = Array.prototype.slice.call(e.target.files, 0);
 		
 		files.forEach(f => {
+			console.log(f);
 			let props = {
 				loading: true,
 				fakeSrc: URL.createObjectURL(f)
@@ -340,6 +375,8 @@ class RichEditor extends Component {
 				this._insertAsyncBlockComponent("AUDIO", f, props);	
 			}
 		});
+
+		this.cleanInput();
 	}
 
 	_handleUploadImage() {
@@ -363,32 +400,8 @@ class RichEditor extends Component {
 		}
 		else if( URLTest ) {
 			
-			function timeoutTest(id){
-				let time = 0;
-				getFileUrl(id).done(function(res){
-					console.log(res);
-					if(res[0].convert === 'pending') {
-						setTimeout(function(){
-							time = time + 500;
-							timeoutTest(id);
-						},500);
-					}else {
-						console.log(time);
-					}
-				})
-			}
-
-			getURLData(text).done(function(res){
-				//console.log(res);
-				getFileUrl(res[0].fileId).done(function(res){
-					//console.log(res);
-					$.getJSON(res[0].url[0],function(result){
-						console.log(result);
-						//timeoutTest(result.imgUrls[0].fileId);
-						that._insertBlockComponent("HYPERLINK", {title: result.title, description: result.description, img: result.imgUrls, text: text});
-					})
-				})
-			})
+			
+			that._insertAsyncBlockComponent("HYPERLINK", null, {text: text, loading: true});
 			return true;
 		}
 	}

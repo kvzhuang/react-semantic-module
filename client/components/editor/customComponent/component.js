@@ -45,10 +45,10 @@ class CustomComponent extends Component  {
 		
 		switch(type) {
 			case 'IMAGE': 
-				return <div styleName="block">
+				return <div styleName="block" style={{ 'textAlign': 'center'}}>
 					{ props.loading ? 
-						<div styleName="mask-block"><img styleName="article-image"src={props.fakeSrc} /><div styleName="mask"></div></div> : 
-						<div>
+						<div styleName="mask-block loading"><img styleName="article-image" src={props.fakeSrc} /><div styleName="loading"></div><div styleName="mask"></div></div> : 
+						<div >
 							<div styleName="close" onClick={this.handleClick.bind(this)}></div>
 							<img styleName="article-image"src={props.fakeSrc} />
 						</div>
@@ -74,19 +74,22 @@ class CustomComponent extends Component  {
 				}
 				</div>;
 			case 'HYPERLINK':
-
 				return <a href={props.text } target="_blank">
 				<div styleName="block">
 					<div styleName="close" onClick={this.handleClick.bind(this)}></div>
 					<span styleName="link">{props.text}</span>
-					<div styleName="linkBlock">
-						<img src={props.img[0].url} />
-						<div styleName="info">
-							<h3>{props.title}</h3>
-							<p>{props.description}</p>
-							<span styleName="tag104">plus.104.com.tw</span>
+					{ props.loading ?  
+						<div styleName="linkLoading"><div styleName="loading"></div></div> 
+						: 
+						<div styleName="linkBlock">
+							<img src={props.img.url} />
+							<div styleName="info">
+								<h3>{props.title}</h3>
+								<p>{props.description}</p>
+								<span styleName="tag104">plus.104.com.tw</span>
+							</div>
 						</div>
-					</div>
+					}
 				</div>
 				</a>;
 			case 'YOUTUBE':

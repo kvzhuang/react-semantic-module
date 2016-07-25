@@ -169,7 +169,7 @@
 .editor .paragraph {
 	margin-bottom: 28px;
 }
-.editor a {
+.editor .paragraph a {
 	text-decoration: underline;
 	color: #4a85bb;
 }
