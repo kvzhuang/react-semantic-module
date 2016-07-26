@@ -30,6 +30,7 @@ let group = [
 |checkedIndex|array|||預設選擇項目|
 |custom|bool|||決定是否有使用者自訂選項|
 |customValue|string|||連接使用者自訂的值，可以在這邊傳入預設值|
+|disabled|bool|||若為true則不可點選|
 
 #### Checkbox
 

@@ -36,7 +36,8 @@ class Switches extends Component {
 					group={group}
 					name="radio_normal"
 					onSelected={this.radioSelect.bind(this)}
-					styleName="radioGroup">
+					styleName="radioGroup"
+					>
 				</RadioGroup>
 				<RadioGroup
 					group={group}
@@ -45,7 +46,8 @@ class Switches extends Component {
 					onSelected={this.radioSelect.bind(this)}
 					custom={true}
 					styleName="radioGroup"
-					customValue={this.state.customValue}>
+					customValue={this.state.customValue}
+					disabled={true}>
 				</RadioGroup>
 				<div className="content">
 				<p>表單送出沒有選擇的時候</p>
@@ -70,7 +72,8 @@ class Switches extends Component {
 					styleName="radioGroup"
 					checkBox={true}
 					maxChoose={3}
-					customValue={this.state.customValue}>
+					customValue={this.state.customValue}
+					disabled={true}>
 				</RadioGroup>
 				<div className="content" dangerouslySetInnerHTML={{__html: html}}>
 					

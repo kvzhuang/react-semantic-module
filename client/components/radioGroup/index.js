@@ -85,6 +85,10 @@ class RadioGroup extends Component {
 		}
 	} 
 	
+	handleClick(e){
+		if( this.props.disabled ) e.preventDefault();
+	}
+
 	render() {
 		
 		const {
@@ -115,7 +119,7 @@ class RadioGroup extends Component {
 							onChange={that.handleChange.bind(that,index)}
 							defaultChecked={checkedIndex-1 === index || checkedValue === data.label ? 'checked' : null } />
 						
-						<label htmlFor={name + 'radio' + index}><div styleName="check"></div>{data.label}</label>
+						<label htmlFor={name + 'radio' + index} onClick={that.handleClick.bind(that)}><div styleName="check"></div>{data.label}</label>
 						
 					</div>
 					);
@@ -130,14 +134,26 @@ class RadioGroup extends Component {
 							label="自訂"
 							onChange={this.customChoose.bind(this)}
 							defaultChecked={ customValue? group.length + 1 : null} />
-						<label htmlFor={name + 'custom'}><div styleName="check"></div>自訂</label>
-						<input
+						<label htmlFor={name + 'custom'} onClick={that.handleClick.bind(that)}><div styleName="check"></div>自訂</label>
+						{ that.props.disabled ? 
+							<input
 							type="text" 
 							ref="customInput"
 							value={this.state.customValue} 
 							onChange={this.customChange.bind(this)} 
 							disabled={this.state.customDisable}
-							onBlur={this.handleBlur.bind(this)}/>
+							onBlur={this.handleBlur.bind(this)}
+							disabled={true}/> 
+							:
+							<input
+							type="text" 
+							ref="customInput"
+							value={this.state.customValue} 
+							onChange={this.customChange.bind(this)} 
+							disabled={this.state.customDisable}
+							onBlur={this.handleBlur.bind(this)}/>	
+						}
+						
 						
 					</div>
 				}
