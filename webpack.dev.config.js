@@ -69,6 +69,10 @@ module.exports = function checkMode(app){
 				{
 					test: /\.(png|svg|ttf|woff)$/,
 					loader: 'file'
+				},
+				{
+					test: /\.json$/,
+					loader: 'json'
 				}
 				]
 			},

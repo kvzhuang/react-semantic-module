@@ -11,6 +11,7 @@ import RadioGroup from './radioGroup';
 import TextField from './textfeild';
 
 import Validators from '../utils/validator';
+import Editor from './editor';
 
 export { 
 	LightBox,
@@ -21,5 +22,6 @@ export {
 	DropList, 
 	RadioGroup, 
 	TextField, 
-	Validators 
+	Validators,
+	Editor 
 };

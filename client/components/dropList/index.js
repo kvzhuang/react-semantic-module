@@ -63,8 +63,12 @@ class DropdownList extends Component{
                       clickAway={this.toggleOpen}
 					  width={this.props.width} > 
 					  { this.props.listContent.map(function (data, index) {
+						  let style = index === that.state.selected - 1 ? { background: '#def6ff' } : { };
 						  return (
-							  <li key={index} onClick={that.onSelect.bind(that, data, index)}>
+							  <li key={index}
+							  	  ref={"listItem" + index} 
+							  	  onClick={that.onSelect.bind(that, data, index)} 
+								  style={style}>
 								  { typeof(data.iconFont) !== 'undefined' && <i className={"fa " + data.iconFont } aria-hidden="true"  /> }								  	
 								  {data.label}
 							  </li>

@@ -97,7 +97,8 @@
 	margin: 0;
 	padding: 0;
 	color: #444;
-	font-size: 13px;
+	font-size: 18px;
+	margin-bottom: 7px;
 }
 .toolbar .toolbar-icons:after {
 	content: "";
@@ -134,8 +135,8 @@
 	outline: 0;
 	border: 0;
 	border-bottom: 3px solid #444;
-	height: 31px;
-	top: 1px;
+	height: 35px;
+	top: 0px;
 	z-index: 9;
 }
 
@@ -157,14 +158,71 @@
 	line-height: 28px;
 	font-style: italic;
 	color: #8a8a8a;
-	width: 626px;
+	width: 100%;
 	padding: 40px 60px 40px 60px;
 	margin: 0 auto;
 	border: 0;
 }
-.editor img {
+.editor img, .editor video {
 	max-width: 100%;
 }
 .editor .paragraph {
 	margin-bottom: 28px;
+}
+.editor .paragraph a {
+	text-decoration: underline;
+	color: #4a85bb;
+}
+
+/* mention */
+.mention {
+	color: #4a85bb;
+	text-decoration: none;
+}
+
+.mentionSuggestions {
+	position: absolute;
+	border-top: 1px solid #eee;
+	background: #fff;
+	border-radius: 2px;
+	cursor: pointer;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	transform-origin: 50% 0%;
+	transform: scaleY(0);
+	margin: -16px;
+	margin-top: 30px;
+}
+
+.mentionSuggestionsEntry {
+	padding: 7px 10px 3px 10px;
+	transition: background-color 0.4s cubic-bezier(.27,1.27,.48,.56);
+}
+
+.mentionSuggestionsEntry:active {
+	background-color: #cce7ff;
+}
+
+.mentionSuggestionsEntryFocused {
+	padding: 7px 10px 3px 10px;
+	transition: background-color 0.4s cubic-bezier(.27,1.27,.48,.56);
+	background-color: #e6f3ff;
+}
+
+.mentionSuggestionsEntryText {
+	display: inline-block;
+	margin-left: 8px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.mentionSuggestionsEntryAvatar {
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	border-radius: 12px;
 }

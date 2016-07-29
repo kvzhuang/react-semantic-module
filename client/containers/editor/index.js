@@ -13,7 +13,26 @@ import html from 'doc/editor.md';
 import {
 	convertToRaw,
 } from 'draft-js';
-console.log(Editor);
+
+import $ from 'jquery';
+
+import testData from './test.json';
+console.log(testData);
+
+let metion = [];
+
+/*$.each(testData.response, function(index,value){
+	let item = {link: value.pid, name: value.userName, avatar: 'https://pbs.twimg.com/profile_images/517863945/mattsailing_400x400.jpg'};
+	metion.push(item);
+})*/
+
+console.log(metion);
+import { fromJS } from 'immutable';
+
+
+
+
+const mentions = fromJS(metion);
 
 class EditorPage extends Component {
 	constructor(){
@@ -22,10 +41,12 @@ class EditorPage extends Component {
 			open: false,
 			rawStateString: null,
 			HTMLString: null,
-			rawState: null
+			rawState: null,
+			uploading: false
 		}
 		this.onChange = (rawState) => this._onChange(rawState);
 		this.toggle = () => this._toggle();
+		this.onRequestSearch = (value) => this._onRequestSearch(value);
 	}
 	_onChange (contentState) {
 		this.contentState = contentState;
@@ -33,22 +54,31 @@ class EditorPage extends Component {
 	}
 	_toggle(){
 		let html;
-		const option = {
-			parser:{
-				'img': 'IMAGE'
+		if( !this.state.uploading ){
+			if( this.contentState ) {
+				html = stateToHTML(this.contentState);
 			}
+			this.setState({ 
+				open: !this.state.open,
+				rawStateString: JSON.stringify(this.rawState),
+				rawState: this.rawState,
+				HTMLString: html,
+				HTMLtoState: convertToRaw(stateFromHTML(html))
+			});
 		}
-		if( this.contentState ) {
-			html = stateToHTML(this.contentState);
-		}
-		this.setState({ 
-			open: !this.state.open,
-			rawStateString: JSON.stringify(this.rawState),
-			rawState: this.rawState,
-			HTMLString: html,
-			HTMLtoState: convertToRaw(stateFromHTML(html))
-		 });
+		
 	}
+	componentDidMount() {
+		
+	}
+	onUploadStatusChange(status){
+		this.setState({
+			uploading: status.uploading
+		})
+	}
+	/*_onRequestSearch(value) {
+
+	}*/
 	render() {
 		let option = {
 			submit: {
@@ -66,7 +96,8 @@ class EditorPage extends Component {
 					<LightBox option={option}
 						  onClose={this.toggle.bind(this)}>
 						<div styleName="editorBlock">
-							<Editor onChange={this.onChange}/>
+							<Editor onChange={this.onChange} 
+									onUploadStatusChange={this.onUploadStatusChange.bind(this)}/>
 						</div>
 					</LightBox>	
 				}
@@ -78,7 +109,9 @@ class EditorPage extends Component {
 						</div>
 						<h3> Convert from JSON </h3>
 						<div className="content">
-							<Editor content={this.state.rawState}/>
+							<Editor content={this.state.rawState}
+									mentions={mentions}
+									readOnly={true}/>
 						</div>
 						<h3> SHOW HTML RESULT </h3>
 						<div className="content">
@@ -86,7 +119,9 @@ class EditorPage extends Component {
 						</div>
 						<h3> Convert from HTML </h3>
 						<div className="content">
-							<Editor content={this.state.HTMLtoState}/>
+							<Editor content={this.state.HTMLtoState}
+									mentions={mentions}
+									readOnly={true}/>
 						</div>
 					</div>
 				}

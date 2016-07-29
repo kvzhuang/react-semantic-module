@@ -15,6 +15,15 @@ class Lightbox extends Component{
 		enableDocScroll();
 	}
 	
+    handleClose(type){
+        console.log(type);
+        if( type === 'overlay' && this.props.clickOverlayToClose === false ) {
+           
+        }else {
+            if( this.props.onClose ) this.props.onClose();
+        }
+    }
+
     render(){
         let contentPadding = '0 10px', contentHeight = 'auto';
         if ( this.props.option.contentHeight ) {
@@ -23,7 +32,7 @@ class Lightbox extends Component{
         return(
             <div styleName="container">
                 <Overlay 
-                         onRequestClose={this.props.onClose}
+                         onRequestClose={this.handleClose.bind(this,'overlay')}
                          styleName="overlay">
                         
                 </Overlay>
@@ -35,9 +44,9 @@ class Lightbox extends Component{
                     <div styleName="content" style={{padding: contentPadding, maxHeight : contentHeight}}>
                         { this.props.children }
                         { this.props.option.submit && <button onClick={this.props.option.submit.action} styleName="submit">{this.props.option.submit.text}</button>}
-                        { this.props.option.cancel && <button onClick={this.props.onClose}>{this.props.option.cancel.text}</button>}
+                        { this.props.option.cancel && <button onClick={this.handleClose.bind(this,'cancel')}>{this.props.option.cancel.text}</button>}
                     </div>
-                    { this.props.option.closeIcon && <div styleName="close" onClick={this.props.onClose}></div>}
+                    { this.props.option.closeIcon && <div styleName="close" onClick={this.handleClose.bind(this,'closeIcon')}></div>}
                 </div>
             </div>
         );

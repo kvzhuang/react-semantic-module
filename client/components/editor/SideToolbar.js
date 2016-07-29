@@ -4,11 +4,11 @@ import CSSModules from 'react-css-modules';
 import style from './style.css';
 
 const BLOCK_TYPES = [
-	{ label: 'H1', style: 'header-one' },
-	{ label: 'H2', style: 'header-two' },
-	{ icon: 'fa fa-list', style: 'unordered-list-item' },
-	{ icon: 'fa fa-list-ol', style: 'ordered-list-item' },
-	{ icon: 'fa fa-quote-right', style: 'blockquote' }
+	{ icon: 'icon h1', style: 'header-one' },
+	{ icon: 'icon h2', style: 'header-two' },
+	{ icon: 'icon list ul', style: 'unordered-list-item' },
+	{ icon: 'icon list ol', style: 'ordered-list-item' },
+	{ icon: 'icon left_double_quote', style: 'blockquote' }
 ];
 
 const SideToolbarExtras = CSSModules(({ editorState, onToggle }) => {
@@ -46,13 +46,13 @@ class SideToolbar extends Component {
 		const { editorState, onUploadImage, onToggle } = this.props;
 		return (
 			<div style={this.props.style} styleName="side-toolbar">
-				<i className="fa fa-picture-o"
+				<i className="icon picture"
 					aria-hidden="true"
 					onMouseDown={e => e.preventDefault() }
 					onClick={onUploadImage}
 					>
 				</i>
-				<i className="fa fa-bars"
+				<i className="icon bars"
 					aria-hidden="true"
 					onMouseEnter={() => this.setState({ isExpanded: true }) }
 					onMouseDown={(e) => e.preventDefault() }

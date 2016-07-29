@@ -1,4 +1,5 @@
-export const getSelectionRange = () => {
+
+export const getSelectionRange = (window) => {
 	const selection = window.getSelection();
 	if (selection.rangeCount === 0) return null;
 	return selection.getRangeAt(0);
