@@ -58,7 +58,7 @@ class EditorPage extends Component {
 		let html;
 		if( this.state.uploadingCount === 0 ){
 			if( this.contentState ) {
-				html = stateToHTML(this.contentState);
+				//html = stateToHTML(this.contentState);
 			}
 			this.setState({ 
 				open: !this.state.open,
