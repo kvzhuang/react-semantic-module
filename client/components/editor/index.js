@@ -30,7 +30,9 @@ import {
 import SideToolbar from './SideToolbar';
 import InlineToolbar from './InlineToolbar';
 import CustomComponent from './customComponent/component.js';
-import { getSignature,uploadToS3,getFileUrl,getURLData } from '../../utils/fileUpload.js';
+import { getSignature,uploadToS3,getFileUrl,getURLData,MIMEMap } from '../../utils/fileUpload.js';
+
+import InsertUtils from './insertUtils.js';
 
 import $ from 'jquery';
 /*
@@ -65,32 +67,32 @@ function findLinkEntities(contentBlock, callback) {
 }
 
 const Link = (props) => {
+	console.log(props);
 	const {url} = Entity.get(props.entityKey).getData();
 	const styleLink = {
 		color: '#3b5998',
 		textDecoration: 'underline',
 	}
 	return (
-		<a href={url} style={styleLink}>
+		<a href={url} style={styleLink} target="_blank">
 			{props.children}
 		</a>
 	);
 };
 
 const decorator = new CompositeDecorator([
-			{
-				strategy: findLinkEntities,
-				component: Link,
-			},
-		]);
+						{
+							strategy: findLinkEntities,
+							component: Link,
+						},
+					]);
 
 class RichEditor extends Component {
 	constructor(props) { 
 		super(props);
-		/* LINK declartion*/ 
-		
-		
+	
 		let editorState = null;
+
 		if (props.editorState) {
 			editorState = props.editorState
 		} else if (props.content) {
@@ -104,42 +106,52 @@ class RichEditor extends Component {
 			editorState = EditorState.createEmpty(decorator)
 		}
 		
+		this.uploading = 0;
+
 		this.state = {
 			editorState,
 			inlineToolbar: { show: false },
 			suggestions: this.props.mentions
 		};
-
-		this.onChange = (editorState) => {
+		/* Editor onChange event (core render method) */ 
+		this.onChange = (editorState, callback) => {
 			this.setState({ editorState });
 			if( props.onChange ) props.onChange(editorState.getCurrentContent());
 			setTimeout(this.updateSelection, 0);
+			if( typeof(callback) === 'function' ) callback();
 		}
-
+		/* Editor component public method */ 
 		this.focus = () => this.refs.editor.focus();
+		this.blur = () => this.refs.editor.blur();
+
 		this.updateSelection = () => this._updateSelection();
 		this.handleKeyCommand = (command) => this._handleKeyCommand(command);
-		this.handleFileInput = (e) => this._handleFileInput(e);
-		this.handleUploadImage = () => this._handleUploadImage();
 		this.toggleBlockType = (type) => this._toggleBlockType(type);
 		this.toggleInlineStyle = (style) => this._toggleInlineStyle(style);
-		this.toggleLink = () => this._toggleLink();
+		
+		this.handleFileInput = (e) => this._handleFileInput(e);
+		this.handleUploadImage = () => this._handleUploadImage();
+		
 		this.onLinkKeyDown = (e) => this._onLinkKeyDown(e);
 		this.insertBlockComponent = (type, data) => this._insertBlockComponent(type,data);
 		this.insertImage = (file) => this._insertImage(file);
 		this.blockRenderer = (block) => this._blockRenderer(block);
 		this.blockStyler = (block) => {
 			if (block.getType() === 'unstyled') {
-				return 'paragraph';
+				return 'paragraph'; 
 			}
 			return null;
 		}
 		this.cleanInput = () => { this.refs.fileInput.value = null; }
 		this.handlePaste = (text) => this._handlePaste(text);
 		this.onSearchChange = ({value}) => this._onSearchChange({value});
+		this.setLoadingState = (counter) => {
+			this.uploading = counter;
+			if( this.props.onUploadStatusChange ) this.props.onUploadStatusChange(this.uploading);
+		}
 	}
 	
-	
+	/* Draft js block render function*/
 	_blockRenderer(block) {
 		let type = block.getType();
 		let that = this;
@@ -153,14 +165,10 @@ class RichEditor extends Component {
 					}
 				}
 			}
-		}else if(type === 'HYPERLINK') {
-			return {
-				component: CustomComponent,
-				editable: false
-			}
 		}
 	}
-	
+
+	/* handle inlineToolbar position and if show */ 
 	_updateSelection() {
 		if( typeof(window) !== 'undefined') {
 			const selectionRange = getSelectionRange(window);
@@ -168,7 +176,6 @@ class RichEditor extends Component {
 				popoverControlTop = null,
 				popoverControlLeft = null,
 				selectedBlock;
-			
 			if (selectionRange) {
 				let rangeBounds = selectionRange.getBoundingClientRect();
 				selectedBlock = getSelectedBlockElement(selectionRange);
@@ -184,7 +191,7 @@ class RichEditor extends Component {
 					popoverControlLeft = this.tempLeft;
 				}
 			}
-			
+
 			this.setState({
 				selectedBlock,
 				inlineToolbar: {
@@ -227,104 +234,162 @@ class RichEditor extends Component {
 		);
 	}
 	
-	/*_toggleLink() {
-		const { editorState } = this.state;
-		this.setState({
-			linkInput: {
-				show: true
-			},
-			InlineToolbar: {
-				show: false
-			}
-		})
-	}*/
 	_onLinkKeyDown(value) {
 		
 		const entityKey = Entity.create('LINK', 'MUTABLE', {url: value});
+		let that = this;
 		
-		this.setState({
-			editorState: RichUtils.toggleLink(
+		this.onChange(RichUtils.toggleLink(
               this.state.editorState,
               this.state.editorState.getSelection(),
               entityKey
-            ),
-			inlineToolbar: { show: false }
-		});
+            ),function(){
+				that.setState({
+					inlineToolbar: { show: false }
+				})
+			});
 	}
-	_insertBlockComponent(type, props) {
-		const entityKey = Entity.create(type, 'IMMUTABLE', props);
-		this.onChange(AtomicBlockUtils.insertAtomicBlock(
-            this.state.editorState,
-            entityKey,
-			' '
-          ));
+
+	_insertTextBlock(){
+		let blockArray = this.state.editorState.getCurrentContent().getBlocksAsArray();
+		console.log(blockArray);
+	}
+
+	_insertBlockComponent(entityKey, type, props, mutablity) {
+		console.log("insert");
+		const currentSelection = this.state.editorState.getSelection();
+		let newState = null;
+
+		if( entityKey ){
+			let selection = currentSelection.set('hasFocus', false);
+			Entity.replaceData(entityKey, props);
+			newState = EditorState.forceSelection(this.state.editorState,selection);
+		}else {
+			entityKey = Entity.create(type, mutablity, props);
+			newState = AtomicBlockUtils.insertAtomicBlock( this.state.editorState,entityKey,' ');
+			
+		}
+
+		this.onChange(newState);
+
+		return entityKey;
 	};
 
 	_insertAsyncBlockComponent(type, file, props){
-		
-		if( this.props.onUploadStatusChange ) this.props.onUploadStatusChange({ uploading: true });
-		const currentSelection = this.state.editorState.getSelection();
-		const entityKey = Entity.create(
-			type,
-			'IMMUTABLE',
-			props
-		);
-		this.onChange(AtomicBlockUtils.insertAtomicBlock(
-			this.state.editorState,
-			entityKey,
-			' '
-		));
 		let that = this;
 
-		function timeoutTest(id){
-				let time = 0;
-				getFileUrl(id).done(function(res){
-					console.log(res);
-					if(res[0].convertStatus === 'pending') {
-						setTimeout(function(){
-							time = time + 500;
-							timeoutTest(id);
-						},500);
-					}else {
-						$.getJSON(res[0].url[0],function(result){
-							console.log(result);
-							props.loading = false;
-							props.title = result.title; 
-							props.description = result.description;
-							props.img = result.imgUrls[0]; 
-							//timeoutTest(result.imgUrls[0].fileId);
-							let selection = currentSelection.set('hasFocus', false);
-							Entity.replaceData(entityKey, props);
-							that.onChange(EditorState.forceSelection(that.state.editorState,selection));
-							if( that.props.onUploadStatusChange ) that.props.onUploadStatusChange({ uploading: false });
-						})
-					}
-				})
-			}
+		this.setLoadingState(this.uploading + 1);
 
-		if( type === 'HYPERLINK') {
-			getURLData(props.text).done(function(res){
-				//console.log(res);
-				timeoutTest(res[0].fileId)
-			})
-		}else {
-			getSignature(file).done(function(jsonDataForUpload){
-				uploadToS3(jsonDataForUpload, file).done(function(){
-					getFileUrl(jsonDataForUpload.fileId).done(function(res){
+		let entityKey = this._insertBlockComponent(null, type, props);		
 
-						props.loading = false;
-						props.src = res[0].url[0];
-						props.fileId = jsonDataForUpload.fileId;
-						
-						let selection = currentSelection.set('hasFocus', false);
-						Entity.replaceData(entityKey, props);
-						that.onChange(EditorState.forceSelection(that.state.editorState,selection));
-						if( that.props.onUploadStatusChange ) that.props.onUploadStatusChange({ uploading: false });
-					})
-				})
+		getSignature(file).done(function(jsonDataForUpload){
+			console.log(jsonDataForUpload);
+			uploadToS3(jsonDataForUpload, file).done(function(){
+				
+				props.loading = false;
+				props.src = props.fakeSrc;
+				props.fileId = jsonDataForUpload.fileId;
+				
+				that._insertBlockComponent(entityKey, type, props);
+
+				that.setLoadingState(that.uploading - 1);
+
+			}).fail(function(error){
+
+				props.error = true;
+
+				that._insertBlockComponent(entityKey, type, props);
+				
+				that.setLoadingState(that.uploading - 1);
+
 			})
-		}
+		})
 		
+	}
+
+	_handleHyperLink(url){
+		
+		let that = this;
+		let type = 'HYPERLINK';
+		let props = {
+			loading: true,
+			url: url
+		}		
+		let entityKey = this._insertBlockComponent(null, type, props, 'IMMUTABLE');
+
+		let getJSONLoop = function(id, callback){
+			let time = 0;
+			getFileUrl(id).done(function(res){
+				if(res[0].convertStatus === 'pending' || res[0].convertStatus === 'uploading') {
+					setTimeout(() => {
+						time = time + 500;
+						getJSONLoop(id, callback);
+					},500);
+					
+				}else if( res[0].convertStatus === 'success'){
+					callback(res);
+				}else if( res[0].convertStatus === 'noResponse' ) {
+					that._linkFail(props);
+				}
+			})
+		};
+
+		getURLData(props.url).done(function(res){
+				//console.log(res);
+			getJSONLoop(res[0].fileId, function(urlResult){
+
+				$.getJSON(urlResult[0].url[0],function(result){
+					
+					console.log(result);
+
+					props.loading = false;
+					props.title = result.title; 
+					props.description = result.description;
+					props.img = result.imgUrls[0];
+					props.fileId = res[0].fileId;
+					props.url = url; 
+					//timeoutTest(result.imgUrls[0].fileId);
+
+					that._insertBlockComponent(entityKey, type, props, 'IMMUTABLE');
+
+
+				}).fail(function(res){
+					//props.loading = false;
+					that._linkFail(props);
+				})
+			})
+		})
+	}
+
+	_linkFail(props) {
+		let that = this;
+
+		props.linkError = true;
+		that._insertBlockComponent(entityKey, type, props, 'IMMUTABLE');
+		props.loading = false;
+		props.linkError = null;
+		//that._insertBlockComponent(null, 'LINK', props, 'MUTABLE');
+		let startKey = that.state.editorState.getSelection().getAnchorKey();
+		that.setState({
+			editorState: InsertUtils.InsertText(that.state.editorState, url)
+		},function(){
+
+			let endKey = that.state.editorState.getCurrentContent().getSelectionAfter().getFocusKey();
+			let targetRange = new SelectionState({
+				anchorKey: startKey,
+				anchorOffset: 0,
+				focusKey: endKey,
+				focusOffset: url.length
+			});
+
+			const entityKey = Entity.create('LINK', 'MUTABLE', {url: url});
+			const linkState = RichUtils.toggleLink(
+					that.state.editorState,
+					targetRange,
+					entityKey);
+			const newState = EditorState.forceSelection(linkState, that.state.editorState.getCurrentContent().getSelectionAfter());
+			that.onChange(newState);
+		});
 	}
 
 	_removeBlock(blockKey) {
@@ -333,11 +398,12 @@ class RichEditor extends Component {
 
 		let block = content.getBlockForKey(blockKey);
 		let blockAfter = content.getKeyAfter(blockKey);
+		let blockBefore = content.getKeyBefore(blockKey);
 
 		let targetRange = new SelectionState({
 			anchorKey: blockKey,
 			anchorOffset: 0,
-			focusKey: blockAfter,
+			focusKey: blockKey,
 			focusOffset: block.getLength(),
 		});
 
@@ -349,14 +415,17 @@ class RichEditor extends Component {
 		);
 
 		let newState = EditorState.push(editorState, resetBlock, 'remove-range');
-
+			
 		this.onChange(newState);
 	}
 	_handleFileInput(e) {
+		const docReg =  /(doc|docx|pdf|wps|xls|xlsx)/i;
 		let files = Array.prototype.slice.call(e.target.files, 0);
+		
 		
 		files.forEach(f => {
 			console.log(f);
+			console.log(f.type.match(docReg));
 			let props = {
 				loading: true,
 				fakeSrc: URL.createObjectURL(f)
@@ -367,7 +436,7 @@ class RichEditor extends Component {
 			else if ( f.type.indexOf('video') > -1 ){
 				this._insertAsyncBlockComponent("VIDEO", f, props);
 			}
-			else if ( f.type.indexOf('document') > -1 ){
+			else if ( f.type.match(docReg) ){
 				this._insertAsyncBlockComponent("DOCUMENT", f, props);
 			}
 			else if ( f.type.indexOf('audio') > -1 ){
@@ -387,21 +456,20 @@ class RichEditor extends Component {
 		const youtubeReg = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
 		const URLReg = /^(http|https):\/\//i;
 
-		let that = this;
-
 		let youtubeTest = text.match(youtubeReg);
 		let URLTest = text.match(URLReg);
 
-		if( youtubeTest ){			
-			setTimeout(function(){
-			that._insertBlockComponent("YOUTUBE", {src: youtubeTest[0], file: youtubeTest[1], text: text})
-			}, 500);
+		if( youtubeTest ){
+
+			setTimeout(() => {
+				this._insertBlockComponent( null, "YOUTUBE", {src: youtubeTest[0], file: youtubeTest[1], url: text});
+			},500)
+
 			return true;
 		}
-		else if( URLTest ) {
-			
-			
-			that._insertAsyncBlockComponent("HYPERLINK", null, {text: text, loading: true});
+		else if( URLTest ) {			
+
+			this._handleHyperLink(text);
 			return true;
 		}
 	}
@@ -431,7 +499,6 @@ class RichEditor extends Component {
 		let sideToolbarOffsetTop = 0;
 
 		if (selectedBlock) {
-			//console.log(selectedBlock);
 			const editor = document.getElementById('richEditor');
 			const editorBounds = editor.getBoundingClientRect();
 			const blockBounds = selectedBlock.getBoundingClientRect();
@@ -441,10 +508,9 @@ class RichEditor extends Component {
 		}
 		
 		let contentState = editorState.getCurrentContent();
-		/*let html = stateToHTML(contentState);
-		
-		console.log(html);*/
+
 		return (
+			
 			<div styleName="editor" className={ editorStyles.editor } id="richEditor" >
 				{selectedBlock
 					? <SideToolbar
@@ -474,7 +540,6 @@ class RichEditor extends Component {
 						spellCheck={true}
 						readOnly={this.props.readOnly}
 						ref="editor"
-						onClick={this.focus}
 						handlePastedText={this.handlePaste}
 						plugins={plugins}
 						/>

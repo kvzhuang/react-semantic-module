@@ -1,5 +1,29 @@
 import $ from 'jquery';
 
+const MIMEMap = {
+	'image/jpeg': 'IMAGE',
+	'image/png': 'IMAGE',
+	'image/gif': 'IMAGE',
+	'image/bmp': 'IMAGE',
+	'image/vnd.wap.wbmp': 'IMAGE',
+	'application/pdf': 'DOCUMENT',
+	'application/vnd.oasis.opendocument.presentation': 'DOCUMENT',
+	'application/vnd.oasis.opendocument.text': 'DOCUMENT',
+	'application/msword': 'DOCUMENT',
+	'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'DOCUMENT',
+	'application/rtf': 'DOCUMENT',
+	'application/vnd.ms-powerpoint': 'DOCUMENT',
+	'application/vnd.ms-powerpoint.slideshow.macroenabled.12': 'DOCUMENT',
+	'application/vnd.openxmlformats-officedocument.presentationml.presentation': 'DOCUMENT',
+	'application/vnd.openxmlformats-officedocument.presentationml.slideshow': 'DOCUMENT',
+	'application/vnd.ms-powerpoint.template.macroenabled.12': 'DOCUMENT',
+	'application/vnd.openxmlformats-officedocument.presentationml.template': 'DOCUMENT',
+	'audio/x-wav': 'AUDIO',
+	'audio/x-ms-wma': 'AUDIO',
+
+};
+export { MIMEMap };
+
 export function getSignature (file){
 	let jsonDataForSig = {
 		apnum: "10400",
@@ -45,6 +69,7 @@ export function getSignature (file){
 	});
 }
 export function uploadToS3(jsonDataForUpload, file){
+	console.log(file.type);
 	let formData = new FormData();
 	formData.append('key', jsonDataForUpload.objectKey);
 	formData.append('content-type', 'image/jpeg');
@@ -107,6 +132,8 @@ export function getURLData(url){
 		data: JSON.stringify(jsonData),
 	})
 }
+
+
 /*
 export function fileUpload (pid, file){
 	getSignature(file).done(function(jsonDataForUpload){

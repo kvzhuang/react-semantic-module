@@ -20,11 +20,13 @@ import testData from './test.json';
 console.log(testData);
 
 let metion = [];
+if(typeof(window) !== 'undefined'){
+	$.each(testData.response, function(index,value){
+		let item = {id:index, link: value.pid, name: value.userName, avatar: 'https://pbs.twimg.com/profile_images/517863945/mattsailing_400x400.jpg'};
+		metion.push(item);
+	})
+}
 
-/*$.each(testData.response, function(index,value){
-	let item = {link: value.pid, name: value.userName, avatar: 'https://pbs.twimg.com/profile_images/517863945/mattsailing_400x400.jpg'};
-	metion.push(item);
-})*/
 
 console.log(metion);
 import { fromJS } from 'immutable';
@@ -42,7 +44,7 @@ class EditorPage extends Component {
 			rawStateString: null,
 			HTMLString: null,
 			rawState: null,
-			uploading: false
+			uploadingCount: 0
 		}
 		this.onChange = (rawState) => this._onChange(rawState);
 		this.toggle = () => this._toggle();
@@ -54,7 +56,7 @@ class EditorPage extends Component {
 	}
 	_toggle(){
 		let html;
-		if( !this.state.uploading ){
+		if( this.state.uploadingCount === 0 ){
 			if( this.contentState ) {
 				html = stateToHTML(this.contentState);
 			}
@@ -71,9 +73,9 @@ class EditorPage extends Component {
 	componentDidMount() {
 		
 	}
-	onUploadStatusChange(status){
+	onUploadStatusChange(counter){
 		this.setState({
-			uploading: status.uploading
+			uploadingCount: counter
 		})
 	}
 	/*_onRequestSearch(value) {
@@ -94,11 +96,13 @@ class EditorPage extends Component {
 				
 				{ this.state.open && 
 					<LightBox option={option}
-						  onClose={this.toggle.bind(this)}>
+						  onClose={this.toggle.bind(this,'close')}>
 						<div styleName="editorBlock">
 							<Editor onChange={this.onChange} 
+									mentions={mentions}
 									onUploadStatusChange={this.onUploadStatusChange.bind(this)}/>
 						</div>
+						{ this.state.uploadingCount > 0 && <div styleName="uploading">有{this.state.uploadingCount}個檔案上傳中...</div>}
 					</LightBox>	
 				}
 				{ this.state.rawStateString &&
@@ -118,11 +122,7 @@ class EditorPage extends Component {
 							<p>{ this.state.HTMLString }</p>
 						</div>
 						<h3> Convert from HTML </h3>
-						<div className="content">
-							<Editor content={this.state.HTMLtoState}
-									mentions={mentions}
-									readOnly={true}/>
-						</div>
+
 					</div>
 				}
 				<div className="content" dangerouslySetInnerHTML={{__html: html}}>

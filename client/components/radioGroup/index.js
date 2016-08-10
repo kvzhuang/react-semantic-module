@@ -91,16 +91,7 @@ class RadioGroup extends Component {
 
 	render() {
 		
-		const {
-			checkBox,
-			name,
-			group,
-			checkedIndex,
-			checkedValue,
-			custom,
-			customChoose,
-			customValue
-		} = this.props;
+		const { checkBox,name,group,checkedIndex,checkedValue,custom,customChoose,customValue } = this.props;
 		let that = this;
 		let type = checkBox ? 'checkbox' : 'radio'; 
 		

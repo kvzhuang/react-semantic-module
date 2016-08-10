@@ -24,7 +24,7 @@ class CustomComponent extends Component  {
 		this.props.blockProps.onRequestRemove(this.props.block.getKey());
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		
 		let that = this;
 		if( !this.state.props.src && this.state.props.fileId ) {
@@ -40,9 +40,29 @@ class CustomComponent extends Component  {
 	render(){
 		const props = this.state.props;
 		const type = this.state.type;
+		let that = this;
 		
 		if( !props.fakeSrc ) props.fakeSrc = props.src;
 		
+		if( props.error ) {
+			/* 當error block出現之後隔5秒將其刪除 */ 
+			setTimeout(function(){
+				that.props.blockProps.onRequestRemove(that.props.block.getKey());
+			},3000);
+
+			return <div styleName="block">
+				<div styleName="close" onClick={this.handleClick.bind(this)}></div>
+				<div styleName="loading-preset">
+					<div styleName="play-icon error"></div>
+					<p styleName="errorText">上傳發生錯誤，請重新上傳</p>
+				</div>
+			</div>
+		}
+
+		if( props.linkError ) {
+			that.props.blockProps.onRequestRemove(that.props.block.getKey());
+		}
+
 		switch(type) {
 			case 'IMAGE': 
 				return <div styleName="block" style={{ 'textAlign': 'center'}}>
@@ -56,7 +76,7 @@ class CustomComponent extends Component  {
 					</div>;
 			case 'VIDEO':
 				return <div styleName="block">
-				{ props.loading? <div styleName="loading-preset"><div styleName="play-icon video"></div></div> : 
+				{ props.loading? <div styleName="loading-preset"><div styleName="play-icon video"></div><div styleName="loader"></div></div> : 
 					<div>
 						<div styleName="close" onClick={this.handleClick.bind(this)}></div>
 						<video controls src={props.src} />
@@ -65,7 +85,7 @@ class CustomComponent extends Component  {
 				</div>;
 			case 'AUDIO':
 				return <div styleName="block">
-				{ props.loading? <div styleName="loading-preset audio"><div styleName="play-icon audio"></div></div> : 
+				{ props.loading? <div styleName="loading-preset audio"><div styleName="play-icon audio"></div><div styleName="loader"></div></div> : 
 					<div styleName="mid-block">
 						<div styleName="close" onClick={this.handleClick.bind(this)}></div>
 						<div styleName="title">{props.name}</div>
@@ -74,10 +94,10 @@ class CustomComponent extends Component  {
 				}
 				</div>;
 			case 'HYPERLINK':
-				return <a href={props.text } target="_blank">
+				return <a href={props.url } target="_blank">
 				<div styleName="block">
 					<div styleName="close" onClick={this.handleClick.bind(this)}></div>
-					<span styleName="link">{props.text}</span>
+					<span styleName="link">{props.url}</span>
 					{ props.loading ?  
 						<div styleName="linkLoading"><div styleName="loading"></div></div> 
 						: 
@@ -95,13 +115,17 @@ class CustomComponent extends Component  {
 			case 'YOUTUBE':
 				return <div styleName="block">
 					<div styleName="close" onClick={this.handleClick.bind(this)}></div>
-					<a href={props.text } target="_blank">{props.text}</a>
+					<a href={props.url } target="_blank">{props.url}</a>
 					<div>
 					<iframe width="476" height="267.5"
 						src={"https://www.youtube.com/embed/" + props.file}>
 						</iframe>
 					</div>
 				</div>
+			case 'LINK':
+				return <a href={props.url} target="_blank">
+					{props.url}
+				</a>
 			default:
 				return false;
 		}
